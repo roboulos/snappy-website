@@ -1,0 +1,10 @@
+{
+  "name": "snappy-website",
+  "main": "src/index.js",
+  "compatibility_date": "2025-01-28",
+  "account_id": "7eb97d8aafdc135db8eb1c18613dc170",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS"
+  }
+}
