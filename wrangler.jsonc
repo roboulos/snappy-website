@@ -3,6 +3,7 @@
   "main": "src/index.js",
   "compatibility_date": "2025-01-28",
   "account_id": "7eb97d8aafdc135db8eb1c18613dc170",
+  "pages_build_output_dir": "./public",
   "assets": {
     "directory": "./public",
     "binding": "ASSETS"
