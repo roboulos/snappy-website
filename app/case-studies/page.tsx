@@ -1,8 +1,6 @@
 "use client"
 
 import { motion } from "framer-motion"
-import Link from "next/link"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -12,8 +10,6 @@ import {
   Clock, 
   Users,
   Zap,
-  Shield,
-  BarChart3,
   Building2,
   Briefcase,
   FileText,
@@ -143,7 +139,7 @@ export default function CaseStudiesPage() {
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               See how leading enterprises are transforming their AI capabilities with 
-              our MCP solutions. From finance to healthcare, we're driving innovation at scale.
+              our MCP solutions. From finance to healthcare, we&apos;re driving innovation at scale.
             </p>
           </motion.div>
         </div>
@@ -243,7 +239,7 @@ export default function CaseStudiesPage() {
                       {/* Testimonial */}
                       <div className="border-l-4 border-accent pl-6 mb-8">
                         <Quote className="w-8 h-8 text-accent mb-3" />
-                        <p className="text-lg italic mb-3">"{study.testimonial.quote}"</p>
+                        <p className="text-lg italic mb-3">&quot;{study.testimonial.quote}&quot;</p>
                         <div>
                           <p className="font-semibold">{study.testimonial.author}</p>
                           <p className="text-sm text-muted-foreground">{study.testimonial.role}</p>
@@ -274,7 +270,7 @@ export default function CaseStudiesPage() {
           >
             <h2 className="text-4xl font-bold mb-4">More Success Stories</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              From startups to Fortune 500, we've helped organizations across every industry
+              From startups to Fortune 500, we&apos;ve helped organizations across every industry
             </p>
           </motion.div>
 

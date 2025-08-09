@@ -9,12 +9,10 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -124,7 +122,7 @@ export default function ContactPage() {
               Get in Touch
             </Badge>
             <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6">
-              Let's Build Your
+              Let&apos;s Build Your
               <span className="block gradient-text gradient-gold">
                 MCP Solution Together
               </span>
@@ -183,7 +181,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold mb-2">Enterprise Experience</h3>
                     <p className="text-muted-foreground">
-                      We've successfully implemented MCP solutions for Fortune 500 companies 
+                      We&apos;ve successfully implemented MCP solutions for Fortune 500 companies 
                       across finance, healthcare, and technology sectors.
                     </p>
                   </div>
@@ -447,7 +445,7 @@ export default function ContactPage() {
                     </div>
                     <h3 className="text-2xl font-bold mb-4">Thank You!</h3>
                     <p className="text-muted-foreground mb-6">
-                      We've received your message and will get back to you within 24 hours.
+                      We&apos;ve received your message and will get back to you within 24 hours.
                     </p>
                     <Button
                       variant="outline"

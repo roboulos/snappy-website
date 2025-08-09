@@ -71,6 +71,27 @@ const MCPVisualization = () => {
   const x = useSpring(mouseX, springConfig)
   const y = useSpring(mouseY, springConfig)
 
+  // Create transforms for central node
+  const centralX = useTransform(x, (value) => value * 0.1)
+  const centralY = useTransform(y, (value) => value * 0.1)
+
+  // Create transforms for orbiting nodes (individually to avoid hooks in callbacks)
+  const orbit0X = useTransform(x, (value) => Math.cos(0) * 150 + value * 0.05)
+  const orbit0Y = useTransform(y, (value) => Math.sin(0) * 150 + value * 0.05)
+  const orbit1X = useTransform(x, (value) => Math.cos(Math.PI / 2) * 150 + value * 0.05)
+  const orbit1Y = useTransform(y, (value) => Math.sin(Math.PI / 2) * 150 + value * 0.05)
+  const orbit2X = useTransform(x, (value) => Math.cos(Math.PI) * 150 + value * 0.05)
+  const orbit2Y = useTransform(y, (value) => Math.sin(Math.PI) * 150 + value * 0.05)
+  const orbit3X = useTransform(x, (value) => Math.cos(3 * Math.PI / 2) * 150 + value * 0.05)
+  const orbit3Y = useTransform(y, (value) => Math.sin(3 * Math.PI / 2) * 150 + value * 0.05)
+
+  const orbitTransforms = [
+    { x: orbit0X, y: orbit0Y },
+    { x: orbit1X, y: orbit1Y },
+    { x: orbit2X, y: orbit2Y },
+    { x: orbit3X, y: orbit3Y }
+  ]
+
   return (
     <motion.div 
       className="relative w-full h-full flex items-center justify-center"
@@ -84,8 +105,8 @@ const MCPVisualization = () => {
       <motion.div
         className="absolute w-32 h-32 rounded-full bg-gradient-to-br from-primary to-secondary shadow-2xl"
         style={{
-          x: useTransform(x, (value) => value * 0.1),
-          y: useTransform(y, (value) => value * 0.1),
+          x: centralX,
+          y: centralY,
         }}
       >
         <div className="absolute inset-2 rounded-full bg-background/90 flex items-center justify-center">
@@ -95,11 +116,6 @@ const MCPVisualization = () => {
 
       {/* Orbiting nodes */}
       {[0, 1, 2, 3].map((i) => {
-        const angle = (i * Math.PI * 2) / 4
-        const radius = 150
-        const baseX = Math.cos(angle) * radius
-        const baseY = Math.sin(angle) * radius
-
         return (
           <motion.div
             key={i}
@@ -114,8 +130,8 @@ const MCPVisualization = () => {
               rotate: { duration: 20, repeat: Infinity, ease: "linear" }
             }}
             style={{
-              x: useTransform(x, (value) => baseX + value * 0.05),
-              y: useTransform(y, (value) => baseY + value * 0.05),
+              x: orbitTransforms[i].x,
+              y: orbitTransforms[i].y,
             }}
           >
             <div className="absolute inset-2 rounded-full bg-background/90 flex items-center justify-center">
@@ -212,7 +228,7 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              The MCP consulting partner for Fortune 500 innovators. We architect, implement, and scale Model Context Protocol solutions that unlock your AI's full potential.
+              The MCP consulting partner for Fortune 500 innovators. We architect, implement, and scale Model Context Protocol solutions that unlock your AI&apos;s full potential.
             </motion.p>
 
             <motion.div

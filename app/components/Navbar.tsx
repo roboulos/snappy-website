@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
 import {
@@ -19,7 +18,6 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { 
   Shield, 
   Menu, 
-  ChevronDown,
   Code2,
   Wrench,
   Users,
@@ -73,7 +71,6 @@ const resources = [
 ]
 
 export default function Navbar() {
-  const pathname = usePathname()
   const [isScrolled, setIsScrolled] = React.useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
 

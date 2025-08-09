@@ -14,12 +14,7 @@ import {
   Zap,
   Shield,
   Globe,
-  Layers,
-  GitBranch,
-  Database,
-  Cloud,
-  Lock,
-  BarChart
+  Layers
 } from "lucide-react"
 
 const services = [
@@ -332,7 +327,7 @@ export default function ServicesClient() {
           >
             <h2 className="text-4xl font-bold mb-4">Ready to Transform Your AI Infrastructure?</h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Let's discuss how MCP can revolutionize your business operations.
+              Let&apos;s discuss how MCP can revolutionize your business operations.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="btn-gold">

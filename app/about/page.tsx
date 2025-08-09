@@ -1,7 +1,6 @@
 "use client"
 
 import { motion } from "framer-motion"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -123,7 +122,7 @@ export default function AboutPage() {
               </span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              We're on a mission to unlock the full potential of AI through Model Context Protocol, 
+              We&apos;re on a mission to unlock the full potential of AI through Model Context Protocol, 
               empowering enterprises to build smarter, faster, and more secure AI systems.
             </p>
           </motion.div>
@@ -164,13 +163,13 @@ export default function AboutPage() {
               <h2 className="text-4xl font-bold mb-6">Our Mission</h2>
               <p className="text-lg text-muted-foreground mb-6">
                 We believe that AI should be accessible, secure, and transformative for every 
-                organization. Through Model Context Protocol, we're creating a world where AI 
+                organization. Through Model Context Protocol, we&apos;re creating a world where AI 
                 systems can seamlessly connect, communicate, and collaborate.
               </p>
               <p className="text-lg text-muted-foreground mb-8">
                 Our team of world-class engineers and consultants work tirelessly to ensure 
-                that your MCP implementation not only meets today's needs but scales for 
-                tomorrow's challenges.
+                that your MCP implementation not only meets today&apos;s needs but scales for 
+                tomorrow&apos;s challenges.
               </p>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
@@ -196,7 +195,7 @@ export default function AboutPage() {
                   <div>
                     <h4 className="font-semibold mb-1">Client Success Focus</h4>
                     <p className="text-muted-foreground">
-                      Your success is our success - we're partners, not vendors
+                      Your success is our success - we&apos;re partners, not vendors
                     </p>
                   </div>
                 </div>
@@ -388,7 +387,7 @@ export default function AboutPage() {
             <Award className="w-16 h-16 text-accent mx-auto mb-6" />
             <h2 className="text-4xl font-bold mb-4">Join Us in Building the Future</h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Whether you're looking to implement MCP or join our team, we'd love to hear from you.
+              Whether you&apos;re looking to implement MCP or join our team, we&apos;d love to hear from you.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="btn-gold">
