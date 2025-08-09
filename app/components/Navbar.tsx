@@ -27,6 +27,7 @@ import {
   Mail,
   Phone
 } from "lucide-react"
+import Image from "next/image"
 
 const services = [
   {
@@ -102,7 +103,13 @@ export default function Navbar() {
               transition={{ duration: 0.5 }}
               className="relative"
             >
-              <Shield className="h-8 w-8 text-primary" />
+              <Image 
+                src="/icons/mcp-logo.png" 
+                alt="MCP Logo" 
+                width={32} 
+                height={32}
+                className="drop-shadow-lg"
+              />
               <div className="absolute inset-0 bg-accent/20 blur-lg group-hover:bg-accent/30 transition-colors" />
             </motion.div>
             <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">

@@ -10,12 +10,15 @@ import {
   Linkedin, 
   Github, 
   Twitter,
+  Youtube,
   Mail,
   Phone,
   MapPin,
   ArrowRight,
-  Sparkles
+  Sparkles,
+  Users
 } from "lucide-react"
+import MCPLogo from "./icons/MCPLogo"
 
 const footerLinks = {
   services: [
@@ -31,10 +34,10 @@ const footerLinks = {
     { label: "Careers", href: "/careers" }
   ],
   resources: [
-    { label: "MCP Documentation", href: "https://modelcontextprotocol.io" },
-    { label: "MCP Registry", href: "https://github.com/modelcontextprotocol/registry" },
-    { label: "Discord Community", href: "https://discord.gg/mcp" },
-    { label: "GitHub", href: "https://github.com/snappymcp" }
+    { label: "Snappy MCP Tool", href: "https://mcp.snappy.ai" },
+    { label: "Chrome Extension", href: "https://chrome.google.com/webstore/detail/statechange-power-tools-f/jgednopabapolfhfbgipkkigkafnlmla" },
+    { label: "Skool Community", href: "https://www.skool.com/snappy" },
+    { label: "YouTube Channel", href: "https://www.youtube.com/channel/UC86jQJpksJULOMiQN6XBLsQ" }
   ],
   legal: [
     { label: "Privacy Policy", href: "/privacy" },
@@ -45,9 +48,9 @@ const footerLinks = {
 }
 
 const socialLinks = [
-  { icon: Linkedin, href: "https://linkedin.com/company/snappymcp", label: "LinkedIn" },
-  { icon: Github, href: "https://github.com/snappymcp", label: "GitHub" },
-  { icon: Twitter, href: "https://twitter.com/snappymcp", label: "Twitter" }
+  { icon: Youtube, href: "https://www.youtube.com/channel/UC86jQJpksJULOMiQN6XBLsQ", label: "YouTube" },
+  { icon: Users, href: "https://www.skool.com/snappy", label: "Community" },
+  { icon: Github, href: "https://github.com/modelcontextprotocol", label: "GitHub" }
 ]
 
 export default function Footer() {
@@ -94,29 +97,29 @@ export default function Footer() {
           {/* Company Info */}
           <div className="col-span-2">
             <Link href="/" className="flex items-center space-x-2 mb-4">
-              <Shield className="h-8 w-8 text-primary" />
+              <MCPLogo size={32} className="text-primary" />
               <span className="text-2xl font-bold">Snappy MCP</span>
             </Link>
             <p className="text-muted-foreground mb-6 max-w-xs">
-              Enterprise Model Context Protocol solutions that transform how organizations 
-              leverage AI at scale.
+              MCP Integration Specialist. Transform your business systems into AI-powered 
+              machines without disrupting operations.
             </p>
             <div className="space-y-2 mb-6">
               <div className="flex items-center gap-2 text-sm">
                 <Mail className="h-4 w-4 text-muted-foreground" />
-                <a href="mailto:enterprise@snappymcp.com" className="hover:text-primary transition-colors">
-                  enterprise@snappymcp.com
+                <a href="mailto:robert@snappy.ai" className="hover:text-primary transition-colors">
+                  robert@snappy.ai
                 </a>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <Phone className="h-4 w-4 text-muted-foreground" />
-                <a href="tel:+18885550123" className="hover:text-primary transition-colors">
-                  +1 (888) 555-0123
-                </a>
+                <span className="text-muted-foreground">
+                  Schedule via contact form
+                </span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <MapPin className="h-4 w-4 text-muted-foreground" />
-                <span>San Francisco, CA</span>
+                <span>Remote First</span>
               </div>
             </div>
             <div className="flex gap-3">

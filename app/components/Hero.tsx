@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { ArrowRight, Sparkles, Zap, Shield, Globe } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 
 const FloatingOrb = ({ delay = 0, duration = 20, size = 400 }) => {
   return (
@@ -110,7 +111,13 @@ const MCPVisualization = () => {
         }}
       >
         <div className="absolute inset-2 rounded-full bg-background/90 flex items-center justify-center">
-          <Shield className="w-12 h-12 text-primary" />
+          <Image 
+            src="/icons/mcp-logo.png" 
+            alt="MCP Logo" 
+            width={48} 
+            height={48}
+            className="drop-shadow-lg"
+          />
         </div>
       </motion.div>
 
@@ -205,7 +212,7 @@ export default function Hero() {
             >
               <Badge variant="outline" className="mb-4 px-3 py-1 border-accent text-accent">
                 <Sparkles className="w-3 h-3 mr-1" />
-                Enterprise MCP Solutions
+                MCP Integration Expert
               </Badge>
             </motion.div>
 
@@ -228,7 +235,7 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              The MCP consulting partner for Fortune 500 innovators. We architect, implement, and scale Model Context Protocol solutions that unlock your AI&apos;s full potential.
+              MCP Integration Specialist for significant business systems. Your database becomes hands and ears for AI while preserving proven business logic. No system replacement, just AI-powered efficiency.
             </motion.p>
 
             <motion.div
@@ -299,18 +306,24 @@ export default function Hero() {
           className="mt-20 pt-12 border-t border-border"
         >
           <p className="text-center text-sm text-muted-foreground mb-8">
-            Trusted by industry leaders
+            Proven track record with real results
           </p>
-          <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8 opacity-50">
-            {["OpenAI", "Anthropic", "Microsoft", "Google", "Meta"].map((company, i) => (
+          <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8">
+            {[
+              { label: "500+", desc: "Community Members" },
+              { label: "100+", desc: "MCP Tools Built" },
+              { label: "5.0★", desc: "Chrome Extension" },
+              { label: "1-2 weeks", desc: "Typical Delivery" }
+            ].map((item, i) => (
               <motion.div
-                key={company}
+                key={item.label}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1 + i * 0.1 }}
-                className="text-2xl font-semibold text-muted-foreground"
+                className="text-center"
               >
-                {company}
+                <div className="text-2xl font-bold text-primary">{item.label}</div>
+                <div className="text-sm text-muted-foreground">{item.desc}</div>
               </motion.div>
             ))}
           </div>

@@ -4,41 +4,35 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { ArrowRight, Code2, Wrench, Users, BookOpen, Sparkles } from "lucide-react"
+import { ArrowRight, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 
 const services = [
   {
-    icon: Code2,
-    title: "Custom MCP Development",
-    description: "Build tailored MCP servers designed specifically for your unique business requirements and workflows",
-    href: "/services/custom-development",
-    features: ["Custom protocols", "API integration", "Scalable architecture"],
-    color: "from-primary to-secondary"
+    iconPath: "/icons/mcp-servers-final.png",
+    title: "Custom MCP Servers",
+    description: "Connect legacy systems to AI in 1-2 weeks. I build the bridge between your database and Claude. Perfect for SMBs.",
+    href: "/offer",
+    features: ["1-2 week delivery", "Database integration", "Full OAuth security"],
+    //color: "from-primary to-secondary"
+    color: "from-accent to-secondary"
   },
   {
-    icon: Wrench,
-    title: "MCP Integration Services",
-    description: "Seamlessly integrate MCP into your existing systems and tools for enhanced AI capabilities",
-    href: "/services/integration",
-    features: ["Legacy systems", "Cloud platforms", "Real-time sync"],
+    iconPath: "/icons/mcp-training-final.png",
+    title: "Build-to-Own Development",
+    description: "We build your system together using my MCP tools. You gradually take ownership, while moving fast.",
+    href: "https://mcp.snappy.ai",
+    features: ["Collaborative building", "Knowledge transfer", "Production-ready"],
     color: "from-secondary to-accent"
   },
   {
-    icon: Users,
-    title: "MCP Strategy Consulting",
-    description: "Expert guidance to help your organization adopt and scale MCP effectively",
-    href: "/services/consulting",
-    features: ["Architecture planning", "Team training", "Best practices"],
+    iconPath: "/icons/build-to-own-final.png",
+    title: "Snappy MCP Training",
+    description: "Master the tool and techniques that let me ship in hours what used to take weeks. Pure knowledge transfer.",
+    href: "/tools",
+    features: ["500+ member community", "Live workshops", "Real-world examples"],
     color: "from-accent to-primary"
-  },
-  {
-    icon: BookOpen,
-    title: "Resources & Training",
-    description: "Comprehensive documentation, tutorials, and training programs for your team",
-    href: "/resources",
-    features: ["Documentation", "Video tutorials", "Workshops"],
-    color: "from-primary to-accent"
   }
 ]
 
@@ -86,8 +80,8 @@ export default function ServicesSection() {
             Enterprise MCP Solutions
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            From development to deployment, we provide comprehensive MCP services that transform 
-            how your organization leverages AI technology.
+            Real MCP expertise from someone who builds and ships daily. Transform your business 
+            with AI integration that actually works.
           </p>
         </motion.div>
 
@@ -96,10 +90,9 @@ export default function ServicesSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8"
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
         >
           {services.map((service) => {
-            const Icon = service.icon
             return (
               <motion.div
                 key={service.title}
@@ -114,7 +107,13 @@ export default function ServicesSection() {
                   <div className="relative z-10">
                     {/* Icon with gradient background */}
                     <div className={`inline-flex p-4 rounded-xl bg-gradient-to-br ${service.color} mb-6 shadow-lg`}>
-                      <Icon className="w-8 h-8 text-white" />
+                      <Image 
+                        src={service.iconPath} 
+                        alt={service.title}
+                        width={48}
+                        height={48}
+                        className="w-12 h-12"
+                      />
                     </div>
                     
                     <h3 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors">

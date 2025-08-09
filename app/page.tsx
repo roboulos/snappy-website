@@ -1,7 +1,7 @@
 import Banner from "./components/Banner";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import ClientLogos from "./components/ClientLogos";
+import RealProjects from "./components/RealProjects";
 import ServicesSection from "./components/ServicesSection";
 import AboutSection from "./components/AboutSection";
 import Newsletter from "./components/Newsletter";
@@ -13,7 +13,7 @@ export default function Home() {
       <Banner />
       <Navbar />
       <Hero />
-      <ClientLogos />
+      <RealProjects />
       <ServicesSection />
       <AboutSection />
       <Newsletter />

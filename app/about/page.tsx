@@ -49,6 +49,8 @@ const stats = [
   { value: "50M+", label: "API Calls Daily" }
 ]
 
+// Note: This is placeholder team data - Robert operates as a solo consultant
+// The team section could be removed or replaced with testimonials/partners
 const team = [
   {
     name: "Sarah Chen",
@@ -259,6 +261,105 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Meet Robert Section */}
+      <section className="py-20">
+        <div className="mx-auto max-w-5xl px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <Badge variant="outline" className="mb-4">
+              <Users className="w-3 h-3 mr-1" />
+              Founder
+            </Badge>
+            <h2 className="text-4xl font-bold mb-4">Meet Robert</h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              MCP Integration Specialist who transforms significant business systems into AI-powered machines
+            </p>
+          </motion.div>
+
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="order-2 lg:order-1"
+            >
+              <div className="space-y-6">
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Robert has been pioneering Model Context Protocol implementations since its inception, 
+                  building tools that let developers ship in hours what used to take weeks. From designing 
+                  the Xano MCP server (mcp.snappy.ai) to running a 500+ member community, Robert combines 
+                  deep technical expertise with a passion for empowering developers.
+                </p>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  His approach is simple: connect legacy systems to AI in 1-2 weeks, preserve proven 
+                  business logic, and enable teams to move fast without disrupting customers. Whether 
+                  you&apos;re an SMB looking for custom MCP servers or an enterprise needing production-grade 
+                  integrations, Robert&apos;s hands-on approach ensures you achieve results quickly.
+                </p>
+                
+                <div className="pt-4 space-y-4">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-primary shrink-0" />
+                    <span className="text-muted-foreground">Created StateChange Power Tools - 5.0★ Chrome Extension</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-primary shrink-0" />
+                    <span className="text-muted-foreground">Built 100+ MCP tools for production use</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-primary shrink-0" />
+                    <span className="text-muted-foreground">500+ developers in the Snappy community</span>
+                  </div>
+                </div>
+
+                <div className="pt-6 flex gap-4">
+                  <Button asChild className="btn-gold">
+                    <a href="https://www.youtube.com/channel/UC86jQJpksJULOMiQN6XBLsQ" target="_blank" rel="noopener noreferrer">
+                      Watch on YouTube
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </a>
+                  </Button>
+                  <Button asChild variant="outline">
+                    <a href="https://www.skool.com/snappy" target="_blank" rel="noopener noreferrer">
+                      Join Community
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="order-1 lg:order-2"
+            >
+              <div className="relative">
+                <div className="aspect-square rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 p-2">
+                  <div className="h-full rounded-xl bg-card flex items-center justify-center">
+                    <div className="text-center p-8">
+                      <div className="w-48 h-48 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                        <Users className="w-24 h-24 text-white" />
+                      </div>
+                      <p className="text-sm text-muted-foreground italic">
+                        Photo placeholder - Robert will provide
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                {/* Decorative elements */}
+                <div className="absolute -top-4 -right-4 w-24 h-24 bg-accent/20 rounded-full blur-2xl" />
+                <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-primary/20 rounded-full blur-2xl" />
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* Team Section */}
       <section className="py-20">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -268,9 +369,9 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-4xl font-bold mb-4">Leadership Team</h2>
+            <h2 className="text-4xl font-bold mb-4">Partner Network</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              World-class engineers and business leaders united by a passion for AI innovation
+              Collaborating with talented developers and consultants worldwide
             </p>
           </motion.div>
 
