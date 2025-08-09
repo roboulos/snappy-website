@@ -157,7 +157,7 @@ export default function AboutSection() {
               Why MCP Matters
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground mb-12 leading-relaxed">
-              Just as HTTP standardized web communications, MCP creates a universal protocol for AI systems to interact with the world's data - securely, reliably, and at scale.
+              Just as HTTP standardized web communications, MCP creates a universal protocol for AI systems to interact with the world&apos;s data - securely, reliably, and at scale.
             </p>
             
             <div className="space-y-6">

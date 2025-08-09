@@ -112,7 +112,7 @@ export default function Footer() {
                     Ready to Transform Your AI Infrastructure?
                   </h3>
                   <p className="text-lg text-muted-foreground">
-                    Let's discuss how MCP can revolutionize your business operations.
+                    Let&apos;s discuss how MCP can revolutionize your business operations.
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4">
