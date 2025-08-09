@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import Script from "next/script";
+import AnimatedLayout from "./components/AnimatedLayout";
+import BackToTop from "./components/BackToTop";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -114,6 +116,10 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icon.png" type="image/png" />
         <link rel="apple-touch-icon" href="/apple-icon.png" />
+        <link rel="preload" as="image" href="/icons/mcp-logo.png" type="image/png" fetchPriority="high" />
+        <link rel="preload" as="image" href="/icons/mcp-servers-final.png" type="image/png" />
+        <link rel="preload" as="image" href="/icons/mcp-training-final.png" type="image/png" />
+        <link rel="preload" as="image" href="/icons/build-to-own-final.png" type="image/png" />
         <Script
           id="json-ld"
           type="application/ld+json"
@@ -121,7 +127,10 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans antialiased">
-        {children}
+        <AnimatedLayout>
+          {children}
+        </AnimatedLayout>
+        <BackToTop />
         <Toaster />
       </body>
     </html>

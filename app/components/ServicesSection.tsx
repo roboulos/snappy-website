@@ -60,10 +60,10 @@ const itemVariants = {
 export default function ServicesSection() {
   return (
     <section id="services" className="py-24 md:py-32 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/20 to-background" />
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
-      <div className="absolute left-0 bottom-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
+      {/* Background decoration with enhanced gradients */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background" />
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[40rem] h-[40rem] bg-gradient-to-br from-accent/20 to-secondary/20 rounded-full blur-3xl animate-pulse-subtle" />
+      <div className="absolute left-0 bottom-0 w-[40rem] h-[40rem] bg-gradient-to-tr from-primary/20 to-accent/20 rounded-full blur-3xl animate-pulse-subtle" />
       
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div
@@ -76,7 +76,7 @@ export default function ServicesSection() {
             <Sparkles className="w-3 h-3 mr-1" />
             Our Services
           </Badge>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+          <h2 className="text-5xl md:text-6xl font-extrabold tracking-[-0.03em] mb-6 gradient-premium-text">
             Enterprise MCP Solutions
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -97,39 +97,40 @@ export default function ServicesSection() {
               <motion.div
                 key={service.title}
                 variants={itemVariants}
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.015, rotateX: 1, rotateY: -1 }}
+                transition={{ type: "spring", stiffness: 250, damping: 18 }}
                 className="group"
               >
-                <Card className="relative h-full p-8 hover-elevate overflow-hidden">
+                <Card className="relative h-full p-10 hover-elevate overflow-hidden border-2 border-transparent hover:border-accent/20 transition-all duration-300">
                   {/* Gradient background on hover */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
                   
                   <div className="relative z-10">
                     {/* Icon with gradient background */}
-                    <div className={`inline-flex p-4 rounded-xl bg-gradient-to-br ${service.color} mb-6 shadow-lg`}>
+                    <div className={`inline-flex p-6 rounded-2xl bg-gradient-to-br ${service.color} mb-8 shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-110`}>
                       <Image 
                         src={service.iconPath} 
                         alt={service.title}
-                        width={48}
-                        height={48}
-                        className="w-12 h-12"
+                        width={80}
+                        height={80}
+                        className="w-20 h-20 drop-shadow-lg"
                       />
                     </div>
                     
-                    <h3 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors">
+                    <h3 className="text-3xl font-bold mb-4 group-hover:text-primary transition-colors tracking-[-0.02em]">
                       {service.title}
                     </h3>
                     
-                    <p className="text-muted-foreground mb-6">
+                    <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
                       {service.description}
                     </p>
                     
                     {/* Features list */}
                     <ul className="space-y-2 mb-6">
                       {service.features.map((feature) => (
-                        <li key={feature} className="flex items-center gap-2 text-sm">
-                          <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                          <span>{feature}</span>
+                        <li key={feature} className="flex items-center gap-3 text-base">
+                          <div className="w-2 h-2 rounded-full bg-gradient-to-r from-primary to-accent" />
+                          <span className="font-medium">{feature}</span>
                         </li>
                       ))}
                     </ul>

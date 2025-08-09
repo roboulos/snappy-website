@@ -1,10 +1,9 @@
 "use client"
 
 import Link from "next/link"
-import { motion } from "framer-motion"
+import { motion, useMotionValue, useSpring } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
+import { MagneticButton } from "@/components/ui/MagneticButton"
 import { 
   Shield, 
   Linkedin, 
@@ -16,7 +15,10 @@ import {
   MapPin,
   ArrowRight,
   Sparkles,
-  Users
+  Users,
+  Heart,
+  ExternalLink,
+  Check
 } from "lucide-react"
 import MCPLogo from "./icons/MCPLogo"
 
@@ -34,10 +36,10 @@ const footerLinks = {
     { label: "Careers", href: "/careers" }
   ],
   resources: [
-    { label: "Snappy MCP Tool", href: "https://mcp.snappy.ai" },
-    { label: "Chrome Extension", href: "https://chrome.google.com/webstore/detail/statechange-power-tools-f/jgednopabapolfhfbgipkkigkafnlmla" },
-    { label: "Skool Community", href: "https://www.skool.com/snappy" },
-    { label: "YouTube Channel", href: "https://www.youtube.com/channel/UC86jQJpksJULOMiQN6XBLsQ" }
+    { label: "Snappy MCP Tool", href: "https://mcp.snappy.ai", external: true },
+    { label: "Chrome Extension", href: "https://chrome.google.com/webstore/detail/statechange-power-tools-f/jgednopabapolfhfbgipkkigkafnlmla", external: true },
+    { label: "Skool Community", href: "https://www.skool.com/snappy", external: true },
+    { label: "YouTube Channel", href: "https://www.youtube.com/channel/UC86jQJpksJULOMiQN6XBLsQ", external: true }
   ],
   legal: [
     { label: "Privacy Policy", href: "/privacy" },
@@ -53,196 +55,335 @@ const socialLinks = [
   { icon: Github, href: "https://github.com/modelcontextprotocol", label: "GitHub" }
 ]
 
+const securityBadges = [
+  { label: "SOC2 Type II", icon: Shield },
+  { label: "ISO 27001", icon: Shield },
+  { label: "HIPAA Compliant", icon: Shield }
+]
+
 export default function Footer() {
+  // Mouse tracking for glow effect
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+  const springX = useSpring(mouseX, { stiffness: 50, damping: 20 })
+  const springY = useSpring(mouseY, { stiffness: 50, damping: 20 })
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    mouseX.set(e.clientX - rect.left)
+    mouseY.set(e.clientY - rect.top)
+  }
+
   return (
-    <footer className="relative bg-gradient-to-b from-background to-muted/50 border-t">
-      {/* Newsletter CTA */}
-      <div className="border-b">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8 py-12">
+    <footer 
+      className="relative bg-gradient-to-b from-muted/30 to-background border-t overflow-hidden"
+      onMouseMove={handleMouseMove}
+    >
+      {/* Subtle background glow that follows mouse */}
+      <motion.div
+        className="absolute inset-0 opacity-20 pointer-events-none"
+        style={{
+          background: `radial-gradient(800px circle at ${springX.get()}px ${springY.get()}px, hsl(var(--accent) / 0.1), transparent 40%)`,
+        }}
+      />
+
+      {/* Premium CTA Section */}
+      <div className="relative border-b border-border/50">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8 py-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 rounded-2xl p-8 md:p-12"
+            className="relative"
           >
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-              <div>
-                <h3 className="text-2xl font-bold mb-3">
-                  Stay Ahead with MCP Insights
-                </h3>
-                <p className="text-muted-foreground">
-                  Get weekly updates on MCP developments, best practices, and industry news 
-                  delivered directly to your inbox.
-                </p>
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-primary/5 via-accent/5 to-secondary/5 rounded-3xl blur-xl"
+              animate={{ 
+                scale: [1, 1.05, 1],
+                opacity: [0.5, 0.8, 0.5]
+              }}
+              transition={{ duration: 4, repeat: Infinity }}
+            />
+            
+            <div className="relative bg-gradient-to-br from-background/80 to-background/60 backdrop-blur-xl rounded-3xl p-10 md:p-14 border border-white/10 shadow-2xl">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+                <div className="flex-1 text-center md:text-left">
+                  <h3 className="text-3xl md:text-4xl font-bold mb-3 gradient-premium-text">
+                    Ready to Transform Your AI Infrastructure?
+                  </h3>
+                  <p className="text-lg text-muted-foreground">
+                    Let's discuss how MCP can revolutionize your business operations.
+                  </p>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <MagneticButton className="px-8 py-4 text-base font-semibold">
+                    Book a Free Consultation
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </MagneticButton>
+                  <Button variant="outline" size="lg" className="group">
+                    View Case Studies
+                    <ExternalLink className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  </Button>
+                </div>
               </div>
-              <div className="flex gap-3">
-                <Input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1"
-                />
-                <Button className="btn-gold">
-                  Subscribe
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </div>
+              
+              {/* Trust indicators */}
+              <motion.div 
+                className="mt-10 pt-10 border-t border-border/50"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+              >
+                <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-green-500" />
+                    <span>Free 30-min consultation</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-green-500" />
+                    <span>No commitment required</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-green-500" />
+                    <span>Expert MCP guidance</span>
+                  </div>
+                </div>
+              </motion.div>
             </div>
           </motion.div>
         </div>
       </div>
 
-      {/* Main Footer Content */}
-      <div className="mx-auto max-w-7xl px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-8">
-          {/* Company Info */}
-          <div className="col-span-2">
-            <Link href="/" className="flex items-center space-x-2 mb-4">
-              <MCPLogo size={32} className="text-primary" />
+      {/* Main Footer Content with refined grid */}
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-8 py-20">
+        <div className="grid grid-cols-2 md:grid-cols-12 gap-8 lg:gap-12">
+          {/* Company Info - Wider column */}
+          <motion.div 
+            className="col-span-2 md:col-span-5"
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <Link href="/" className="inline-flex items-center space-x-3 mb-6 group">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl blur-xl group-hover:blur-2xl transition-all" />
+                <MCPLogo size={40} className="relative text-primary" />
+              </div>
               <span className="text-2xl font-bold">Snappy MCP</span>
             </Link>
-            <p className="text-muted-foreground mb-6 max-w-xs">
+            
+            <p className="text-muted-foreground mb-8 max-w-md leading-relaxed">
               MCP Integration Specialist. Transform your business systems into AI-powered 
-              machines without disrupting operations.
+              machines without disrupting operations. Your database becomes hands and ears for AI.
             </p>
-            <div className="space-y-2 mb-6">
-              <div className="flex items-center gap-2 text-sm">
-                <Mail className="h-4 w-4 text-muted-foreground" />
-                <a href="mailto:robert@snappy.ai" className="hover:text-primary transition-colors">
-                  robert@snappy.ai
-                </a>
-              </div>
-              <div className="flex items-center gap-2 text-sm">
-                <Phone className="h-4 w-4 text-muted-foreground" />
-                <span className="text-muted-foreground">
-                  Schedule via contact form
-                </span>
-              </div>
-              <div className="flex items-center gap-2 text-sm">
-                <MapPin className="h-4 w-4 text-muted-foreground" />
-                <span>Remote First</span>
-              </div>
+            
+            <div className="space-y-3 mb-8">
+              <motion.a 
+                href="mailto:robert@snappy.ai" 
+                className="flex items-center gap-3 text-sm group"
+                whileHover={{ x: 4 }}
+              >
+                <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                  <Mail className="h-4 w-4" />
+                </div>
+                <span className="group-hover:text-primary transition-colors">robert@snappy.ai</span>
+              </motion.a>
+              
+              <motion.div 
+                className="flex items-center gap-3 text-sm"
+                whileHover={{ x: 4 }}
+              >
+                <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
+                  <Phone className="h-4 w-4" />
+                </div>
+                <span className="text-muted-foreground">Schedule via contact form</span>
+              </motion.div>
+              
+              <motion.div 
+                className="flex items-center gap-3 text-sm"
+                whileHover={{ x: 4 }}
+              >
+                <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
+                  <MapPin className="h-4 w-4" />
+                </div>
+                <span>Remote First • Global Team</span>
+              </motion.div>
             </div>
+            
+            {/* Social Links with hover effects */}
             <div className="flex gap-3">
-              {socialLinks.map((social) => {
+              {socialLinks.map((social, index) => {
                 const Icon = social.icon
                 return (
-                  <a
+                  <motion.a
                     key={social.label}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-lg bg-muted hover:bg-primary/10 flex items-center justify-center transition-colors"
+                    className="relative w-12 h-12 rounded-xl bg-muted hover:bg-primary/10 flex items-center justify-center transition-all group"
                     aria-label={social.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    whileHover={{ y: -4 }}
                   >
-                    <Icon className="h-5 w-5" />
-                  </a>
+                    <Icon className="h-5 w-5 group-hover:text-primary transition-colors" />
+                  </motion.a>
                 )
               })}
             </div>
-          </div>
+          </motion.div>
 
-          {/* Services Links */}
-          <div>
-            <h4 className="font-semibold mb-4">Services</h4>
+          {/* Link Columns with staggered animations */}
+          <motion.div 
+            className="col-span-1 md:col-span-2"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+          >
+            <h4 className="font-semibold mb-6 text-sm uppercase tracking-wider text-muted-foreground">Services</h4>
             <ul className="space-y-3">
               {footerLinks.services.map((link) => (
-                <li key={link.href}>
+                <motion.li key={link.href} whileHover={{ x: 4 }}>
                   <Link
                     href={link.href}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1 group"
                   >
                     {link.label}
+                    <ArrowRight className="h-3 w-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                   </Link>
-                </li>
+                </motion.li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
-          {/* Company Links */}
-          <div>
-            <h4 className="font-semibold mb-4">Company</h4>
+          <motion.div 
+            className="col-span-1 md:col-span-2"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+          >
+            <h4 className="font-semibold mb-6 text-sm uppercase tracking-wider text-muted-foreground">Company</h4>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
-                <li key={link.href}>
+                <motion.li key={link.href} whileHover={{ x: 4 }}>
                   <Link
                     href={link.href}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1 group"
                   >
                     {link.label}
+                    <ArrowRight className="h-3 w-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                   </Link>
-                </li>
+                </motion.li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
-          {/* Resources Links */}
-          <div>
-            <h4 className="font-semibold mb-4">Resources</h4>
+          <motion.div 
+            className="col-span-1 md:col-span-2"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+          >
+            <h4 className="font-semibold mb-6 text-sm uppercase tracking-wider text-muted-foreground">Resources</h4>
             <ul className="space-y-3">
               {footerLinks.resources.map((link) => (
-                <li key={link.href}>
+                <motion.li key={link.href} whileHover={{ x: 4 }}>
                   <a
                     href={link.href}
-                    target={link.href.startsWith("http") ? "_blank" : undefined}
-                    rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1 group"
                   >
                     {link.label}
+                    {link.external && <ExternalLink className="h-3 w-3 opacity-50 group-hover:opacity-100 transition-opacity" />}
                   </a>
-                </li>
+                </motion.li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
-          {/* Legal Links */}
-          <div>
-            <h4 className="font-semibold mb-4">Legal</h4>
+          <motion.div 
+            className="col-span-1"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+          >
+            <h4 className="font-semibold mb-6 text-sm uppercase tracking-wider text-muted-foreground">Legal</h4>
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (
-                <li key={link.href}>
+                <motion.li key={link.href} whileHover={{ x: 4 }}>
                   <Link
                     href={link.href}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
                     {link.label}
                   </Link>
-                </li>
+                </motion.li>
               ))}
             </ul>
-          </div>
+          </motion.div>
         </div>
 
-        {/* Trust Badges */}
-        <div className="mt-12 pt-8 border-t">
-          <div className="flex flex-wrap items-center justify-between gap-6">
+        {/* Trust & Bottom Section */}
+        <motion.div 
+          className="mt-16 pt-12 border-t border-border/50"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+        >
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            {/* Security Badges */}
             <div className="flex flex-wrap gap-4">
-              <Badge variant="secondary" className="px-3 py-1">
-                <Shield className="w-3 h-3 mr-1" />
-                SOC2 Type II
-              </Badge>
-              <Badge variant="secondary" className="px-3 py-1">
-                <Shield className="w-3 h-3 mr-1" />
-                ISO 27001
-              </Badge>
-              <Badge variant="secondary" className="px-3 py-1">
-                <Shield className="w-3 h-3 mr-1" />
-                HIPAA Compliant
-              </Badge>
+              {securityBadges.map((badge, index) => (
+                <motion.div
+                  key={badge.label}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.6 + index * 0.1, type: "spring" }}
+                  whileHover={{ y: -2 }}
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-muted/50 backdrop-blur-sm border border-border/50"
+                >
+                  <badge.icon className="h-4 w-4 text-primary" />
+                  <span className="text-sm font-medium">{badge.label}</span>
+                </motion.div>
+              ))}
             </div>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Sparkles className="w-4 h-4" />
-              <span>Pioneering MCP solutions since 2022</span>
+
+            {/* Copyright and Credits */}
+            <div className="text-center md:text-right">
+              <p className="text-sm text-muted-foreground mb-2">
+                © {new Date().getFullYear()} Snappy MCP. All rights reserved.
+              </p>
+              <p className="text-xs text-muted-foreground flex items-center justify-center md:justify-end gap-1">
+                Built with <Heart className="h-3 w-3 text-red-500 animate-pulse" /> in San Francisco
+              </p>
             </div>
           </div>
-        </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-8 pt-8 border-t text-center">
-          <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Snappy MCP. All rights reserved. 
-            Built with dedication in San Francisco.
-          </p>
-        </div>
+          {/* Pioneering statement */}
+          <motion.div 
+            className="mt-8 text-center"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.8 }}
+          >
+            <div className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+              <Sparkles className="h-4 w-4 text-accent animate-pulse" />
+              <span>Pioneering MCP solutions since 2022</span>
+              <Sparkles className="h-4 w-4 text-accent animate-pulse" />
+            </div>
+          </motion.div>
+        </motion.div>
       </div>
     </footer>
   )

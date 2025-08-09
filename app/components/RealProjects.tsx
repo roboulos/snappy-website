@@ -49,7 +49,7 @@ export default function RealProjects() {
             <ExternalLink className="w-3 h-3 mr-1" />
             Real MCP Projects
           </Badge>
-          <h2 className="text-4xl font-bold mb-4">
+          <h2 className="text-4xl font-bold mb-4 gradient-premium-text">
             What Robert Has Built
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -70,7 +70,10 @@ export default function RealProjects() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="group relative p-6 rounded-lg border bg-card hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                whileHover={{ y: -4, rotateX: 2, rotateY: -2 }}
+                className="group relative p-6 rounded-xl border bg-card shadow-md hover:shadow-2xl hover:border-accent/30 transition-colors"
+                style={{ transformStyle: 'preserve-3d' }}
+                whileTap={{ scale: 0.98 }}
               >
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-lg">
