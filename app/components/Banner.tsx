@@ -8,7 +8,7 @@ export default function Banner() {
             <path d="M10 5V10L13 13" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round"/>
           </svg>
           <p className="text-amber-900">
-            We're launching our comprehensive MCP implementation guide –{' '}
+            We&apos;re launching our comprehensive MCP implementation guide –{' '}
             <a href="#" className="font-semibold text-amber-700 hover:text-amber-800 underline">
               Get early access
             </a>
