@@ -1,108 +1,305 @@
-"use client";
+"use client"
 
-import { useState } from "react";
+import * as React from "react"
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
+import { ArrowRight, Sparkles, Zap, Shield, Globe } from "lucide-react"
+import Link from "next/link"
 
-export default function Hero() {
-  const [email, setEmail] = useState("");
+const FloatingOrb = ({ delay = 0, duration = 20, size = 400 }) => {
+  return (
+    <motion.div
+      className="absolute rounded-full opacity-10"
+      style={{
+        background: "radial-gradient(circle, hsl(var(--accent)) 0%, transparent 70%)",
+        width: size,
+        height: size,
+      }}
+      animate={{
+        x: [0, 100, -100, 0],
+        y: [0, -100, 100, 0],
+      }}
+      transition={{
+        duration,
+        delay,
+        repeat: Infinity,
+        ease: "linear",
+      }}
+    />
+  )
+}
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle newsletter signup
-    console.log("Email submitted:", email);
-  };
+const AnimatedGrid = () => {
+  return (
+    <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent" />
+      <svg
+        className="absolute inset-0 w-full h-full"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <pattern
+            id="grid"
+            x="0"
+            y="0"
+            width="50"
+            height="50"
+            patternUnits="userSpaceOnUse"
+          >
+            <path
+              d="M 50 0 L 0 0 0 50"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="0.5"
+              className="text-border opacity-50"
+            />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid)" />
+      </svg>
+    </div>
+  )
+}
+
+const MCPVisualization = () => {
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+  
+  const springConfig = { damping: 25, stiffness: 150 }
+  const x = useSpring(mouseX, springConfig)
+  const y = useSpring(mouseY, springConfig)
 
   return (
-    <section className="bg-bgLight py-24 md:py-32">
-      <div className="max-w-container mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center px-8">
-        <div>
-          <h1 className="text-5xl md:text-6xl font-bold text-textHeading leading-tight tracking-tight">
-            Power Your AI with Model Context Protocol
-          </h1>
-          <p className="mt-6 text-lg md:text-xl text-textBody leading-relaxed">
-            <span className="font-semibold text-textHeading">Expert MCP Solutions:</span> Custom development, seamless integration, and strategic consulting to transform your business with MCP
-          </p>
-          <form onSubmit={handleSubmit} className="mt-8 flex flex-col sm:flex-row gap-4 max-w-md">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              className="flex-1 px-5 py-4 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-              required
-            />
-            <button 
-              type="submit"
-              className="px-8 py-4 bg-primary text-white rounded-lg font-semibold shadow hover:bg-indigo-700 transition-colors"
-            >
-              Get Started
-            </button>
-          </form>
-          <p className="mt-4 text-sm text-textBody">
-            Join developers building the future with MCP. 
-            <a href="#" className="text-primary hover:underline ml-1">Learn about our latest insights</a>
-          </p>
+    <motion.div 
+      className="relative w-full h-full flex items-center justify-center"
+      onMouseMove={(e) => {
+        const rect = e.currentTarget.getBoundingClientRect()
+        mouseX.set(e.clientX - rect.left - rect.width / 2)
+        mouseY.set(e.clientY - rect.top - rect.height / 2)
+      }}
+    >
+      {/* Central node */}
+      <motion.div
+        className="absolute w-32 h-32 rounded-full bg-gradient-to-br from-primary to-secondary shadow-2xl"
+        style={{
+          x: useTransform(x, (value) => value * 0.1),
+          y: useTransform(y, (value) => value * 0.1),
+        }}
+      >
+        <div className="absolute inset-2 rounded-full bg-background/90 flex items-center justify-center">
+          <Shield className="w-12 h-12 text-primary" />
         </div>
-        <div className="flex justify-center relative">
-          <svg 
-            width="500" 
-            height="400" 
-            viewBox="0 0 500 400" 
-            fill="none" 
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-auto max-w-lg"
+      </motion.div>
+
+      {/* Orbiting nodes */}
+      {[0, 1, 2, 3].map((i) => {
+        const angle = (i * Math.PI * 2) / 4
+        const radius = 150
+        const baseX = Math.cos(angle) * radius
+        const baseY = Math.sin(angle) * radius
+
+        return (
+          <motion.div
+            key={i}
+            className="absolute w-16 h-16 rounded-full bg-accent shadow-lg"
+            initial={{ scale: 0 }}
+            animate={{ 
+              scale: 1,
+              rotate: 360,
+            }}
+            transition={{
+              scale: { delay: 0.2 + i * 0.1, duration: 0.5 },
+              rotate: { duration: 20, repeat: Infinity, ease: "linear" }
+            }}
+            style={{
+              x: useTransform(x, (value) => baseX + value * 0.05),
+              y: useTransform(y, (value) => baseY + value * 0.05),
+            }}
           >
-            {/* Waveform similar to Pulse */}
-            <path 
-              d="M50 200 Q100 150, 150 200 T250 200 Q300 100, 350 200 T450 200" 
-              stroke="#6366f1" 
-              strokeWidth="3" 
-              fill="none"
-            />
-            <circle cx="50" cy="200" r="8" fill="#f97316"/>
-            <circle cx="450" cy="200" r="8" fill="#f97316"/>
-            
-            {/* Nodes and connections */}
-            <circle cx="150" cy="200" r="6" fill="#6366f1"/>
-            <circle cx="250" cy="200" r="6" fill="#6366f1"/>
-            <circle cx="350" cy="200" r="6" fill="#6366f1"/>
-            
-            {/* Additional decorative elements */}
-            <path 
-              d="M200 150 L300 150 M200 250 L300 250" 
-              stroke="#f97316" 
-              strokeWidth="2" 
+            <div className="absolute inset-2 rounded-full bg-background/90 flex items-center justify-center">
+              {i === 0 && <Zap className="w-6 h-6 text-accent" />}
+              {i === 1 && <Globe className="w-6 h-6 text-accent" />}
+              {i === 2 && <Sparkles className="w-6 h-6 text-accent" />}
+              {i === 3 && <Shield className="w-6 h-6 text-accent" />}
+            </div>
+          </motion.div>
+        )
+      })}
+
+      {/* Connecting lines */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none">
+        {[0, 1, 2, 3].map((i) => {
+          const angle = (i * Math.PI * 2) / 4
+          const radius = 150
+          const x = Math.cos(angle) * radius
+          const y = Math.sin(angle) * radius
+
+          return (
+            <motion.line
+              key={i}
+              x1="50%"
+              y1="50%"
+              x2={`${50 + (x / 4)}%`}
+              y2={`${50 + (y / 4)}%`}
+              stroke="hsl(var(--primary))"
+              strokeWidth="1"
               strokeDasharray="5,5"
-              opacity="0.5"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{ delay: 0.5 + i * 0.1, duration: 1 }}
+              opacity={0.3}
             />
-            
-            {/* Small accent dots */}
-            <circle cx="100" cy="120" r="3" fill="#f97316" opacity="0.6"/>
-            <circle cx="400" cy="120" r="3" fill="#f97316" opacity="0.6"/>
-            <circle cx="150" cy="280" r="3" fill="#6366f1" opacity="0.6"/>
-            <circle cx="350" cy="280" r="3" fill="#6366f1" opacity="0.6"/>
-          </svg>
-          
-          {/* Social links */}
-          <div className="absolute bottom-0 right-0 flex gap-4">
-            <a href="#" className="text-textBody hover:text-primary transition-colors">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z" stroke="currentColor" strokeWidth="2"/>
-                <path d="M8 12V16M8 8V8.01M12 16V10M16 16V13C16 11.3431 14.6569 10 13 10C12.4477 10 12 10.4477 12 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
-            </a>
-            <a href="#" className="text-textBody hover:text-primary transition-colors">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 19C4 20.5 4 16.5 2 16M16 22V18.13C16.0375 17.6532 15.9731 17.1738 15.811 16.7238C15.6489 16.2738 15.3929 15.8634 15.06 15.52C18.2 15.17 21.5 13.98 21.5 8.52C21.4997 7.12383 20.9627 5.7812 20 4.77C20.4559 3.54851 20.4236 2.19835 19.91 1C19.91 1 18.73 0.65 16 2.48C13.708 1.85882 11.292 1.85882 9 2.48C6.27 0.65 5.09 1 5.09 1C4.57638 2.19835 4.54414 3.54851 5 4.77C4.03013 5.7887 3.49252 7.14346 3.5 8.55C3.5 13.97 6.8 15.16 9.94 15.55C9.611 15.89 9.35726 16.2954 9.19531 16.7399C9.03335 17.1844 8.96681 17.6581 9 18.13V22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </a>
-            <a href="#" className="text-textBody hover:text-primary transition-colors">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M23 3.00005C22 3.50005 20.97 3.87005 20 4.00005C21.05 3.50005 21.84 2.70005 22.23 1.75005C21.19 2.24005 20.04 2.57005 18.82 2.72005C17.84 1.88005 16.5 1.40005 15 1.40005C12.62 1.40005 10.71 3.31005 10.71 5.69005C10.71 6.02005 10.74 6.35005 10.81 6.66005C7.29 6.49005 4.16 4.79005 2.06 2.22005C1.69 2.85005 1.48 3.59005 1.48 4.39005C1.48 5.87005 2.23 7.18005 3.38 7.95005C2.68 7.93005 2.02 7.72005 1.44 7.39005V7.44005C1.44 9.54005 2.91 11.3 4.85 11.69C4.49 11.79 4.11 11.84 3.72 11.84C3.45 11.84 3.18 11.81 2.92 11.76C3.46 13.49 5.03 14.76 6.9 14.79C5.44 15.93 3.61 16.61 1.63 16.61C1.29 16.61 0.95 16.59 0.62 16.55C2.51 17.76 4.76 18.47 7.18 18.47C15 18.47 19.27 11.91 19.27 6.18005C19.27 6.00005 19.27 5.82005 19.26 5.64005C20.09 5.04005 20.8 4.29005 21.36 3.43005C20.6 3.77005 19.78 4.00005 18.91 4.11005C19.8 3.58005 20.48 2.75005 20.8 1.75005L23 3.00005Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </a>
-          </div>
+          )
+        })}
+      </svg>
+    </motion.div>
+  )
+}
+
+export default function Hero() {
+  const [email, setEmail] = React.useState("")
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    console.log("Email submitted:", email)
+  }
+
+  return (
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-background via-muted/20 to-background">
+      {/* Background effects */}
+      <AnimatedGrid />
+      <FloatingOrb delay={0} duration={30} size={600} />
+      <FloatingOrb delay={5} duration={25} size={400} />
+      <FloatingOrb delay={10} duration={35} size={500} />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8 py-24 md:py-32">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          {/* Left content */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <Badge variant="outline" className="mb-4 px-3 py-1 border-accent text-accent">
+                <Sparkles className="w-3 h-3 mr-1" />
+                Enterprise MCP Solutions
+              </Badge>
+            </motion.div>
+
+            <motion.h1
+              className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <span className="block">Transform Your</span>
+              <span className="block bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+                AI Infrastructure
+              </span>
+              <span className="block">with MCP</span>
+            </motion.h1>
+
+            <motion.p
+              className="mt-6 text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              The MCP consulting partner for Fortune 500 innovators. We architect, implement, and scale Model Context Protocol solutions that unlock your AI's full potential.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="mt-10"
+            >
+              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md">
+                <Input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  className="flex-1 h-12 px-5 text-base"
+                  required
+                />
+                <Button type="submit" size="lg" className="btn-gold group">
+                  Get Started
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </form>
+              <p className="mt-4 text-sm text-muted-foreground">
+                Join 500+ enterprises already leveraging MCP.{" "}
+                <Link href="/case-studies" className="text-primary underline-gold">
+                  See success stories
+                </Link>
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="mt-12 flex items-center gap-8 text-sm text-muted-foreground"
+            >
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                <span>99.9% Uptime</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Shield className="w-4 h-4 text-primary" />
+                <span>SOC2 Compliant</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Zap className="w-4 h-4 text-accent" />
+                <span>50ms Response</span>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Right visualization */}
+          <motion.div
+            className="relative h-[400px] lg:h-[600px]"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+          >
+            <MCPVisualization />
+          </motion.div>
         </div>
+
+        {/* Trust badges */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8 }}
+          className="mt-20 pt-12 border-t border-border"
+        >
+          <p className="text-center text-sm text-muted-foreground mb-8">
+            Trusted by industry leaders
+          </p>
+          <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8 opacity-50">
+            {["OpenAI", "Anthropic", "Microsoft", "Google", "Meta"].map((company, i) => (
+              <motion.div
+                key={company}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1 + i * 0.1 }}
+                className="text-2xl font-semibold text-muted-foreground"
+              >
+                {company}
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
-  );
+  )
 }
