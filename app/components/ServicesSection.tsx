@@ -10,29 +10,28 @@ import Image from "next/image"
 
 const services = [
   {
-    iconPath: "/icons/mcp-servers-final.png",
+    iconPath: "/icons/world-class/service-mcp-servers.png",
     title: "Custom MCP Servers",
     description: "Connect legacy systems to AI in 1-2 weeks. I build the bridge between your database and Claude. Perfect for SMBs.",
     href: "/offer",
     features: ["1-2 week delivery", "Database integration", "Full OAuth security"],
-    //color: "from-primary to-secondary"
-    color: "from-accent to-secondary"
+    gradientClass: "gradient-primary"
   },
   {
-    iconPath: "/icons/mcp-training-final.png",
+    iconPath: "/icons/world-class/service-build-to-own.png",
     title: "Build-to-Own Development",
     description: "We build your system together using my MCP tools. You gradually take ownership, while moving fast.",
     href: "https://mcp.snappy.ai",
     features: ["Collaborative building", "Knowledge transfer", "Production-ready"],
-    color: "from-secondary to-accent"
+    gradientClass: "gradient-accent"
   },
   {
-    iconPath: "/icons/build-to-own-final.png",
+    iconPath: "/icons/world-class/service-training.png",
     title: "Snappy MCP Training",
     description: "Master the tool and techniques that let me ship in hours what used to take weeks. Pure knowledge transfer.",
     href: "/tools",
     features: ["500+ member community", "Live workshops", "Real-world examples"],
-    color: "from-accent to-primary"
+    gradientClass: "gradient-premium"
   }
 ]
 
@@ -62,8 +61,8 @@ export default function ServicesSection() {
     <section id="services" className="py-24 md:py-32 relative overflow-hidden">
       {/* Background decoration with enhanced gradients */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background" />
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[40rem] h-[40rem] bg-gradient-to-br from-accent/20 to-secondary/20 rounded-full blur-3xl animate-pulse-subtle" />
-      <div className="absolute left-0 bottom-0 w-[40rem] h-[40rem] bg-gradient-to-tr from-primary/20 to-accent/20 rounded-full blur-3xl animate-pulse-subtle" />
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[40rem] h-[40rem] gradient-glass-accent rounded-full blur-3xl animate-pulse-subtle" />
+      <div className="absolute left-0 bottom-0 w-[40rem] h-[40rem] gradient-glass-primary rounded-full blur-3xl animate-pulse-subtle" />
       
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div
@@ -103,11 +102,11 @@ export default function ServicesSection() {
               >
                 <Card className="relative h-full p-10 hover-elevate overflow-hidden border-2 border-transparent hover:border-accent/20 transition-all duration-300">
                   {/* Gradient background on hover */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
+                  <div className={`absolute inset-0 ${service.gradientClass} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
                   
                   <div className="relative z-10">
                     {/* Icon with gradient background */}
-                    <div className={`inline-flex p-6 rounded-2xl bg-gradient-to-br ${service.color} mb-8 shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-110`}>
+                    <div className={`inline-flex p-6 rounded-2xl ${service.gradientClass} mb-8 shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-110`}>
                       <Image 
                         src={service.iconPath} 
                         alt={service.title}
@@ -129,7 +128,7 @@ export default function ServicesSection() {
                     <ul className="space-y-2 mb-6">
                       {service.features.map((feature) => (
                         <li key={feature} className="flex items-center gap-3 text-base">
-                          <div className="w-2 h-2 rounded-full bg-gradient-to-r from-primary to-accent" />
+                          <div className="w-2 h-2 rounded-full gradient-accent" />
                           <span className="font-medium">{feature}</span>
                         </li>
                       ))}

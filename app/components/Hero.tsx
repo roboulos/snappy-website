@@ -1,33 +1,34 @@
 "use client"
 
 import * as React from "react"
-import { motion, useMotionValue, useSpring, useTransform, useScroll } from "framer-motion"
+import { motion, useMotionValue, useSpring, useTransform, useScroll, useAnimationFrame } from "framer-motion"
 import { MagneticButton } from "@/components/ui/MagneticButton"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { ArrowRight, Sparkles, Zap, Shield, Globe } from "lucide-react"
+import { ArrowRight, Sparkles } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 
 const FloatingOrb = ({ delay = 0, duration = 20, size = 400 }) => {
   return (
     <motion.div
-      className="absolute rounded-full opacity-10 will-change-transform"
+      className="absolute rounded-full opacity-[0.02] will-change-transform"
       style={{
-        background: "radial-gradient(circle, hsl(var(--accent)) 0%, transparent 70%)",
+        background: "radial-gradient(circle, hsl(var(--accent) / 0.04) 0%, transparent 70%)",
         width: size,
         height: size,
         transform: "translateZ(0)",
+        filter: "blur(80px)",
       }}
       animate={{
-        x: [0, 100, -100, 0],
-        y: [0, -100, 100, 0],
+        x: [0, 30, -30, 0],
+        y: [0, -30, 30, 0],
       }}
       transition={{
-        duration,
+        duration: duration * 2, // even slower
         delay,
         repeat: Infinity,
-        ease: "linear",
+        ease: [0.65, 0, 0.35, 1],
       }}
     />
   )
@@ -36,7 +37,7 @@ const FloatingOrb = ({ delay = 0, duration = 20, size = 400 }) => {
 const AnimatedGrid = () => {
   return (
     <div className="absolute inset-0 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent" />
       <svg
         className="absolute inset-0 w-full h-full"
         xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +56,7 @@ const AnimatedGrid = () => {
               fill="none"
               stroke="currentColor"
               strokeWidth="0.5"
-              className="text-border opacity-50"
+              className="text-border opacity-[0.015]"
             />
           </pattern>
         </defs>
@@ -65,62 +66,207 @@ const AnimatedGrid = () => {
   )
 }
 
+// Individual orbiting icon component
+const OrbitingIcon = ({ icon, index, totalIcons, rotation, parallaxX, parallaxY }) => {
+  const angleOffset = (index / totalIcons) * 360 // degrees
+  const wobble = useMotionValue(0)
+  
+  // Add subtle oscillation for organic feel
+  useAnimationFrame((t) => {
+    wobble.set(Math.sin(t / 1500 + index * Math.PI/2) * 1) // ±1px subtle wobble
+  })
+  
+  // Create smooth orbit transforms
+  const orbitX = useTransform(rotation, r => 
+    Math.cos((r + angleOffset) * Math.PI / 180) * icon.radius
+  )
+  const orbitY = useTransform(rotation, r => 
+    Math.sin((r + angleOffset) * Math.PI / 180) * icon.radius
+  )
+  
+  // Add depth effect - icons scale and fade based on position
+  const scale = useTransform(rotation, r => {
+    const angle = (r + angleOffset) * Math.PI / 180
+    return 0.85 + Math.sin(angle) * 0.15 // Scale between 0.7 and 1.0
+  })
+  
+  // Depth-based opacity
+  const depthOpacity = useTransform(orbitY, y => 0.6 + (y / icon.radius) * 0.4)
+  
+  // Add mouse influence
+  const iconX = useTransform([orbitX, parallaxX], ([orbit, mouse]) => orbit + mouse)
+  const iconY = useTransform([orbitY, parallaxY], ([orbit, mouse]) => orbit + mouse)
+  
+  // Counter-rotation to keep icon upright
+  const counterRotate = useTransform(rotation, r => -r - angleOffset)
+  
+  return (
+    <motion.div
+      className="absolute pointer-events-none"
+      style={{
+        left: '50%',
+        top: '50%',
+        x: iconX,
+        y: iconY,
+        scale,
+        opacity: depthOpacity
+      }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: icon.delay, duration: 0.8 }}
+    >
+      <motion.div
+        style={{
+          rotate: counterRotate,
+          x: wobble
+        }}
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{
+          delay: icon.delay,
+          duration: 0.8,
+          type: "spring",
+          stiffness: 260,
+          damping: 20
+        }}
+        whileHover={{ scale: 1.12 }}
+      >
+        <Image
+          src={icon.src}
+          alt={icon.alt}
+          width={72}
+          height={72}
+          className="drop-shadow-xl"
+        />
+        <motion.span
+          className="absolute text-[10px] sm:text-xs text-muted-foreground/50 whitespace-nowrap font-light"
+          style={{ 
+            bottom: "-20px",
+            left: "50%",
+            x: "-50%",
+            rotate: counterRotate 
+          }}
+          animate={{ 
+            opacity: orbitY.get() < 0 ? [0, 0.5, 0.5, 0] : 0 
+          }}
+          transition={{ duration: 2 }}
+        >
+          {icon.alt}
+        </motion.span>
+      </motion.div>
+    </motion.div>
+  )
+}
+
+// Helper component for directional arrow markers - ultra minimal
+const ArrowMarker = ({ startX, startY, endX, endY, delay, color }: any) => {
+  const progress = useMotionValue(0)
+  
+  useAnimationFrame((t) => {
+    const d = ((t / 8000) + delay) % 1 // much slower movement
+    progress.set(d)
+  })
+
+  // Interpolate position
+  const cx = useTransform(progress, p => startX + (endX - startX) * p)
+  const cy = useTransform(progress, p => startY + (endY - startY) * p)
+  
+  // Rotation angle to point toward destination
+  const angle = Math.atan2(endY - startY, endX - startX) * (180 / Math.PI)
+
+  return (
+    <motion.polygon
+      points="-1.5,1 1.5,1 0,-2" // tiny chevron
+      fill={color}
+      style={{
+        translateX: cx,
+        translateY: cy,
+        rotate: angle,
+        opacity: 0.3
+      }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: [0, 0.3, 0.3, 0] }}
+      transition={{ 
+        duration: 8, 
+        repeat: Infinity, 
+        ease: "easeInOut",
+        times: [0, 0.1, 0.9, 1]
+      }}
+    />
+  )
+}
+
 const MCPVisualization = () => {
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
   
-  const springConfig = { damping: 25, stiffness: 150 }
+  // Smooth spring values for mouse interaction
+  const springConfig = { damping: 20, stiffness: 120 }
   const x = useSpring(mouseX, springConfig)
   const y = useSpring(mouseY, springConfig)
   
+  // Rotation value for smooth orbit
+  const rotation = useMotionValue(0)
+  const timeRef = React.useRef(0)
+  const baseSpeed = 65 // ultra-slow rotation for luxury feel
+  
+  // Continuous orbit animation
+  useAnimationFrame((_, delta) => {
+    timeRef.current += delta / 1000 // convert to seconds
+    const deg = (timeRef.current / baseSpeed) * 360
+    rotation.set(deg)
+  })
+  
+  // Enhanced mouse parallax for richer 3D feel
+  const parallaxX = useTransform(x, v => v * 0.05)
+  const parallaxY = useTransform(y, v => v * 0.05)
+  
   // Scroll-based parallax
   const { scrollYProgress } = useScroll()
-  const parallaxY = useTransform(scrollYProgress, [0, 0.5], [0, -50])
-  const orbitScale = useTransform(scrollYProgress, [0, 0.4], [1, 1.15])
-
+  const parallaxScrollY = useTransform(scrollYProgress, [0, 0.5], [0, -50])
+  
   // Create transforms for central node
-  const centralX = useTransform(x, (value) => value * 0.15)
-  const centralY = useTransform(y, (value) => value * 0.15)
-
-  // Create transforms for orbiting nodes (individually to avoid hooks in callbacks)
-  const orbit0X = useTransform(x, (value) => Math.cos(0) * 150 + value * 0.08)
-  const orbit0Y = useTransform(y, (value) => Math.sin(0) * 150 + value * 0.08)
-  const orbit1X = useTransform(x, (value) => Math.cos(Math.PI / 2) * 150 + value * 0.08)
-  const orbit1Y = useTransform(y, (value) => Math.sin(Math.PI / 2) * 150 + value * 0.08)
-  const orbit2X = useTransform(x, (value) => Math.cos(Math.PI) * 150 + value * 0.08)
-  const orbit2Y = useTransform(y, (value) => Math.sin(Math.PI) * 150 + value * 0.08)
-  const orbit3X = useTransform(x, (value) => Math.cos(3 * Math.PI / 2) * 150 + value * 0.08)
-  const orbit3Y = useTransform(y, (value) => Math.sin(3 * Math.PI / 2) * 150 + value * 0.08)
-
-  const orbitTransforms = [
-    { x: orbit0X, y: orbit0Y },
-    { x: orbit1X, y: orbit1Y },
-    { x: orbit2X, y: orbit2Y },
-    { x: orbit3X, y: orbit3Y }
+  const centralX = useTransform(x, (value) => value * 0.2)
+  const centralY = useTransform(y, (value) => value * 0.2)
+  
+  // Icons configuration - smaller, refined orbit radius for premium feel
+  const icons = [
+    { src: "/icons/world-class/gmail/gmailglass2.png", alt: "Gmail", radius: 210, delay: 0 },
+    { src: "/icons/world-class/stripe/stripeglass.png", alt: "Stripe", radius: 210, delay: 0.2 },
+    { src: "/icons/world-class/github/githubglass.png", alt: "GitHub", radius: 210, delay: 0.4 },
+    { src: "/icons/world-class/notion/notionglass.png", alt: "Notion", radius: 210, delay: 0.6 }
   ]
 
   return (
     <motion.div 
       className="relative w-full h-full flex items-center justify-center will-change-transform"
-      style={{ y: parallaxY }}
+      style={{ y: parallaxScrollY }}
       onMouseMove={(e) => {
         const rect = e.currentTarget.getBoundingClientRect()
         mouseX.set(e.clientX - rect.left - rect.width / 2)
         mouseY.set(e.clientY - rect.top - rect.height / 2)
       }}
+      onMouseLeave={() => {
+        mouseX.set(0)
+        mouseY.set(0)
+      }}
     >
-      {/* Glow effect behind central node */}
+      {/* Enhanced multi-layer glow effect behind central node */}
       <motion.div
-        className="absolute w-80 h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] rounded-full"
+        className="absolute w-80 h-80 md:w-96 md:h-96 lg:w-[32rem] lg:h-[32rem] rounded-full"
         style={{
           x: centralX,
           y: centralY,
-          background: "radial-gradient(circle, hsl(var(--accent) / 0.25) 0%, transparent 75%)",
-          filter: "blur(80px)",
-          boxShadow: "0 0 100px hsl(var(--accent) / 0.4)",
+          background: `
+            radial-gradient(circle, hsl(var(--accent) / 0.4) 0%, transparent 75%),
+            radial-gradient(circle, hsl(var(--accent) / 0.2) 0%, transparent 100%)
+          `,
+          filter: "blur(100px)",
+          boxShadow: "0 0 120px hsl(var(--accent) / 0.6), 0 0 200px hsl(var(--accent) / 0.3)",
         }}
         animate={{
-          scale: [1, 1.05, 1],
+          scale: [1, 1.08, 1],
+          opacity: [0.9, 1, 0.9],
           rotate: [0, 5, -5, 0],
         }}
         transition={{
@@ -129,111 +275,145 @@ const MCPVisualization = () => {
           ease: "easeInOut",
         }}
       />
-
-      {/* Central node - Much larger MCP logo */}
+      
+      {/* Rotating halo shimmer for luxury effect */}
       <motion.div
-        className="absolute w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-3xl gradient-premium shadow-2xl overflow-hidden border-4 border-white/10 pulse-glow"
+        className="absolute w-72 h-72 md:w-[22rem] md:h-[22rem] lg:w-[26rem] lg:h-[26rem] rounded-full border border-accent/20"
         style={{
           x: centralX,
           y: centralY,
-          boxShadow: "0 30px 60px rgba(0,0,0,0.25), 0 0 100px hsl(var(--accent) / 0.4)",
+          boxShadow: "0 0 40px hsl(var(--accent) / 0.3), inset 0 0 40px hsl(var(--accent) / 0.1)",
         }}
         animate={{
-          rotate: [0, 6, -6, 0],
+          rotate: 360,
+          scale: [1, 1.02, 1],
         }}
         transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
+          rotate: { duration: 30, repeat: Infinity, ease: "linear" },
+          scale: { duration: 8, repeat: Infinity, ease: "easeInOut" },
+        }}
+      />
+
+      {/* Central node - Larger MCP logo as dominant focal point */}
+      <motion.div
+        className="absolute w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96"
+        style={{
+          x: centralX,
+          y: centralY,
+        }}
+        animate={{ 
+          rotate: [0, 1, -1, 0],
+          scale: [1, 1.005, 1],
+          filter: [
+            "drop-shadow(0 0 25px hsl(var(--accent) / 0.25)) drop-shadow(0 0 50px hsl(var(--accent) / 0.1))",
+            "drop-shadow(0 0 30px hsl(var(--accent) / 0.3)) drop-shadow(0 0 60px hsl(var(--accent) / 0.15))",
+            "drop-shadow(0 0 25px hsl(var(--accent) / 0.25)) drop-shadow(0 0 50px hsl(var(--accent) / 0.1))"
+          ]
+        }}
+        transition={{ 
+          duration: 25, 
+          repeat: Infinity, 
+          ease: [0.65, 0, 0.35, 1] 
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent" />
-        <div className="absolute inset-4 md:inset-5 lg:inset-6 rounded-2xl bg-background/20 backdrop-blur-sm flex items-center justify-center">
-          <Image 
-            src="/icons/mcp-logo.png" 
-            alt="MCP Logo" 
-            width={160} 
-            height={160}
-            className="drop-shadow-3xl w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40"
-            priority
-            loading="eager"
-          />
-        </div>
+        <Image
+          src="/icons/world-class/mcp/MCPFrostedGlass2.png"
+          alt="MCP Logo"
+          width={400}
+          height={400}
+          className="w-full h-full select-none pointer-events-none"
+          priority
+          loading="eager"
+        />
       </motion.div>
 
-      {/* Orbiting nodes with enhanced effects */}
-      <motion.div 
-        style={{ scale: orbitScale }} 
-        className="absolute inset-0 flex items-center justify-center"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-      >
-        {[0, 1, 2, 3].map((i) => {
-          const angle = (i * Math.PI * 2) / 4
-          const radius = 150
-          return (
-            <motion.div
-            key={i}
-            className="absolute w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-2xl bg-gradient-to-br from-accent to-brand-copper shadow-xl overflow-hidden z-20"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ 
-              scale: 1,
-              opacity: 1,
-            }}
-            transition={{
-              scale: { delay: 0.3 + i * 0.15, duration: 0.8, type: "spring" },
-              opacity: { delay: 0.3 + i * 0.15, duration: 0.8 },
-            }}
-            style={{
-              left: `calc(50% + ${Math.cos(angle) * radius}px)`,
-              top: `calc(50% + ${Math.sin(angle) * radius}px)`,
-              x: orbitTransforms[i].x,
-              y: orbitTransforms[i].y,
-              transform: 'translate(-50%, -50%)',
-              boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2), 0 0 40px hsl(var(--accent) / 0.3)",
-            }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent" />
-            <div className="absolute inset-2 rounded-xl bg-background/40 backdrop-blur-sm flex items-center justify-center">
-              {i === 0 && <Zap className="w-10 h-10 text-accent drop-shadow-lg" />}
-              {i === 1 && <Globe className="w-10 h-10 text-accent drop-shadow-lg" />}
-              {i === 2 && <Sparkles className="w-10 h-10 text-accent drop-shadow-lg" />}
-              {i === 3 && <Shield className="w-10 h-10 text-accent drop-shadow-lg" />}
-            </div>
-          </motion.div>
-          )
-        })}
-      </motion.div>
+      {/* Smooth orbiting icons with natural motion */}
+      {icons.map((icon, i) => (
+        <OrbitingIcon
+          key={icon.alt}
+          icon={icon}
+          index={i}
+          totalIcons={icons.length}
+          rotation={rotation}
+          parallaxX={parallaxX}
+          parallaxY={parallaxY}
+        />
+      ))}
 
-      {/* Enhanced connecting lines with gradients */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none">
+      {/* Premium connection lines with glow */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 800 800">
         <defs>
-          <linearGradient id="line-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0" />
-            <stop offset="50%" stopColor="hsl(var(--primary))" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="hsl(var(--accent))" stopOpacity="0" />
+          <linearGradient id="flow-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity="0.05" />
+            <stop offset="50%" stopColor="hsl(var(--accent))" stopOpacity="0.15" />
+            <stop offset="100%" stopColor="hsl(var(--accent))" stopOpacity="0.05" />
           </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="2" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
         </defs>
-        {[0, 1, 2, 3].map((i) => {
-          const angle = (i * Math.PI * 2) / 4
-          const radius = 150
-          const x = Math.cos(angle) * radius
-          const y = Math.sin(angle) * radius
-
+        {/* Thin connection lines */}
+        {icons.map((_, i) => {
+          const angle = (i * Math.PI * 2) / icons.length
+          const startX = 400
+          const startY = 400
+          const endX = 400 + Math.cos(angle) * 280
+          const endY = 400 + Math.sin(angle) * 280
           return (
             <motion.line
-              key={i}
-              x1="50%"
-              y1="50%"
-              x2={`${50 + (x / 4)}%`}
-              y2={`${50 + (y / 4)}%`}
-              stroke="url(#line-gradient)"
-              strokeWidth="2"
-              strokeDasharray="8,4"
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ pathLength: 1, opacity: 1 }}
-              transition={{ delay: 0.6 + i * 0.15, duration: 1.2 }}
+              key={`line-${i}`}
+              x1={startX}
+              y1={startY}
+              x2={endX}
+              y2={endY}
+              stroke="hsl(var(--accent) / 0.08)"
+              strokeWidth="0.75"
+              strokeLinecap="round"
+              initial={{ opacity: 0 }}
+              animate={{ 
+                opacity: [0.08, 0.12, 0.08]
+              }}
+              transition={{ 
+                delay: 0.5 + i * 0.5, 
+                duration: 8,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
             />
+          )
+        })}
+        {/* Bidirectional moving data dots for active flow */}
+        {icons.map((_, i) => {
+          const angle = (i * Math.PI * 2) / icons.length
+          const startX = 400
+          const startY = 400
+          const endX = 400 + Math.cos(angle) * 250
+          const endY = 400 + Math.sin(angle) * 250
+          return (
+            <React.Fragment key={`arrows-${i}`}>
+              {/* Outbound arrow */}
+              <ArrowMarker 
+                startX={startX} 
+                startY={startY} 
+                endX={endX} 
+                endY={endY} 
+                delay={i * 0.35} 
+                color="hsl(var(--accent) / 0.25)" 
+              />
+              {/* Inbound arrow */}
+              <ArrowMarker 
+                startX={endX} 
+                startY={endY} 
+                endX={startX} 
+                endY={startY} 
+                delay={i * 0.35 + 0.5} 
+                color="hsl(var(--primary) / 0.2)" 
+              />
+            </React.Fragment>
           )
         })}
       </svg>
@@ -252,14 +432,58 @@ export default function Hero() {
   }
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-background via-muted/20 to-background">
+    <section 
+      className="relative min-h-screen flex items-center overflow-hidden"
+      style={{
+        background: `
+          radial-gradient(circle at 50% 50%, hsl(var(--background)) 0%, hsl(var(--muted) / 0.05) 40%, hsl(var(--background)) 80%),
+          linear-gradient(180deg, hsl(var(--muted) / 0.1) 0%, transparent 50%, hsl(var(--muted) / 0.1) 100%)
+        `
+      }}
+    >
       {/* Background effects */}
       <AnimatedGrid />
-      <FloatingOrb delay={0} duration={30} size={600} />
-      <FloatingOrb delay={5} duration={25} size={400} />
-      <FloatingOrb delay={10} duration={35} size={500} />
+      
+      {/* Subtle noise texture for depth */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <motion.div
+          className="absolute w-[200%] h-[200%] opacity-[0.03]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.4'/%3E%3C/svg%3E")`,
+          }}
+          animate={{
+            x: [0, -30, 0],
+            y: [0, 20, 0]
+          }}
+          transition={{
+            duration: 60,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+      </div>
+      
+      <FloatingOrb delay={0} duration={40} size={900} />
+      <FloatingOrb delay={5} duration={35} size={700} />
+      <FloatingOrb delay={10} duration={50} size={800} />
+      
+      {/* Additional subtle fog layers */}
+      <motion.div 
+        className="absolute inset-0 pointer-events-none"
+        animate={{
+          opacity: [0.02, 0.04, 0.02]
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      >
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-radial from-accent/10 to-transparent blur-3xl" />
+        <div className="absolute bottom-0 right-1/3 w-[30rem] h-[30rem] bg-gradient-radial from-primary/10 to-transparent blur-3xl" />
+      </motion.div>
 
-      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8 py-20">
+      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8 py-24 md:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.2fr),minmax(0,1fr)] gap-8 lg:gap-8 items-start">
           {/* Left content */}
           <motion.div
@@ -274,7 +498,7 @@ export default function Hero() {
             >
               <Badge variant="outline" className="mb-4 px-3 py-1 border-accent text-accent">
                 <Sparkles className="w-3 h-3 mr-1" />
-                MCP Integration Expert
+                The Next Era of AI-Driven Operations
               </Badge>
             </motion.div>
 
@@ -285,14 +509,15 @@ export default function Hero() {
               transition={{ delay: 0.3 }}
               style={{ y: textY }}
             >
-              <span className="block text-lg md:text-xl lg:text-2xl font-medium text-muted-foreground mb-4">
-                Transform Your
+              <span className="block text-base md:text-lg font-medium text-muted-foreground mb-4 uppercase tracking-wider">
+                Model Context Protocol
               </span>
-              <span className="block text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-none bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-                AI Infrastructure
+              <span className="block text-5xl md:text-6xl lg:text-7xl xl:text-8xl gradient-premium-text leading-tight">
+                MCP as the Brain of <br className="hidden md:block" />
+                Your Infrastructure
               </span>
-              <span className="block text-lg md:text-xl lg:text-2xl font-light text-muted-foreground mt-6">
-                with Model Context Protocol
+              <span className="mt-6 block text-xl md:text-2xl font-light text-muted-foreground">
+                Orchestrating data. Automating workflows. Preserving your logic.
               </span>
             </motion.h1>
 
@@ -344,11 +569,15 @@ export default function Hero() {
                 <span>99.9% Uptime</span>
               </div>
               <div className="flex items-center gap-2">
-                <Shield className="w-4 h-4 text-primary" />
+                <div className="w-4 h-4 rounded-full bg-primary/20 flex items-center justify-center">
+                  <div className="w-2 h-2 rounded-full bg-primary" />
+                </div>
                 <span>SOC2 Compliant</span>
               </div>
               <div className="flex items-center gap-2">
-                <Zap className="w-4 h-4 text-accent" />
+                <div className="w-4 h-4 rounded-full bg-accent/20 flex items-center justify-center">
+                  <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                </div>
                 <span>50ms Response</span>
               </div>
             </motion.div>

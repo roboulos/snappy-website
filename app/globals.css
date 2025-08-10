@@ -272,6 +272,25 @@
     box-shadow: var(--shadow-lg);
   }
   
+  /* Premium glassmorphic card */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* World-class glassmorphic icon container */
+  .glass-icon {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(255,255,255,0.12);
+    border-radius: 16px;
+  }
+  
   /* Gold Underline Effect */
   .underline-gold {
     position: relative;
@@ -293,39 +312,73 @@
     width: 100%;
   }
   
-  /* ===== Gradients ===== */
+  /* ===== Premium Gradient System - Consistent Site-Wide ===== */
+  
+  /* Primary gradients - blue to slate */
   .gradient-primary {
     background: linear-gradient(135deg, 
-      hsl(var(--primary)) 0%, 
-      hsl(var(--secondary)) 100%);
+      #3B7EA1 0%,   /* Deep Teal */
+      #5E6B8D 100%); /* Sophisticated Slate */
   }
   
-  .gradient-gold {
+  /* Accent gradients - gold to copper */
+  .gradient-gold,
+  .gradient-accent {
     background: linear-gradient(135deg, 
-      hsl(var(--accent)) 0%, 
-      hsl(var(--brand-copper)) 100%);
+      #E5B738 0%,   /* Gold */
+      #C77F34 100%); /* Copper */
   }
   
+  /* Premium multi-color gradient */
+  .gradient-premium {
+    background: linear-gradient(135deg,
+      #3B7EA1 0%,   /* Deep Teal */
+      #E5B738 50%,  /* Gold */
+      #5E6B8D 100%); /* Sophisticated Slate */
+  }
+  
+  /* Glass effect gradients with transparency */
+  .gradient-glass-primary {
+    background: linear-gradient(135deg,
+      rgba(59, 126, 161, 0.15) 0%,
+      rgba(94, 107, 141, 0.15) 100%);
+  }
+  
+  .gradient-glass-accent {
+    background: linear-gradient(135deg,
+      rgba(229, 183, 56, 0.15) 0%,
+      rgba(199, 127, 52, 0.15) 100%);
+  }
+  
+  /* Text gradient utilities */
   .gradient-text {
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
   
-  .gradient-premium {
-    background: linear-gradient(135deg,
-      hsl(var(--primary)) 0%,
-      hsl(var(--secondary)) 40%,
-      hsl(var(--accent) / 0.85) 100%);
+  .gradient-primary-text {
+    background: linear-gradient(135deg, 
+      #3B7EA1 0%, 
+      #5E6B8D 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .gradient-accent-text,
+  .gradient-gold-text {
+    background: linear-gradient(135deg, 
+      #E5B738 0%, 
+      #C77F34 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   
   .gradient-premium-text {
-    background: linear-gradient(
-      90deg,
-      hsl(var(--accent)) 0%,
-      hsl(var(--brand-copper)) 50%,
-      hsl(var(--primary)) 100%
-    );
+    background: linear-gradient(135deg,
+      #3B7EA1 0%,
+      #E5B738 50%,
+      #5E6B8D 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }

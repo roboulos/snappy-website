@@ -111,7 +111,7 @@ export default function Navbar() {
               />
               <div className="absolute inset-0 bg-accent/20 blur-lg group-hover:bg-accent/30 transition-colors" />
             </motion.div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            <span className="text-2xl font-bold gradient-primary-text">
               Snappy
             </span>
           </Link>

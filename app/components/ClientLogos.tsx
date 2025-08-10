@@ -35,7 +35,7 @@ const achievements = [
 
 export default function ClientLogos() {
   return (
-    <section className="py-20 border-y bg-gradient-to-b from-background to-muted/20">
+    <section className="py-24 md:py-32 border-y bg-gradient-to-b from-background to-muted/20">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Trust badges */}
         <motion.div
