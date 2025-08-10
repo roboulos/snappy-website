@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { motion, useMotionValue, useSpring, useTransform, useScroll, useAnimationFrame } from "framer-motion"
+import { motion, useMotionValue, useSpring, useTransform, useScroll, useAnimationFrame, type MotionValue } from "framer-motion"
 import { MagneticButton } from "@/components/ui/MagneticButton"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -67,7 +67,19 @@ const AnimatedGrid = () => {
 }
 
 // Individual orbiting icon component
-const OrbitingIcon = ({ icon, index, totalIcons, rotation, parallaxX, parallaxY }) => {
+const OrbitingIcon = ({ icon, index, totalIcons, rotation, parallaxX, parallaxY }: {
+  icon: {
+    src: string
+    alt: string
+    radius: number
+    delay: number
+  }
+  index: number
+  totalIcons: number
+  rotation: MotionValue<number>
+  parallaxX: MotionValue<number>
+  parallaxY: MotionValue<number>
+}) => {
   const angleOffset = (index / totalIcons) * 360 // degrees
   const wobble = useMotionValue(0)
   
@@ -77,28 +89,28 @@ const OrbitingIcon = ({ icon, index, totalIcons, rotation, parallaxX, parallaxY 
   })
   
   // Create smooth orbit transforms
-  const orbitX = useTransform(rotation, r => 
+  const orbitX = useTransform(rotation, (r: number) => 
     Math.cos((r + angleOffset) * Math.PI / 180) * icon.radius
   )
-  const orbitY = useTransform(rotation, r => 
+  const orbitY = useTransform(rotation, (r: number) => 
     Math.sin((r + angleOffset) * Math.PI / 180) * icon.radius
   )
   
   // Add depth effect - icons scale and fade based on position
-  const scale = useTransform(rotation, r => {
+  const scale = useTransform(rotation, (r: number) => {
     const angle = (r + angleOffset) * Math.PI / 180
     return 0.85 + Math.sin(angle) * 0.15 // Scale between 0.7 and 1.0
   })
   
   // Depth-based opacity
-  const depthOpacity = useTransform(orbitY, y => 0.6 + (y / icon.radius) * 0.4)
+  const depthOpacity = useTransform(orbitY, (y: number) => 0.6 + (y / icon.radius) * 0.4)
   
   // Add mouse influence
-  const iconX = useTransform([orbitX, parallaxX], ([orbit, mouse]) => orbit + mouse)
-  const iconY = useTransform([orbitY, parallaxY], ([orbit, mouse]) => orbit + mouse)
+  const iconX = useTransform([orbitX, parallaxX], (latest: number[]) => latest[0] + latest[1])
+  const iconY = useTransform([orbitY, parallaxY], (latest: number[]) => latest[0] + latest[1])
   
   // Counter-rotation to keep icon upright
-  const counterRotate = useTransform(rotation, r => -r - angleOffset)
+  const counterRotate = useTransform(rotation, (r: number) => -r - angleOffset)
   
   return (
     <motion.div
@@ -159,7 +171,14 @@ const OrbitingIcon = ({ icon, index, totalIcons, rotation, parallaxX, parallaxY 
 }
 
 // Helper component for directional arrow markers - ultra minimal
-const ArrowMarker = ({ startX, startY, endX, endY, delay, color }: any) => {
+const ArrowMarker = ({ startX, startY, endX, endY, delay, color }: {
+  startX: number
+  startY: number
+  endX: number
+  endY: number
+  delay: number
+  color: string
+}) => {
   const progress = useMotionValue(0)
   
   useAnimationFrame((t) => {
