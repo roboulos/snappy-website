@@ -1,10 +1,10 @@
 "use client"
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
+import { motion, useMotionValue, useSpring, useTransform, HTMLMotionProps } from "framer-motion"
 import React from "react"
 import { cn } from "@/lib/utils"
 
-interface MagneticButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+type MagneticButtonProps = HTMLMotionProps<"button"> & {
   children: React.ReactNode
   className?: string
 }
@@ -37,7 +37,7 @@ export function MagneticButton({ children, className, ...props }: MagneticButton
   return (
     <motion.button
       ref={ref}
-      style={{ x: springX, y: springY }}
+      style={{ x: springX, y: springY } as React.CSSProperties}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       whileHover={{ scale: 1.02 }}

@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import { motion, useMotionValue, useSpring, useTransform, useScroll } from "framer-motion"
-import { Button } from "@/components/ui/button"
 import { MagneticButton } from "@/components/ui/MagneticButton"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -246,7 +245,6 @@ export default function Hero() {
   const [email, setEmail] = React.useState("")
   const { scrollY } = useScroll()
   const textY = useTransform(scrollY, [0, 200], [0, -10])
-  const bgY = useTransform(scrollY, [0, 500], [0, 50])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()

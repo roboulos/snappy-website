@@ -1,6 +1,6 @@
 "use client"
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
+import { motion, useMotionValue, useSpring } from "framer-motion"
 import { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { MagneticButton } from "@/components/ui/MagneticButton"

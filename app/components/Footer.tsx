@@ -6,9 +6,7 @@ import { Button } from "@/components/ui/button"
 import { MagneticButton } from "@/components/ui/MagneticButton"
 import { 
   Shield, 
-  Linkedin, 
   Github, 
-  Twitter,
   Youtube,
   Mail,
   Phone,
