@@ -25,13 +25,6 @@ const projects = [
     url: "https://www.skool.com/snappy",
     icon: Users,
     stats: "500+ Members"
-  },
-  {
-    name: "Chrome Extension",
-    description: "StateChange Power Tools with 5-star reviews",
-    url: "https://chrome.google.com/webstore/detail/statechange-power-tools-f/jgednopabapolfhfbgipkkigkafnlmla",
-    icon: Star,
-    stats: "5.0 ★ Rating"
   }
 ];
 
@@ -57,7 +50,7 @@ export default function RealProjects() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-3 gap-6">
           {projects.map((project, index) => {
             const Icon = project.icon;
             return (
@@ -120,8 +113,8 @@ export default function RealProjects() {
             <p className="text-sm text-muted-foreground">MCP Tools Built</p>
           </div>
           <div className="text-center">
-            <p className="text-3xl font-bold text-primary">5.0★</p>
-            <p className="text-sm text-muted-foreground">Chrome Extension Rating</p>
+            <p className="text-3xl font-bold text-primary">1-2 weeks</p>
+            <p className="text-sm text-muted-foreground">Typical Delivery Time</p>
           </div>
         </motion.div>
       </div>

@@ -6,10 +6,10 @@ import Image from "next/image"
 
 const features = [
   {
-    icon: Shield,
-    title: "Secure by Design",
-    description: "Built-in security protocols ensure your data and AI interactions remain protected",
-    color: "from-primary to-secondary"
+    icon: Globe2,
+    title: "Future-Proof",
+    description: "Extensible architecture that grows with your AI needs",
+    color: "from-secondary to-accent"
   },
   {
     icon: Zap,
@@ -18,10 +18,10 @@ const features = [
     color: "from-accent to-brand-copper"
   },
   {
-    icon: Globe2,
-    title: "Future-Proof",
-    description: "Extensible architecture that grows with your AI needs",
-    color: "from-secondary to-accent"
+    icon: Shield,
+    title: "Secure by Design",
+    description: "Built-in security protocols ensure your data and AI interactions remain protected",
+    color: "from-primary to-secondary"
   }
 ]
 
@@ -42,7 +42,7 @@ export default function AboutSection() {
             className="relative"
           >
             <div className="relative w-full aspect-square max-w-[500px] mx-auto">
-              {/* Animated MCP visualization */}
+              {/* Animated MCP visualization with rotating orbit circles */}
               <motion.div 
                 className="absolute inset-0 flex items-center justify-center"
                 animate={{ rotate: 360 }}
@@ -55,15 +55,17 @@ export default function AboutSection() {
                   fill="none" 
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  {/* Outer circle */}
-                  <circle cx="200" cy="200" r="180" stroke="url(#gradient1)" strokeWidth="2" opacity="0.2"/>
-                  <circle cx="200" cy="200" r="150" stroke="url(#gradient1)" strokeWidth="1" opacity="0.3"/>
+                  {/* Orbit circles for each icon - tighter radii for better composition */}
+                  <circle cx="200" cy="200" r="125" stroke="url(#gradient1)" strokeWidth="2" opacity="0.25"/>
+                  <circle cx="200" cy="200" r="155" stroke="url(#gradient1)" strokeWidth="2" opacity="0.3"/>
+                  <circle cx="200" cy="200" r="185" stroke="url(#gradient1)" strokeWidth="2" opacity="0.35"/>
+                  
+                  {/* Optional outer decorative circle */}
+                  <circle cx="200" cy="200" r="205" stroke="url(#gradient1)" strokeWidth="1.5" opacity="0.15"/>
                   
                   {/* Connection lines */}
-                  <path d="M100 200L300 200" stroke="url(#gradient2)" strokeWidth="2" strokeDasharray="4 4" opacity="0.5"/>
-                  <path d="M200 100L200 300" stroke="url(#gradient2)" strokeWidth="2" strokeDasharray="4 4" opacity="0.5"/>
-                  <path d="M129 129L271 271" stroke="url(#gradient2)" strokeWidth="1" strokeDasharray="4 4" opacity="0.3"/>
-                  <path d="M271 129L129 271" stroke="url(#gradient2)" strokeWidth="1" strokeDasharray="4 4" opacity="0.3"/>
+                  <path d="M100 200L300 200" stroke="url(#gradient2)" strokeWidth="1" strokeDasharray="4 4" opacity="0.2"/>
+                  <path d="M200 100L200 300" stroke="url(#gradient2)" strokeWidth="1" strokeDasharray="4 4" opacity="0.2"/>
                   
                   <defs>
                     <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -86,13 +88,17 @@ export default function AboutSection() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, type: "spring" }}
               >
-                <div className="w-44 h-44 md:w-52 md:h-52 rounded-3xl bg-gradient-to-br from-primary via-secondary to-accent shadow-2xl flex items-center justify-center relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent" />
+                <div className="relative flex items-center justify-center">
+                  {/* Subtle glow behind logo - slightly larger to compensate for smaller logo */}
+                  <div className="absolute w-72 h-72 rounded-full bg-gradient-to-br from-primary/20 via-accent/15 to-transparent blur-3xl" />
+                  <div className="absolute w-56 h-56 rounded-full bg-accent/10 blur-2xl animate-pulse" />
+                  
+                  {/* MCP Logo - increased size */}
                   <Image 
-                    src="/icons/mcp-logo.png" 
+                    src="/icons/world-class/mcp/MCPFrostedGlass2.png" 
                     alt="MCP Logo" 
-                    width={100} 
-                    height={100}
+                    width={180} 
+                    height={180}
                     className="relative z-10 drop-shadow-2xl"
                   />
                 </div>
@@ -100,23 +106,27 @@ export default function AboutSection() {
               
               {/* Orbiting elements */}
               {[0, 1, 2].map((i) => {
-                // Vary distances for depth
-                const distances = [120, 140, 160];
-                const distance = distances[i];
-
-                // Vary icon sizes slightly for interest
-                const sizes = [24, 28, 26]; // in px
-                const Icon = [Shield, Zap, Globe2][i];
+                // Icon sizes - all the same size for consistency
+                const sizes = [36, 36, 36]; // in px - all same size
+                
+                // Distances adjusted to put icon centers exactly on orbit lines
+                // Base orbit radii: 125, 155, 185
+                // Custom adjustments per icon for perfect alignment
+                const orbits = [125, 155, 185];
+                const adjustments = [60, 5, 5]; // globe +60 total, zap +5, shield +5
+                const distance = orbits[i] + (sizes[i] * 0.25) + adjustments[i];
+                // Reorder icons: Globe on inner, Zap on middle, Shield on outer
+                const Icon = [Globe2, Zap, Shield][i];
 
                 // Different durations & easing for each
                 const durations = [20, 25, 30];
                 const delays = [0, 1, 2]; // stagger start times
+                const startAngles = [0, 120, 240]; // evenly spaced starting positions
 
                 return (
                   <motion.div
                     key={i}
-                    className="absolute top-1/2 left-1/2"
-                    style={{ originX: 0.5, originY: 0.5 }}
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                     animate={{ rotate: 360 }}
                     transition={{
                       duration: durations[i],
@@ -126,19 +136,22 @@ export default function AboutSection() {
                     }}
                   >
                     <div
-                      style={{
-                        transform: `rotate(${i * 120}deg) translate(${distance}px)`,
-                      }}
                       className="absolute"
+                      style={{
+                        transform: `rotate(${startAngles[i]}deg) translateX(${distance}px)`,
+                        transformOrigin: 'center center'
+                      }}
                     >
-                      <div
-                        className="rounded-2xl gradient-gold shadow-lg"
-                        style={{ width: `${sizes[i] * 2}px`, height: `${sizes[i] * 2}px` }} // scale container
+                      <motion.div
+                        className="rounded-2xl gradient-gold shadow-lg -translate-x-1/2 -translate-y-1/2"
+                        style={{ width: `${sizes[i] * 2}px`, height: `${sizes[i] * 2}px` }}
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ type: "spring", stiffness: 300 }}
                       >
                         <div className="w-full h-full rounded-2xl bg-background/90 backdrop-blur-sm flex items-center justify-center">
                           <Icon className="text-primary" style={{ width: sizes[i], height: sizes[i] }} />
                         </div>
-                      </div>
+                      </motion.div>
                     </div>
                   </motion.div>
                 );

@@ -67,18 +67,17 @@ const AnimatedGrid = () => {
 }
 
 // Individual orbiting icon component
-const OrbitingIcon = ({ icon, index, totalIcons, rotation, parallaxX, parallaxY }: {
+const OrbitingIcon = ({ icon, index, totalIcons, rotation }: {
   icon: {
     src: string
     alt: string
     radius: number
     delay: number
+    size?: number
   }
   index: number
   totalIcons: number
   rotation: MotionValue<number>
-  parallaxX: MotionValue<number>
-  parallaxY: MotionValue<number>
 }) => {
   const angleOffset = (index / totalIcons) * 360 // degrees
   const wobble = useMotionValue(0)
@@ -105,9 +104,9 @@ const OrbitingIcon = ({ icon, index, totalIcons, rotation, parallaxX, parallaxY 
   // Depth-based opacity
   const depthOpacity = useTransform(orbitY, (y: number) => 0.6 + (y / icon.radius) * 0.4)
   
-  // Add mouse influence
-  const iconX = useTransform([orbitX, parallaxX], (latest: number[]) => latest[0] + latest[1])
-  const iconY = useTransform([orbitY, parallaxY], (latest: number[]) => latest[0] + latest[1])
+  // Add mouse influence with smoother calculation - remove parallax to keep stable orbit
+  const iconX = useTransform([orbitX, wobble], ([ox, w]: number[]) => ox + w)
+  const iconY = orbitY
   
   // Counter-rotation to keep icon upright
   const counterRotate = useTransform(rotation, (r: number) => -r - angleOffset)
@@ -120,6 +119,8 @@ const OrbitingIcon = ({ icon, index, totalIcons, rotation, parallaxX, parallaxY 
         top: '50%',
         x: iconX,
         y: iconY,
+        translateX: '-50%',
+        translateY: '-50%',
         scale,
         opacity: depthOpacity
       }}
@@ -146,8 +147,8 @@ const OrbitingIcon = ({ icon, index, totalIcons, rotation, parallaxX, parallaxY 
         <Image
           src={icon.src}
           alt={icon.alt}
-          width={72}
-          height={72}
+          width={icon.size || 72}
+          height={icon.size || 72}
           className="drop-shadow-xl"
         />
         <motion.span
@@ -216,13 +217,14 @@ const ArrowMarker = ({ startX, startY, endX, endY, delay, color }: {
 }
 
 const MCPVisualization = () => {
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
+  const [isMobile, setIsMobile] = React.useState(false)
   
-  // Smooth spring values for mouse interaction
-  const springConfig = { damping: 20, stiffness: 120 }
-  const x = useSpring(mouseX, springConfig)
-  const y = useSpring(mouseY, springConfig)
+  React.useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
   
   // Rotation value for smooth orbit
   const rotation = useMotionValue(0)
@@ -236,46 +238,148 @@ const MCPVisualization = () => {
     rotation.set(deg)
   })
   
-  // Enhanced mouse parallax for richer 3D feel
-  const parallaxX = useTransform(x, v => v * 0.05)
-  const parallaxY = useTransform(y, v => v * 0.05)
-  
   // Scroll-based parallax
   const { scrollYProgress } = useScroll()
   const parallaxScrollY = useTransform(scrollYProgress, [0, 0.5], [0, -50])
   
-  // Create transforms for central node
-  const centralX = useTransform(x, (value) => value * 0.2)
-  const centralY = useTransform(y, (value) => value * 0.2)
-  
-  // Icons configuration - smaller, refined orbit radius for premium feel
+  // Icons configuration - expanded set with AI and communication tools
   const icons = [
-    { src: "/icons/world-class/gmail/gmailglass2.png", alt: "Gmail", radius: 210, delay: 0 },
-    { src: "/icons/world-class/stripe/stripeglass.png", alt: "Stripe", radius: 210, delay: 0.2 },
-    { src: "/icons/world-class/github/githubglass.png", alt: "GitHub", radius: 210, delay: 0.4 },
-    { src: "/icons/world-class/notion/notionglass.png", alt: "Notion", radius: 210, delay: 0.6 }
+    { src: "/icons/world-class/gmail/gmailglass2.png", alt: "Gmail", radius: 240, delay: 0, size: 72 },
+    { src: "/icons/world-class/stripe/stripeglass.png", alt: "Stripe", radius: 240, delay: 0.1, size: 72 },
+    { src: "/icons/world-class/github/githubglass.png", alt: "GitHub", radius: 240, delay: 0.2, size: 72 },
+    { src: "/icons/world-class/notion/notionglass.png", alt: "Notion", radius: 240, delay: 0.3, size: 72 },
+    { src: "/icons/final/claudefrostedlogo4.png", alt: "Claude", radius: 240, delay: 0.4, size: 84 },
+    { src: "/icons/final/openaifrosted.png", alt: "OpenAI", radius: 240, delay: 0.5, size: 84 },
+    { src: "/icons/final/slacklogofrosted.png", alt: "Slack", radius: 240, delay: 0.6, size: 84 }
   ]
 
+  // Mobile version with simplified layout
+  if (isMobile) {
+    const mobileIcons = [
+      { src: "/icons/world-class/gmail/gmailglass2.png", alt: "Gmail", angle: -45 },
+      { src: "/icons/world-class/stripe/stripeglass.png", alt: "Stripe", angle: 90 },
+      { src: "/icons/world-class/github/githubglass.png", alt: "GitHub", angle: 225 }
+    ]
+    
+    const radius = 120
+    
+    return (
+      <div className="relative w-full h-full flex items-center justify-center">
+        {/* Central photo with glow */}
+        <div className="relative">
+          <div className="absolute inset-0 rounded-full bg-accent/20 blur-3xl scale-150" />
+          <div className="relative w-48 h-48 rounded-full overflow-hidden shadow-xl">
+            <div 
+              className="absolute -inset-1 rounded-full opacity-50"
+              style={{ 
+                background: "conic-gradient(from 0deg, hsl(var(--accent)) 0%, transparent 25%, transparent 50%, hsl(var(--primary)) 75%, hsl(var(--accent)) 100%)",
+                filter: "blur(8px)"
+              }} 
+            />
+            <div className="relative w-full h-full rounded-full overflow-hidden border border-white/10 bg-gradient-to-b from-primary/20 to-primary/40">
+              <Image
+                src="/images/consultant-placeholder.png"
+                alt="Robert Boulos - MCP Integration Specialist"
+                fill
+                className="object-cover"
+                priority
+                loading="eager"
+              />
+              <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-b from-white/10 via-transparent to-transparent" />
+              <div className="pointer-events-none absolute inset-0 rounded-full shadow-inner" />
+            </div>
+          </div>
+          
+          {/* MCP Badge */}
+          <div className="absolute -bottom-2 -right-2 px-3 py-1.5 rounded-full backdrop-blur-md border border-white/20 bg-background/90 flex items-center gap-2 shadow-lg scale-110">
+            <Image 
+              src="/icons/world-class/mcp/MCPFrostedGlass2.png" 
+              alt="MCP" 
+              width={20} 
+              height={20} 
+              className="opacity-90" 
+            />
+            <span className="text-xs font-semibold text-foreground/80">MCP Expert</span>
+          </div>
+        </div>
+        
+        {/* Orbiting icons (static with gentle float) */}
+        {mobileIcons.map((icon, i) => {
+          const x = Math.cos(icon.angle * Math.PI / 180) * radius
+          const y = Math.sin(icon.angle * Math.PI / 180) * radius
+          return (
+            <motion.div
+              key={icon.alt}
+              className="absolute"
+              style={{
+                left: `calc(50% + ${x}px)`,
+                top: `calc(50% + ${y}px)`,
+                translateX: "-50%",
+                translateY: "-50%"
+              }}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                y: [0, -6, 0]
+              }}
+              transition={{ 
+                opacity: { delay: 0.3 + i * 0.1 },
+                scale: { delay: 0.3 + i * 0.1, type: "spring" },
+                y: { duration: 4 + i * 0.5, repeat: Infinity, ease: "easeInOut" }
+              }}
+            >
+              <div className="relative">
+                {/* Connection line */}
+                <svg
+                  className="absolute inset-0 w-full h-full pointer-events-none"
+                  style={{ 
+                    width: Math.abs(x) + 48,
+                    height: Math.abs(y) + 48,
+                    left: x > 0 ? -x : 24,
+                    top: y > 0 ? -y : 24,
+                    zIndex: -1 
+                  }}
+                >
+                  <line
+                    x1={x > 0 ? Math.abs(x) + 24 : 24}
+                    y1={y > 0 ? Math.abs(y) + 24 : 24}
+                    x2={x > 0 ? 24 : Math.abs(x) + 24}
+                    y2={y > 0 ? 24 : Math.abs(y) + 24}
+                    stroke="hsl(var(--accent) / 0.2)"
+                    strokeWidth="1"
+                    strokeLinecap="round"
+                  />
+                </svg>
+                <Image
+                  src={icon.src}
+                  alt={icon.alt}
+                  width={48}
+                  height={48}
+                  className="drop-shadow-lg rounded-lg"
+                />
+              </div>
+            </motion.div>
+          )
+        })}
+      </div>
+    )
+  }
+  
+  // Desktop version
   return (
     <motion.div 
       className="relative w-full h-full flex items-center justify-center will-change-transform"
       style={{ y: parallaxScrollY }}
-      onMouseMove={(e) => {
-        const rect = e.currentTarget.getBoundingClientRect()
-        mouseX.set(e.clientX - rect.left - rect.width / 2)
-        mouseY.set(e.clientY - rect.top - rect.height / 2)
-      }}
-      onMouseLeave={() => {
-        mouseX.set(0)
-        mouseY.set(0)
-      }}
     >
       {/* Enhanced multi-layer glow effect behind central node */}
       <motion.div
         className="absolute w-80 h-80 md:w-96 md:h-96 lg:w-[32rem] lg:h-[32rem] rounded-full"
         style={{
-          x: centralX,
-          y: centralY,
+          left: '50%',
+          top: '50%',
+          translateX: '-50%',
+          translateY: '-50%',
           background: `
             radial-gradient(circle, hsl(var(--accent) / 0.4) 0%, transparent 75%),
             radial-gradient(circle, hsl(var(--accent) / 0.2) 0%, transparent 100%)
@@ -299,8 +403,10 @@ const MCPVisualization = () => {
       <motion.div
         className="absolute w-72 h-72 md:w-[22rem] md:h-[22rem] lg:w-[26rem] lg:h-[26rem] rounded-full border border-accent/20"
         style={{
-          x: centralX,
-          y: centralY,
+          left: '50%',
+          top: '50%',
+          translateX: '-50%',
+          translateY: '-50%',
           boxShadow: "0 0 40px hsl(var(--accent) / 0.3), inset 0 0 40px hsl(var(--accent) / 0.1)",
         }}
         animate={{
@@ -313,21 +419,18 @@ const MCPVisualization = () => {
         }}
       />
 
-      {/* Central node - Larger MCP logo as dominant focal point */}
+      {/* Central node - Consultant photo with premium glass effect */}
       <motion.div
-        className="absolute w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96"
+        className="absolute w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96"
         style={{
-          x: centralX,
-          y: centralY,
+          left: '50%',
+          top: '50%',
+          translateX: '-50%',
+          translateY: '-50%',
         }}
         animate={{ 
           rotate: [0, 1, -1, 0],
           scale: [1, 1.005, 1],
-          filter: [
-            "drop-shadow(0 0 25px hsl(var(--accent) / 0.25)) drop-shadow(0 0 50px hsl(var(--accent) / 0.1))",
-            "drop-shadow(0 0 30px hsl(var(--accent) / 0.3)) drop-shadow(0 0 60px hsl(var(--accent) / 0.15))",
-            "drop-shadow(0 0 25px hsl(var(--accent) / 0.25)) drop-shadow(0 0 50px hsl(var(--accent) / 0.1))"
-          ]
         }}
         transition={{ 
           duration: 25, 
@@ -335,32 +438,83 @@ const MCPVisualization = () => {
           ease: [0.65, 0, 0.35, 1] 
         }}
       >
-        <Image
-          src="/icons/world-class/mcp/MCPFrostedGlass2.png"
-          alt="MCP Logo"
-          width={400}
-          height={400}
-          className="w-full h-full select-none pointer-events-none"
-          priority
-          loading="eager"
-        />
+        {/* Photo container with glass morphism */}
+        <div className="relative w-full h-full rounded-full overflow-hidden">
+          {/* Gradient ring background */}
+          <div 
+            className="absolute -inset-1 rounded-full opacity-50"
+            style={{ 
+              background: "conic-gradient(from 0deg, hsl(var(--accent)) 0%, transparent 25%, transparent 50%, hsl(var(--primary)) 75%, hsl(var(--accent)) 100%)",
+              filter: "blur(8px)"
+            }} 
+          />
+          
+          {/* Photo container */}
+          <div className="relative w-full h-full rounded-full overflow-hidden border border-white/10 bg-gradient-to-b from-primary/20 to-primary/40">
+            {/* Placeholder or actual photo */}
+            <Image
+              src="/images/consultant-placeholder.png"
+              alt="Robert Boulos - MCP Integration Specialist"
+              fill
+              sizes="(max-width: 768px) 256px, (max-width: 1024px) 320px, 384px"
+              className="object-cover"
+              priority
+              loading="eager"
+            />
+            
+            {/* Glass highlight overlay */}
+            <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-b from-white/10 via-transparent to-transparent" />
+            
+            {/* Subtle inner shadow */}
+            <div className="pointer-events-none absolute inset-0 rounded-full shadow-inner" />
+          </div>
+          
+          {/* Premium glow effect */}
+          <div 
+            className="pointer-events-none absolute inset-0 rounded-full"
+            style={{
+              boxShadow: `
+                0 0 40px hsl(var(--accent) / 0.4),
+                0 0 80px hsl(var(--accent) / 0.2),
+                inset 0 0 40px hsl(var(--primary) / 0.1)
+              `
+            }}
+          />
+        </div>
+        
+        {/* MCP Badge */}
+        <motion.div 
+          className="absolute -bottom-3 -right-3 px-3 py-1.5 rounded-full backdrop-blur-md border border-white/20 bg-background/80 flex items-center gap-2 shadow-lg"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
+        >
+          <Image 
+            src="/icons/world-class/mcp/MCPFrostedGlass2.png" 
+            alt="MCP" 
+            width={20} 
+            height={20} 
+            className="opacity-90" 
+          />
+          <span className="text-xs font-semibold text-foreground/80">MCP Expert</span>
+        </motion.div>
       </motion.div>
 
-      {/* Smooth orbiting icons with natural motion */}
-      {icons.map((icon, i) => (
-        <OrbitingIcon
-          key={icon.alt}
-          icon={icon}
-          index={i}
-          totalIcons={icons.length}
-          rotation={rotation}
-          parallaxX={parallaxX}
-          parallaxY={parallaxY}
-        />
-      ))}
+      {/* Smooth orbiting icons with natural motion - hidden on mobile */}
+      <div className="hidden sm:block">
+        {icons.map((icon, i) => (
+          <OrbitingIcon
+            key={icon.alt}
+            icon={icon}
+            index={i}
+            totalIcons={icons.length}
+            rotation={rotation}
+          />
+        ))}
+      </div>
 
-      {/* Premium connection lines with glow */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 800 800">
+      {/* Premium connection lines with glow - hidden on mobile */}
+      <svg className="hidden sm:block absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 800 800">
         <defs>
           <linearGradient id="flow-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity="0.05" />
@@ -376,17 +530,17 @@ const MCPVisualization = () => {
           </filter>
         </defs>
         {/* Thin connection lines */}
-        {icons.map((_, i) => {
+        {icons.map((icon, i) => {
           const angle = (i * Math.PI * 2) / icons.length
-          const startX = 400
-          const startY = 400
-          const endX = 400 + Math.cos(angle) * 280
-          const endY = 400 + Math.sin(angle) * 280
+          const centerX = 400
+          const centerY = 400
+          const endX = centerX + Math.cos(angle) * icon.radius
+          const endY = centerY + Math.sin(angle) * icon.radius
           return (
             <motion.line
               key={`line-${i}`}
-              x1={startX}
-              y1={startY}
+              x1={centerX}
+              y1={centerY}
               x2={endX}
               y2={endY}
               stroke="hsl(var(--accent) / 0.08)"
@@ -406,18 +560,19 @@ const MCPVisualization = () => {
           )
         })}
         {/* Bidirectional moving data dots for active flow */}
-        {icons.map((_, i) => {
+        {icons.map((icon, i) => {
           const angle = (i * Math.PI * 2) / icons.length
-          const startX = 400
-          const startY = 400
-          const endX = 400 + Math.cos(angle) * 250
-          const endY = 400 + Math.sin(angle) * 250
+          const centerX = 400
+          const centerY = 400
+          const arrowRadius = icon.radius * 0.9 // Slightly inside the icon
+          const endX = centerX + Math.cos(angle) * arrowRadius
+          const endY = centerY + Math.sin(angle) * arrowRadius
           return (
             <React.Fragment key={`arrows-${i}`}>
               {/* Outbound arrow */}
               <ArrowMarker 
-                startX={startX} 
-                startY={startY} 
+                startX={centerX} 
+                startY={centerY} 
                 endX={endX} 
                 endY={endY} 
                 delay={i * 0.35} 
@@ -427,8 +582,8 @@ const MCPVisualization = () => {
               <ArrowMarker 
                 startX={endX} 
                 startY={endY} 
-                endX={startX} 
-                endY={startY} 
+                endX={centerX} 
+                endY={centerY} 
                 delay={i * 0.35 + 0.5} 
                 color="hsl(var(--primary) / 0.2)" 
               />
@@ -531,12 +686,12 @@ export default function Hero() {
               <span className="block text-base md:text-lg font-medium text-muted-foreground mb-4 uppercase tracking-wider">
                 Model Context Protocol
               </span>
-              <span className="block text-5xl md:text-6xl lg:text-7xl xl:text-8xl gradient-premium-text leading-tight">
-                MCP as the Brain of <br className="hidden md:block" />
-                Your Infrastructure
+              <span className="block text-4xl md:text-5xl lg:text-6xl xl:text-7xl gradient-premium-text leading-tight">
+                Your Database.<br />
+                Supercharged With AI.
               </span>
               <span className="mt-6 block text-xl md:text-2xl font-light text-muted-foreground">
-                Orchestrating data. Automating workflows. Preserving your logic.
+                Through MCP, we make your existing systems the hands, ears, and memory of artificial intelligence.
               </span>
             </motion.h1>
 
@@ -546,7 +701,7 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              MCP Integration Specialist for significant business systems. Your database becomes hands and ears for AI while preserving proven business logic. No system replacement, just AI-powered efficiency.
+              Transform your existing database into an AI powerhouse in 1-2 weeks. No migrations, no disruptions — just seamless intelligence that understands your business logic and acts on your data.
             </motion.p>
 
             <motion.div

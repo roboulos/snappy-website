@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Photo Placeholder</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #1a1a1a;
+            font-family: -apple-system, system-ui, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        
+        .canvas-container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        canvas {
+            display: block;
+            margin: 0 auto 20px;
+            border: 1px solid #eee;
+        }
+        
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px 24px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        button:hover {
+            background: #1d4ed8;
+        }
+        
+        .info {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="canvas-container">
+        <canvas id="canvas" width="512" height="512"></canvas>
+        <button onclick="downloadImage()">Download Placeholder Image</button>
+        <div class="info">
+            Professional placeholder for Hero section photo
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Create gradient background
+        const gradient = ctx.createLinearGradient(0, 0, 512, 512);
+        gradient.addColorStop(0, '#1e3448'); // Deep teal (matching site primary)
+        gradient.addColorStop(0.5, '#2a3f53'); // Mid tone
+        gradient.addColorStop(1, '#1a2332'); // Darker shade
+        
+        // Fill background
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 512, 512);
+        
+        // Add subtle texture pattern
+        ctx.globalAlpha = 0.05;
+        for (let i = 0; i < 512; i += 4) {
+            for (let j = 0; j < 512; j += 4) {
+                if ((i + j) % 8 === 0) {
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(i, j, 2, 2);
+                }
+            }
+        }
+        ctx.globalAlpha = 1;
+        
+        // Add vignette effect
+        const vignette = ctx.createRadialGradient(256, 256, 200, 256, 256, 256);
+        vignette.addColorStop(0, 'transparent');
+        vignette.addColorStop(1, 'rgba(0,0,0,0.3)');
+        ctx.fillStyle = vignette;
+        ctx.fillRect(0, 0, 512, 512);
+        
+        // Add center icon/text
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        
+        // User icon (simple person silhouette)
+        ctx.fillStyle = 'rgba(255,255,255,0.1)';
+        ctx.beginPath();
+        ctx.arc(256, 200, 60, 0, Math.PI * 2);
+        ctx.fill();
+        
+        ctx.fillStyle = 'rgba(255,255,255,0.1)';
+        ctx.beginPath();
+        ctx.ellipse(256, 340, 100, 80, 0, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Add "Your Photo" text
+        ctx.fillStyle = 'rgba(255,255,255,0.5)';
+        ctx.font = 'bold 24px -apple-system, system-ui, sans-serif';
+        ctx.fillText('YOUR PHOTO', 256, 420);
+        
+        ctx.font = '16px -apple-system, system-ui, sans-serif';
+        ctx.fillStyle = 'rgba(255,255,255,0.3)';
+        ctx.fillText('Professional Headshot', 256, 450);
+        
+        // Add subtle grid lines
+        ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+        ctx.lineWidth = 1;
+        for (let i = 0; i < 512; i += 32) {
+            ctx.beginPath();
+            ctx.moveTo(i, 0);
+            ctx.lineTo(i, 512);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(0, i);
+            ctx.lineTo(512, i);
+            ctx.stroke();
+        }
+        
+        // Add accent glow
+        const glowGradient = ctx.createRadialGradient(256, 256, 100, 256, 256, 200);
+        glowGradient.addColorStop(0, 'rgba(217, 168, 65, 0.1)'); // Gold accent
+        glowGradient.addColorStop(1, 'transparent');
+        ctx.fillStyle = glowGradient;
+        ctx.fillRect(0, 0, 512, 512);
+        
+        function downloadImage() {
+            const link = document.createElement('a');
+            link.download = 'consultant-placeholder.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+    </script>
+</body>
+</html>
