@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { motion, useMotionValue, useSpring, useTransform, useScroll, useAnimationFrame, type MotionValue } from "framer-motion"
+import { motion, useMotionValue, useTransform, useScroll, useAnimationFrame, type MotionValue } from "framer-motion"
 import { MagneticButton } from "@/components/ui/MagneticButton"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -146,11 +146,6 @@ const OrbitingIcon = ({ icon, index, totalIcons, rotation }: {
         }}
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}
-        transition={{
-          type: "spring",
-          stiffness: 400,
-          damping: 15
-        }}
         className="cursor-pointer"
       >
         {/* Glow effect layer - animates separately */}

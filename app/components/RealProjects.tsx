@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Star, Users, Code2 } from "lucide-react";
+import { ExternalLink, Users, Code2 } from "lucide-react";
 
 const projects = [
   {
