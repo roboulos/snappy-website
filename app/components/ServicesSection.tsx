@@ -10,7 +10,7 @@ import Image from "next/image"
 
 const services = [
   {
-    iconPath: "/icons/world-class/service-mcp-servers.png",
+    iconPath: "/icons/services-premium/icon-1754928291136.png",
     title: "Custom MCP Servers",
     description: "Connect legacy systems to AI in 1-2 weeks. I build the bridge between your database and Claude. Perfect for SMBs.",
     href: "/offer",
@@ -18,7 +18,7 @@ const services = [
     gradientClass: "gradient-primary"
   },
   {
-    iconPath: "/icons/world-class/service-build-to-own.png",
+    iconPath: "/icons/services-premium/icon-1754928407671.png",
     title: "Build-to-Own Development",
     description: "We build your system together using my MCP tools. You gradually take ownership, while moving fast.",
     href: "https://mcp.snappy.ai",
@@ -26,7 +26,7 @@ const services = [
     gradientClass: "gradient-accent"
   },
   {
-    iconPath: "/icons/world-class/service-training.png",
+    iconPath: "/icons/services-premium/icon-1754928352488.png",
     title: "Snappy MCP Training",
     description: "Master the tool and techniques that let me ship in hours what used to take weeks. Pure knowledge transfer.",
     href: "/tools",
@@ -105,14 +105,14 @@ export default function ServicesSection() {
                   <div className={`absolute inset-0 ${service.gradientClass} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
                   
                   <div className="relative z-10">
-                    {/* Icon with gradient background */}
-                    <div className={`inline-flex p-6 rounded-2xl ${service.gradientClass} mb-8 shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-110`}>
+                    {/* Icon without background - glassmorphism style */}
+                    <div className="mb-8 group-hover:scale-110 transition-all duration-300">
                       <Image 
                         src={service.iconPath} 
                         alt={service.title}
-                        width={80}
-                        height={80}
-                        className="w-20 h-20 drop-shadow-lg"
+                        width={100}
+                        height={100}
+                        className="w-24 h-24 drop-shadow-xl"
                       />
                     </div>
                     
