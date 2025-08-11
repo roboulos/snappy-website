@@ -52,21 +52,17 @@ export default function Newsletter() {
       />
       
       {/* Subtle floating orbs */}
-      <motion.div 
-        className="absolute -top-32 left-1/3 w-96 h-96 bg-gradient-radial from-accent/15 to-transparent rounded-full blur-3xl"
-        animate={{ 
-          y: [0, -20, 0],
-          scale: [1, 1.05, 1],
+      <div 
+        className="absolute -top-32 left-1/3 w-80 h-80 bg-gradient-radial from-accent/12 to-transparent rounded-full blur-2xl"
+        style={{
+          animation: 'float-orb 24s ease-in-out infinite'
         }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
       />
-      <motion.div 
-        className="absolute -bottom-32 right-1/4 w-[32rem] h-[32rem] bg-gradient-radial from-primary/10 to-transparent rounded-full blur-3xl"
-        animate={{ 
-          y: [0, 20, 0],
-          scale: [1, 1.08, 1],
+      <div 
+        className="absolute -bottom-32 right-1/4 w-96 h-96 bg-gradient-radial from-primary/8 to-transparent rounded-full blur-2xl"
+        style={{
+          animation: 'float-orb 30s ease-in-out infinite reverse'
         }}
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">

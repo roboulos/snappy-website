@@ -1,34 +1,23 @@
 "use client"
 
 import * as React from "react"
-import { motion, useMotionValue, useTransform, useScroll, useAnimationFrame, type MotionValue } from "framer-motion"
+import { motion, useTransform, useScroll, useMotionValue, animate } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { ArrowRight, Sparkles } from "lucide-react"
-import Link from "next/link"
 import Image from "next/image"
 
 const FloatingOrb = ({ delay = 0, duration = 20, size = 400 }) => {
   return (
-    <motion.div
-      className="absolute rounded-full opacity-[0.02] will-change-transform"
+    <div
+      className="absolute rounded-full opacity-[0.02]"
       style={{
         background: "radial-gradient(circle, hsl(var(--accent) / 0.04) 0%, transparent 70%)",
         width: size,
         height: size,
         transform: "translateZ(0)",
-        filter: "blur(80px)",
-      }}
-      animate={{
-        x: [0, 30, -30, 0],
-        y: [0, -30, 30, 0],
-      }}
-      transition={{
-        duration: duration * 2, // even slower
-        delay,
-        repeat: Infinity,
-        ease: [0.65, 0, 0.35, 1],
+        filter: "blur(40px)", // Reduced from 80px
+        animation: `float-orb ${duration * 2}s ${delay}s ease-in-out infinite`,
       }}
     />
   )
@@ -67,7 +56,7 @@ const AnimatedGrid = () => {
 }
 
 // Individual orbiting icon component
-const OrbitingIcon = ({ icon, index, totalIcons, rotation }: {
+const OrbitingIcon = ({ icon, index, totalIcons, baseSpeed }: {
   icon: {
     src: string
     alt: string
@@ -77,164 +66,81 @@ const OrbitingIcon = ({ icon, index, totalIcons, rotation }: {
   }
   index: number
   totalIcons: number
-  rotation: MotionValue<number>
+  baseSpeed: number
 }) => {
-  const angleOffset = (index / totalIcons) * 360 // degrees
-  const wobble = useMotionValue(0)
+  const orbitRadius = 240
+  const baselineSize = 72
+  const angleOffset = (index / totalIcons) * 2 * Math.PI // radians
   
-  // Add subtle oscillation for organic feel
-  useAnimationFrame((t) => {
-    wobble.set(Math.sin(t / 1500 + index * Math.PI/2) * 1) // ±1px subtle wobble
-  })
+  // Create a motion value for rotation
+  const rotation = useMotionValue(0)
   
-  // Create smooth orbit transforms
-  const orbitX = useTransform(rotation, (r: number) => 
-    Math.cos((r + angleOffset) * Math.PI / 180) * icon.radius
+  // Animate the rotation continuously
+  React.useEffect(() => {
+    const controls = animate(rotation, 2 * Math.PI, {
+      duration: baseSpeed,
+      repeat: Infinity,
+      ease: "linear",
+      repeatType: "loop"
+    })
+    return controls.stop
+  }, [rotation, baseSpeed])
+  
+  // Calculate real X/Y position based on rotation
+  const x = useTransform(rotation, r =>
+    Math.cos(r + angleOffset) * orbitRadius
   )
-  const orbitY = useTransform(rotation, (r: number) => 
-    Math.sin((r + angleOffset) * Math.PI / 180) * icon.radius
+  const y = useTransform(rotation, r =>
+    Math.sin(r + angleOffset) * orbitRadius
   )
   
-  // Add depth effect - icons scale and fade based on position
-  const scale = useTransform(rotation, (r: number) => {
-    const angle = (r + angleOffset) * Math.PI / 180
-    return 0.85 + Math.sin(angle) * 0.15 // Scale between 0.7 and 1.0
-  })
-  
-  // Depth-based opacity
-  const depthOpacity = useTransform(orbitY, (y: number) => 0.6 + (y / icon.radius) * 0.4)
-  
-  // Add mouse influence with smoother calculation - remove parallax to keep stable orbit
-  const iconX = useTransform([orbitX, wobble], ([ox, w]: number[]) => ox + w)
-  const iconY = orbitY
-  
-  // Counter-rotation to keep icon upright
-  const counterRotate = useTransform(rotation, (r: number) => -r - angleOffset)
+  // Map Y position to scale and opacity for depth effect
+  // Y goes from -orbitRadius (top) to +orbitRadius (bottom)
+  const scale = useTransform(y, [-orbitRadius, orbitRadius], [0.75, 1.2])
+  const opacity = useTransform(y, [-orbitRadius, orbitRadius], [0.6, 1])
   
   return (
     <motion.div
-      className="absolute"
+      className="absolute cursor-pointer pointer-events-auto"
       style={{
-        left: '50%',
-        top: '50%',
-        x: iconX,
-        y: iconY,
-        translateX: '-50%',
-        translateY: '-50%',
+        left: "50%",
+        top: "50%",
+        x,
+        y,
         scale,
-        opacity: depthOpacity
+        opacity,
+        translateX: "-50%",
+        translateY: "-50%",
+        width: baselineSize,
+        height: baselineSize,
       }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: icon.delay, duration: 0.8 }}
     >
+      {/* Glow effect layer */}
       <motion.div
+        className="absolute inset-0 rounded-xl pointer-events-none"
         style={{
-          rotate: counterRotate,
-          x: wobble,
-          position: "relative",
-          display: "inline-block"
+          boxShadow: "0 0 20px hsl(var(--accent) / 0.4)",
+          zIndex: -1
         }}
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
+        initial={{ opacity: 0 }}
+        whileHover={{ opacity: 1 }}
         transition={{
-          delay: icon.delay,
-          duration: 0.8,
-          type: "spring",
-          stiffness: 260,
-          damping: 20
+          opacity: { duration: 0.12, ease: "easeOut" }
         }}
-        whileHover={{ scale: 1.08 }}
-        whileTap={{ scale: 0.95 }}
-        className="cursor-pointer"
-      >
-        {/* Glow effect layer - animates separately */}
-        <motion.div
-          className="absolute inset-0 rounded-xl pointer-events-none"
-          style={{
-            boxShadow: "0 0 20px hsl(var(--accent) / 0.4)",
-            zIndex: -1
-          }}
-          initial={{ opacity: 0 }}
-          whileHover={{ opacity: 1 }}
-          transition={{
-            opacity: { duration: 0.12, ease: "easeOut" }
-          }}
-        />
-        
-        <Image
-          src={icon.src}
-          alt={icon.alt}
-          width={icon.size || 72}
-          height={icon.size || 72}
-          className="drop-shadow-xl rounded-xl relative z-10"
-          draggable={false}
-        />
-        
-        <motion.span
-          className="absolute text-[10px] sm:text-xs text-muted-foreground/50 whitespace-nowrap font-light"
-          style={{ 
-            bottom: "-20px",
-            left: "50%",
-            x: "-50%",
-            rotate: counterRotate 
-          }}
-          animate={{ 
-            opacity: orbitY.get() < 0 ? [0, 0.5, 0.5, 0] : 0 
-          }}
-          transition={{ duration: 2 }}
-        >
-          {icon.alt}
-        </motion.span>
-      </motion.div>
+      />
+      
+      <Image
+        src={icon.src}
+        alt={icon.alt}
+        width={baselineSize}
+        height={baselineSize}
+        className="drop-shadow-xl rounded-xl relative z-10"
+        draggable={false}
+      />
     </motion.div>
   )
 }
 
-// Helper component for directional arrow markers - ultra minimal
-const ArrowMarker = ({ startX, startY, endX, endY, delay, color }: {
-  startX: number
-  startY: number
-  endX: number
-  endY: number
-  delay: number
-  color: string
-}) => {
-  const progress = useMotionValue(0)
-  
-  useAnimationFrame((t) => {
-    const d = ((t / 8000) + delay) % 1 // much slower movement
-    progress.set(d)
-  })
-
-  // Interpolate position
-  const cx = useTransform(progress, p => startX + (endX - startX) * p)
-  const cy = useTransform(progress, p => startY + (endY - startY) * p)
-  
-  // Rotation angle to point toward destination
-  const angle = Math.atan2(endY - startY, endX - startX) * (180 / Math.PI)
-
-  return (
-    <motion.polygon
-      points="-1.5,1 1.5,1 0,-2" // tiny chevron
-      fill={color}
-      style={{
-        translateX: cx,
-        translateY: cy,
-        rotate: angle,
-        opacity: 0.3
-      }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: [0, 0.3, 0.3, 0] }}
-      transition={{ 
-        duration: 8, 
-        repeat: Infinity, 
-        ease: "easeInOut",
-        times: [0, 0.1, 0.9, 1]
-      }}
-    />
-  )
-}
 
 const MCPVisualization = () => {
   const [isMobile, setIsMobile] = React.useState(false)
@@ -246,17 +152,8 @@ const MCPVisualization = () => {
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
   
-  // Rotation value for smooth orbit
-  const rotation = useMotionValue(0)
-  const timeRef = React.useRef(0)
+  // CSS-based rotation for better performance
   const baseSpeed = 65 // ultra-slow rotation for luxury feel
-  
-  // Continuous orbit animation
-  useAnimationFrame((_, delta) => {
-    timeRef.current += delta / 1000 // convert to seconds
-    const deg = (timeRef.current / baseSpeed) * 360
-    rotation.set(deg)
-  })
   
   // Scroll-based parallax
   const { scrollYProgress } = useScroll()
@@ -285,14 +182,14 @@ const MCPVisualization = () => {
     
     return (
       <div className="relative w-full h-full flex items-center justify-center">
-        {/* Central photo with glow */}
+        {/* Central photo with glow - using primary blue */}
         <div className="relative">
-          <div className="absolute inset-0 rounded-full bg-accent/20 blur-3xl scale-150" />
+          <div className="absolute inset-0 rounded-full bg-primary/20 blur-3xl scale-150" />
           <div className="relative w-48 h-48 rounded-full overflow-hidden shadow-xl">
             <div 
               className="absolute -inset-1 rounded-full opacity-50"
               style={{ 
-                background: "conic-gradient(from 0deg, hsl(var(--accent)) 0%, transparent 25%, transparent 50%, hsl(var(--primary)) 75%, hsl(var(--accent)) 100%)",
+                background: "conic-gradient(from 0deg, hsl(var(--primary)) 0%, transparent 25%, transparent 50%, hsl(var(--secondary)) 75%, hsl(var(--primary)) 100%)",
                 filter: "blur(8px)"
               }} 
             />
@@ -392,42 +289,31 @@ const MCPVisualization = () => {
       className="relative w-full h-full flex items-center justify-center will-change-transform"
       style={{ y: parallaxScrollY }}
     >
-      {/* Enhanced multi-layer glow effect behind central node */}
-      <motion.div
+      {/* Enhanced multi-layer glow effect behind central node - using primary blue */}
+      <div
         className="absolute w-80 h-80 md:w-96 md:h-96 lg:w-[32rem] lg:h-[32rem] rounded-full"
         style={{
           left: '50%',
           top: '50%',
-          translateX: '-50%',
-          translateY: '-50%',
+          transform: 'translate(-50%, -50%)',
           background: `
-            radial-gradient(circle, hsl(var(--accent) / 0.4) 0%, transparent 75%),
-            radial-gradient(circle, hsl(var(--accent) / 0.2) 0%, transparent 100%)
+            radial-gradient(circle, hsl(var(--primary) / 0.3) 0%, transparent 75%),
+            radial-gradient(circle, hsl(var(--primary) / 0.15) 0%, transparent 100%)
           `,
-          filter: "blur(100px)",
-          boxShadow: "0 0 120px hsl(var(--accent) / 0.6), 0 0 200px hsl(var(--accent) / 0.3)",
-        }}
-        animate={{
-          scale: [1, 1.08, 1],
-          opacity: [0.9, 1, 0.9],
-          rotate: [0, 5, -5, 0],
-        }}
-        transition={{
-          duration: 6,
-          repeat: Infinity,
-          ease: "easeInOut",
+          filter: "blur(60px)",
+          boxShadow: "0 0 80px hsl(var(--primary) / 0.4), 0 0 120px hsl(var(--primary) / 0.2)",
         }}
       />
       
-      {/* Rotating halo shimmer for luxury effect */}
+      {/* Rotating halo shimmer for luxury effect - using primary blue */}
       <motion.div
-        className="absolute w-72 h-72 md:w-[22rem] md:h-[22rem] lg:w-[26rem] lg:h-[26rem] rounded-full border border-accent/20"
+        className="absolute w-72 h-72 md:w-[22rem] md:h-[22rem] lg:w-[26rem] lg:h-[26rem] rounded-full border border-primary/20"
         style={{
           left: '50%',
           top: '50%',
           translateX: '-50%',
           translateY: '-50%',
-          boxShadow: "0 0 40px hsl(var(--accent) / 0.3), inset 0 0 40px hsl(var(--accent) / 0.1)",
+          boxShadow: "0 0 40px hsl(var(--primary) / 0.3), inset 0 0 40px hsl(var(--primary) / 0.1)",
         }}
         animate={{
           rotate: 360,
@@ -460,11 +346,11 @@ const MCPVisualization = () => {
       >
         {/* Photo container with glass morphism */}
         <div className="relative w-full h-full rounded-full overflow-hidden">
-          {/* Gradient ring background */}
+          {/* Gradient ring background - using primary blue */}
           <div 
             className="absolute -inset-1 rounded-full opacity-50"
             style={{ 
-              background: "conic-gradient(from 0deg, hsl(var(--accent)) 0%, transparent 25%, transparent 50%, hsl(var(--primary)) 75%, hsl(var(--accent)) 100%)",
+              background: "conic-gradient(from 0deg, hsl(var(--primary)) 0%, transparent 25%, transparent 50%, hsl(var(--secondary)) 75%, hsl(var(--primary)) 100%)",
               filter: "blur(8px)"
             }} 
           />
@@ -489,13 +375,13 @@ const MCPVisualization = () => {
             <div className="pointer-events-none absolute inset-0 rounded-full shadow-inner" />
           </div>
           
-          {/* Premium glow effect */}
+          {/* Premium glow effect - using primary blue */}
           <div 
             className="pointer-events-none absolute inset-0 rounded-full"
             style={{
               boxShadow: `
-                0 0 40px hsl(var(--accent) / 0.4),
-                0 0 80px hsl(var(--accent) / 0.2),
+                0 0 40px hsl(var(--primary) / 0.4),
+                0 0 80px hsl(var(--primary) / 0.2),
                 inset 0 0 40px hsl(var(--primary) / 0.1)
               `
             }}
@@ -520,17 +406,19 @@ const MCPVisualization = () => {
         </motion.div>
       </motion.div>
 
-      {/* Smooth orbiting icons with natural motion - hidden on mobile */}
-      <div className="hidden sm:block">
-        {icons.map((icon, i) => (
-          <OrbitingIcon
-            key={icon.alt}
-            icon={icon}
-            index={i}
-            totalIcons={icons.length}
-            rotation={rotation}
-          />
-        ))}
+      {/* Smooth orbiting icons with CSS animation - hidden on mobile */}
+      <div className="hidden sm:block absolute inset-0 pointer-events-none">
+        <div className="relative w-full h-full">
+          {icons.map((icon, i) => (
+            <OrbitingIcon
+              key={icon.alt}
+              icon={icon}
+              index={i}
+              totalIcons={icons.length}
+              baseSpeed={baseSpeed}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Premium connection lines with glow - hidden on mobile */}
@@ -579,59 +467,23 @@ const MCPVisualization = () => {
             />
           )
         })}
-        {/* Bidirectional moving data dots for active flow */}
-        {icons.map((icon, i) => {
-          const angle = (i * Math.PI * 2) / icons.length
-          const centerX = 400
-          const centerY = 400
-          const arrowRadius = icon.radius * 0.9 // Slightly inside the icon
-          const endX = centerX + Math.cos(angle) * arrowRadius
-          const endY = centerY + Math.sin(angle) * arrowRadius
-          return (
-            <React.Fragment key={`arrows-${i}`}>
-              {/* Outbound arrow */}
-              <ArrowMarker 
-                startX={centerX} 
-                startY={centerY} 
-                endX={endX} 
-                endY={endY} 
-                delay={i * 0.35} 
-                color="hsl(var(--accent) / 0.25)" 
-              />
-              {/* Inbound arrow */}
-              <ArrowMarker 
-                startX={endX} 
-                startY={endY} 
-                endX={centerX} 
-                endY={centerY} 
-                delay={i * 0.35 + 0.5} 
-                color="hsl(var(--primary) / 0.2)" 
-              />
-            </React.Fragment>
-          )
-        })}
       </svg>
     </motion.div>
   )
 }
 
 export default function Hero() {
-  const [email, setEmail] = React.useState("")
   const { scrollY } = useScroll()
   const textY = useTransform(scrollY, [0, 200], [0, -10])
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log("Email submitted:", email)
-  }
 
   return (
     <section 
       className="relative min-h-screen flex items-center overflow-hidden"
       style={{
         background: `
-          radial-gradient(circle at 50% 50%, hsl(var(--background)) 0%, hsl(var(--muted) / 0.05) 40%, hsl(var(--background)) 80%),
-          linear-gradient(180deg, hsl(var(--muted) / 0.1) 0%, transparent 50%, hsl(var(--muted) / 0.1) 100%)
+          radial-gradient(ellipse at top, rgba(59, 126, 161, 0.1) 0%, transparent 50%),
+          radial-gradient(ellipse at bottom, rgba(229, 183, 56, 0.05) 0%, transparent 50%),
+          linear-gradient(180deg, hsl(var(--background)) 0%, rgba(59, 126, 161, 0.02) 50%, hsl(var(--background)) 100%)
         `
       }}
     >
@@ -706,9 +558,9 @@ export default function Hero() {
               <span className="block text-base md:text-lg font-medium text-muted-foreground mb-4 uppercase tracking-wider">
                 Model Context Protocol
               </span>
-              <span className="block text-4xl md:text-5xl lg:text-6xl xl:text-7xl gradient-premium-text leading-tight">
-                Your Database.<br />
-                Supercharged With AI.
+              <span className="block text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-[1.1]">
+                <span className="text-foreground">Your Database.</span><br />
+                <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">Supercharged With AI.</span>
               </span>
               <span className="mt-6 block text-xl md:text-2xl font-light text-muted-foreground">
                 Through MCP, we make your existing systems the hands, ears, and memory of artificial intelligence.
@@ -730,25 +582,31 @@ export default function Hero() {
               transition={{ delay: 0.5 }}
               className="mt-10"
             >
-              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md">
-                <Input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  className="flex-1 h-12 px-5 text-base"
-                  required
-                />
-                <Button type="submit" size="lg" className="btn-gold px-6 py-3 text-base font-semibold group">
-                  Get Started
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <div className="flex flex-col sm:flex-row gap-4 max-w-lg">
+                <Button 
+                  size="lg" 
+                  className="relative px-8 py-6 text-lg font-semibold group flex-1 bg-gradient-to-r from-[#3B7EA1] to-[#5E6B8D] text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+                  onClick={() => window.open('https://calendly.com/robert-boulos/mcp-strategy', '_blank')}
+                >
+                  Book Strategy Call
+                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
-              </form>
-              <p className="mt-4 text-sm text-muted-foreground">
-                Join 500+ enterprises already leveraging MCP.{" "}
-                <Link href="/case-studies" className="text-primary underline-gold">
-                  See success stories
-                </Link>
+                <Button 
+                  size="lg" 
+                  variant="outline"
+                  className="px-8 py-6 text-lg font-semibold border-2 border-[#3B7EA1]/20 hover:border-[#3B7EA1]/40 hover:bg-[#3B7EA1]/5 flex-1 transition-all duration-300"
+                  onClick={() => window.open('/enterprise-mcp-guide.pdf', '_blank')}
+                >
+                  <Sparkles className="mr-2 h-5 w-5" />
+                  Get MCP Guide
+                </Button>
+              </div>
+              <p className="mt-6 text-sm text-muted-foreground">
+                <span className="font-semibold text-green-600">✓</span> 30-min architecture review
+                <span className="mx-2">•</span>
+                <span className="font-semibold text-green-600">✓</span> 70% deploy in under 2 weeks
+                <span className="mx-2">•</span>
+                <span className="font-semibold text-green-600">✓</span> No migration required
               </p>
             </motion.div>
 

@@ -27,11 +27,14 @@ const features = [
 
 export default function AboutSection() {
   return (
-    <section id="about" className="py-24 md:py-32 relative overflow-hidden">
-      {/* Stronger gradient flow from ServicesSection */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[hsl(var(--gradient-accent-mid))] via-[hsl(var(--gradient-primary-start))] to-background" />
-      <div className="absolute left-1/4 top-1/3 w-[45rem] h-[45rem] bg-gradient-radial from-primary/20 via-primary/10 to-transparent blur-3xl animate-pulse-subtle" />
-      <div className="absolute right-1/3 bottom-1/4 w-[40rem] h-[40rem] bg-gradient-radial from-accent/15 to-transparent blur-3xl animate-pulse-subtle" />
+    <section id="about" className="py-24 md:py-32 relative overflow-hidden gradient-services-to-about">
+      {/* Premium gradient mesh background */}
+      <div className="absolute inset-0 gradient-mesh-overlay" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[rgba(94,107,141,0.02)] to-transparent" />
+      
+      {/* Animated orbs for depth */}
+      <div className="absolute left-1/4 top-1/3 w-[40rem] h-[40rem] bg-gradient-radial from-[rgba(59,126,161,0.12)] to-transparent blur-3xl opacity-50 animate-pulse-subtle" />
+      <div className="absolute right-1/3 bottom-1/4 w-[35rem] h-[35rem] bg-gradient-radial from-[rgba(94,107,141,0.1)] to-transparent blur-3xl opacity-50 animate-pulse-subtle" />
       
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -133,7 +136,7 @@ export default function AboutSection() {
                     transition={{
                       duration: durations[i],
                       repeat: Infinity,
-                      ease: [0.6, 0.05, 0.01, 0.99], // smooth cubic bezier
+                      ease: "linear", // Changed to linear for smooth, no-snap rotation
                       delay: delays[i],
                     }}
                   >
@@ -145,14 +148,12 @@ export default function AboutSection() {
                       }}
                     >
                       <motion.div
-                        className="rounded-2xl gradient-gold shadow-lg -translate-x-1/2 -translate-y-1/2"
+                        className="premium-card rounded-2xl shadow-lg -translate-x-1/2 -translate-y-1/2 p-4"
                         style={{ width: `${sizes[i] * 2}px`, height: `${sizes[i] * 2}px` }}
                         whileHover={{ scale: 1.1 }}
                         transition={{ type: "spring", stiffness: 300 }}
                       >
-                        <div className="w-full h-full rounded-2xl bg-background/90 backdrop-blur-sm flex items-center justify-center">
-                          <Icon className="text-primary" style={{ width: sizes[i], height: sizes[i] }} />
-                        </div>
+                        <Icon className="w-full h-full text-[#3B7EA1]" />
                       </motion.div>
                     </div>
                   </motion.div>
@@ -168,8 +169,8 @@ export default function AboutSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-5xl md:text-6xl font-extrabold tracking-[-0.03em] mb-6 gradient-premium-text">
-              Why MCP Matters
+            <h2 className="text-5xl md:text-6xl font-extrabold tracking-[-0.03em] mb-6">
+              <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">Why MCP Matters</span>
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground mb-12 leading-relaxed">
               Just as HTTP standardized web communications, MCP creates a universal protocol for AI systems to interact with the world&apos;s data - securely, reliably, and at scale.
@@ -188,10 +189,8 @@ export default function AboutSection() {
                     whileHover={{ x: 8 }}
                     className="flex items-start gap-4 group"
                   >
-                    <div className={`flex-shrink-0 w-14 h-14 rounded-2xl bg-gradient-to-br ${feature.color} p-[2px] shadow-lg group-hover:shadow-xl transition-all duration-300`}>
-                      <div className="w-full h-full rounded-2xl bg-background/90 backdrop-blur-sm flex items-center justify-center">
-                        <Icon className="w-7 h-7 text-primary" />
-                      </div>
+                    <div className="flex-shrink-0 w-14 h-14 rounded-2xl premium-card p-3 group-hover:scale-105 transition-all duration-300">
+                      <Icon className="w-full h-full text-[#3B7EA1] group-hover:text-[#5E6B8D] transition-colors duration-300" />
                     </div>
                     <div>
                       <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">

@@ -217,8 +217,12 @@ export default function Navbar() {
                 <span style={{ whiteSpace: 'nowrap' }}>Newsletter</span>
               </Button>
             </Link>
-            <Button size="sm" className="btn-gold shadow-lg flex items-center">
-              <Phone className="h-4 w-4 mr-1.5 flex-shrink-0" />
+            <Button 
+              size="sm" 
+              className="bg-gradient-to-r from-primary to-secondary text-white hover:from-primary/90 hover:to-secondary/90 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center"
+              onClick={() => window.open('https://calendly.com/robert-boulos/mcp-strategy', '_blank')}
+            >
+              <Phone className="h-4 w-4 mr-1 flex-shrink-0" />
               <span>Book a Call</span>
             </Button>
           </div>
@@ -291,8 +295,12 @@ export default function Navbar() {
                       <span>Newsletter</span>
                     </Button>
                   </Link>
-                  <Button size="sm" className="w-full btn-gold flex items-center justify-center">
-                    <Phone className="h-4 w-4 mr-1.5 flex-shrink-0" />
+                  <Button 
+                    size="sm" 
+                    className="w-full bg-gradient-to-r from-primary to-secondary text-white hover:from-primary/90 hover:to-secondary/90 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
+                    onClick={() => window.open('https://calendly.com/robert-boulos/mcp-strategy', '_blank')}
+                  >
+                    <Phone className="h-4 w-4 mr-1 flex-shrink-0" />
                     <span>Book a Call</span>
                   </Button>
                 </div>
