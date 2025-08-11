@@ -3,7 +3,6 @@
 import Link from "next/link"
 import { motion, useMotionValue, useSpring } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { MagneticButton } from "@/components/ui/MagneticButton"
 import { 
   Shield, 
   Github, 
@@ -114,10 +113,10 @@ export default function Footer() {
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <MagneticButton className="px-8 py-4 text-base font-semibold">
+                  <Button size="lg" className="btn-gold px-8 py-4 text-base font-semibold group">
                     Book a Free Consultation
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </MagneticButton>
+                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  </Button>
                   <Button variant="outline" size="lg" className="group">
                     View Case Studies
                     <ExternalLink className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />

@@ -30,8 +30,12 @@ const projects = [
 
 export default function RealProjects() {
   return (
-    <section className="py-20 border-y bg-gradient-to-b from-background to-muted/20">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <section className="py-20 relative overflow-hidden">
+      {/* Stronger gradient transition from Hero */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-[hsl(var(--gradient-primary-start))] to-[hsl(var(--gradient-accent-start))]" />
+      <div className="absolute right-0 top-0 w-[40rem] h-[40rem] bg-gradient-radial from-accent/25 to-transparent blur-3xl" />
+      <div className="absolute left-0 bottom-0 w-[40rem] h-[40rem] bg-gradient-radial from-primary/20 to-transparent blur-3xl" />
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

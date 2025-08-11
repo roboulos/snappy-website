@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { motion, useMotionValue, useTransform, useScroll, useAnimationFrame, type MotionValue } from "framer-motion"
-import { MagneticButton } from "@/components/ui/MagneticButton"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { ArrowRight, Sparkles } from "lucide-react"
@@ -739,10 +739,10 @@ export default function Hero() {
                   className="flex-1 h-12 px-5 text-base"
                   required
                 />
-                <MagneticButton type="submit" className="px-6 py-3 text-base font-semibold">
+                <Button type="submit" size="lg" className="btn-gold px-6 py-3 text-base font-semibold group">
                   Get Started
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </MagneticButton>
+                </Button>
               </form>
               <p className="mt-4 text-sm text-muted-foreground">
                 Join 500+ enterprises already leveraging MCP.{" "}

@@ -27,9 +27,11 @@ const features = [
 
 export default function AboutSection() {
   return (
-    <section id="about" className="py-24 md:py-32 relative overflow-hidden bg-gradient-to-b from-muted/30 to-background">
-      {/* Background decoration */}
-      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[50rem] h-[50rem] bg-gradient-to-br from-primary/10 to-accent/10 rounded-full blur-3xl animate-pulse-subtle" />
+    <section id="about" className="py-24 md:py-32 relative overflow-hidden">
+      {/* Stronger gradient flow from ServicesSection */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[hsl(var(--gradient-accent-mid))] via-[hsl(var(--gradient-primary-start))] to-background" />
+      <div className="absolute left-1/4 top-1/3 w-[45rem] h-[45rem] bg-gradient-radial from-primary/20 via-primary/10 to-transparent blur-3xl animate-pulse-subtle" />
+      <div className="absolute right-1/3 bottom-1/4 w-[40rem] h-[40rem] bg-gradient-radial from-accent/15 to-transparent blur-3xl animate-pulse-subtle" />
       
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">

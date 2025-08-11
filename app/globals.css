@@ -43,6 +43,12 @@
     --brand-gold: 42 85% 55%;
     --brand-copper: 28 67% 47%;
     
+    /* Gradient Flow Colors */
+    --gradient-primary-start: 197 37% 94%; /* Very light teal */
+    --gradient-primary-mid: 197 37% 88%;   /* Light teal */
+    --gradient-accent-start: 42 85% 95%;   /* Very light gold */
+    --gradient-accent-mid: 42 85% 90%;     /* Light gold */
+    
     /* Charts */
     --chart-1: 197 37% 24%;
     --chart-2: 42 85% 55%;

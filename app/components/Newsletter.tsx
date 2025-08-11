@@ -3,7 +3,7 @@
 import { motion, useMotionValue, useSpring } from "framer-motion"
 import { useState } from "react"
 import { Input } from "@/components/ui/input"
-import { MagneticButton } from "@/components/ui/MagneticButton"
+import { Button } from "@/components/ui/button"
 import { ShieldCheck, Sparkles, Mail } from "lucide-react"
 
 export default function Newsletter() {
@@ -34,7 +34,10 @@ export default function Newsletter() {
 
   return (
     <section className="relative py-32 overflow-hidden">
-      {/* Premium animated gradient background */}
+      {/* Base gradient layer for smooth transition */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-[hsl(var(--gradient-primary-start))] to-[hsl(var(--gradient-accent-start))]" />
+      
+      {/* Premium animated gradient overlay */}
       <motion.div
         className="absolute inset-0 opacity-30"
         animate={{ 
@@ -48,22 +51,22 @@ export default function Newsletter() {
         transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
       />
       
-      {/* Floating orbs with parallax */}
+      {/* Subtle floating orbs */}
       <motion.div 
-        className="absolute -top-32 left-1/3 w-96 h-96 bg-gradient-to-br from-accent/30 to-primary/30 rounded-full blur-3xl"
+        className="absolute -top-32 left-1/3 w-96 h-96 bg-gradient-radial from-accent/15 to-transparent rounded-full blur-3xl"
         animate={{ 
-          y: [0, -30, 0],
-          scale: [1, 1.1, 1],
+          y: [0, -20, 0],
+          scale: [1, 1.05, 1],
         }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div 
-        className="absolute -bottom-32 right-1/4 w-[32rem] h-[32rem] bg-gradient-to-tr from-primary/20 to-secondary/20 rounded-full blur-3xl"
+        className="absolute -bottom-32 right-1/4 w-[32rem] h-[32rem] bg-gradient-radial from-primary/10 to-transparent rounded-full blur-3xl"
         animate={{ 
-          y: [0, 30, 0],
-          scale: [1, 1.15, 1],
+          y: [0, 20, 0],
+          scale: [1, 1.08, 1],
         }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
@@ -141,9 +144,10 @@ export default function Newsletter() {
                     disabled={isSubmitting}
                   />
                 </div>
-                <MagneticButton 
+                <Button 
                   type="submit" 
-                  className="h-14 px-8 text-base font-semibold whitespace-nowrap"
+                  size="lg"
+                  className="btn-gold h-14 px-8 text-base font-semibold whitespace-nowrap group"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
@@ -159,7 +163,7 @@ export default function Newsletter() {
                       <Sparkles className="ml-2 w-4 h-4" />
                     </>
                   )}
-                </MagneticButton>
+                </Button>
               </motion.form>
               
               <motion.div 

@@ -10,7 +10,7 @@ import Image from "next/image"
 
 const services = [
   {
-    iconPath: "/icons/services-premium/icon-1754928291136.png",
+    iconPath: "/icons/world-class/service-mcp-servers.png",
     title: "Custom MCP Servers",
     description: "Connect legacy systems to AI in 1-2 weeks. I build the bridge between your database and Claude. Perfect for SMBs.",
     href: "/offer",
@@ -18,7 +18,7 @@ const services = [
     gradientClass: "gradient-primary"
   },
   {
-    iconPath: "/icons/services-premium/icon-1754928407671.png",
+    iconPath: "/icons/world-class/service-build-to-own.png",
     title: "Build-to-Own Development",
     description: "We build your system together using my MCP tools. You gradually take ownership, while moving fast.",
     href: "https://mcp.snappy.ai",
@@ -26,7 +26,7 @@ const services = [
     gradientClass: "gradient-accent"
   },
   {
-    iconPath: "/icons/services-premium/icon-1754928352488.png",
+    iconPath: "/icons/world-class/service-training.png",
     title: "Snappy MCP Training",
     description: "Master the tool and techniques that let me ship in hours what used to take weeks. Pure knowledge transfer.",
     href: "/tools",
@@ -59,10 +59,10 @@ const itemVariants = {
 export default function ServicesSection() {
   return (
     <section id="services" className="py-24 md:py-32 relative overflow-hidden">
-      {/* Background decoration with enhanced gradients */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background" />
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[40rem] h-[40rem] gradient-glass-accent rounded-full blur-3xl animate-pulse-subtle" />
-      <div className="absolute left-0 bottom-0 w-[40rem] h-[40rem] gradient-glass-primary rounded-full blur-3xl animate-pulse-subtle" />
+      {/* Stronger gradient continuation from RealProjects */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[hsl(var(--gradient-accent-start))] via-[hsl(var(--gradient-primary-mid))] to-[hsl(var(--gradient-accent-mid))]" />
+      <div className="absolute right-0 top-1/3 w-[50rem] h-[50rem] bg-gradient-radial from-accent/30 via-accent/15 to-transparent blur-3xl animate-pulse-subtle" />
+      <div className="absolute left-0 bottom-1/3 w-[50rem] h-[50rem] bg-gradient-radial from-primary/25 via-primary/10 to-transparent blur-3xl animate-pulse-subtle" />
       
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div
