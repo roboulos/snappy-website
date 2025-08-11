@@ -211,15 +211,15 @@ export default function Navbar() {
 
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center gap-4">
-            <Button variant="ghost" size="sm" asChild>
-              <Link href="/newsletter" className="underline-gold">
-                <Mail className="h-4 w-4 mr-2" />
-                Newsletter
-              </Link>
-            </Button>
-            <Button size="sm" className="btn-gold shadow-lg">
-              <Phone className="h-4 w-4 mr-2" />
-              Book a Call
+            <Link href="/newsletter">
+              <Button variant="ghost" size="sm" className="underline-gold" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.375rem' }}>
+                <Mail className="h-4 w-4 flex-shrink-0" />
+                <span style={{ whiteSpace: 'nowrap' }}>Newsletter</span>
+              </Button>
+            </Link>
+            <Button size="sm" className="btn-gold shadow-lg flex items-center">
+              <Phone className="h-4 w-4 mr-1.5 flex-shrink-0" />
+              <span>Book a Call</span>
             </Button>
           </div>
 
@@ -285,15 +285,15 @@ export default function Navbar() {
                 </Link>
 
                 <div className="pt-4 space-y-3">
-                  <Button variant="outline" size="sm" className="w-full" asChild>
-                    <Link href="/newsletter">
-                      <Mail className="h-4 w-4 mr-2" />
-                      Newsletter
-                    </Link>
-                  </Button>
-                  <Button size="sm" className="w-full btn-gold">
-                    <Phone className="h-4 w-4 mr-2" />
-                    Book a Call
+                  <Link href="/newsletter" className="w-full">
+                    <Button variant="outline" size="sm" className="w-full flex items-center justify-center">
+                      <Mail className="h-4 w-4 mr-1.5 flex-shrink-0" />
+                      <span>Newsletter</span>
+                    </Button>
+                  </Link>
+                  <Button size="sm" className="w-full btn-gold flex items-center justify-center">
+                    <Phone className="h-4 w-4 mr-1.5 flex-shrink-0" />
+                    <span>Book a Call</span>
                   </Button>
                 </div>
               </nav>

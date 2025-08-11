@@ -113,7 +113,7 @@ const OrbitingIcon = ({ icon, index, totalIcons, rotation }: {
   
   return (
     <motion.div
-      className="absolute pointer-events-none"
+      className="absolute"
       style={{
         left: '50%',
         top: '50%',
@@ -131,7 +131,9 @@ const OrbitingIcon = ({ icon, index, totalIcons, rotation }: {
       <motion.div
         style={{
           rotate: counterRotate,
-          x: wobble
+          x: wobble,
+          position: "relative",
+          display: "inline-block"
         }}
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
@@ -142,15 +144,38 @@ const OrbitingIcon = ({ icon, index, totalIcons, rotation }: {
           stiffness: 260,
           damping: 20
         }}
-        whileHover={{ scale: 1.12 }}
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.95 }}
+        transition={{
+          type: "spring",
+          stiffness: 400,
+          damping: 15
+        }}
+        className="cursor-pointer"
       >
+        {/* Glow effect layer - animates separately */}
+        <motion.div
+          className="absolute inset-0 rounded-xl pointer-events-none"
+          style={{
+            boxShadow: "0 0 20px hsl(var(--accent) / 0.4)",
+            zIndex: -1
+          }}
+          initial={{ opacity: 0 }}
+          whileHover={{ opacity: 1 }}
+          transition={{
+            opacity: { duration: 0.12, ease: "easeOut" }
+          }}
+        />
+        
         <Image
           src={icon.src}
           alt={icon.alt}
           width={icon.size || 72}
           height={icon.size || 72}
-          className="drop-shadow-xl"
+          className="drop-shadow-xl rounded-xl relative z-10"
+          draggable={false}
         />
+        
         <motion.span
           className="absolute text-[10px] sm:text-xs text-muted-foreground/50 whitespace-nowrap font-light"
           style={{ 
@@ -276,9 +301,9 @@ const MCPVisualization = () => {
                 filter: "blur(8px)"
               }} 
             />
-            <div className="relative w-full h-full rounded-full overflow-hidden border border-white/10 bg-gradient-to-b from-primary/20 to-primary/40">
+            <div className="relative w-full h-full rounded-full overflow-hidden border border-white/10">
               <Image
-                src="/images/consultant-placeholder.png"
+                src="/images/pictureofme.png"
                 alt="Robert Boulos - MCP Integration Specialist"
                 fill
                 className="object-cover"
@@ -450,10 +475,10 @@ const MCPVisualization = () => {
           />
           
           {/* Photo container */}
-          <div className="relative w-full h-full rounded-full overflow-hidden border border-white/10 bg-gradient-to-b from-primary/20 to-primary/40">
-            {/* Placeholder or actual photo */}
+          <div className="relative w-full h-full rounded-full overflow-hidden border border-white/10">
+            {/* Robert's photo */}
             <Image
-              src="/images/consultant-placeholder.png"
+              src="/images/pictureofme.png"
               alt="Robert Boulos - MCP Integration Specialist"
               fill
               sizes="(max-width: 768px) 256px, (max-width: 1024px) 320px, 384px"
