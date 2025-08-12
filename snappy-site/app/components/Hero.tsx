@@ -68,7 +68,8 @@ const OrbitingIcon = ({ icon, index, totalIcons, baseSpeed }: {
   totalIcons: number
   baseSpeed: number
 }) => {
-  const orbitRadius = 240
+  const orbitRadiusX = 240 // Horizontal spread remains wide
+  const orbitRadiusY = 180 // Reduced vertical spread for perspective squash
   const baselineSize = 72
   const angleOffset = (index / totalIcons) * 2 * Math.PI // radians
   
@@ -86,18 +87,20 @@ const OrbitingIcon = ({ icon, index, totalIcons, baseSpeed }: {
     return controls.stop
   }, [rotation, baseSpeed])
   
-  // Calculate real X/Y position based on rotation
+  // Position: elliptical orbit for perspective
   const x = useTransform(rotation, r =>
-    Math.cos(r + angleOffset) * orbitRadius
+    Math.cos(r + angleOffset) * orbitRadiusX
   )
   const y = useTransform(rotation, r =>
-    Math.sin(r + angleOffset) * orbitRadius
+    Math.sin(r + angleOffset) * orbitRadiusY
   )
   
-  // Map Y position to scale and opacity for depth effect
-  // Y goes from -orbitRadius (top) to +orbitRadius (bottom)
-  const scale = useTransform(y, [-orbitRadius, orbitRadius], [0.75, 1.2])
-  const opacity = useTransform(y, [-orbitRadius, orbitRadius], [0.6, 1])
+  // Map Y (vertical position) to scale and opacity
+  const scale = useTransform(y, [-orbitRadiusY, orbitRadiusY], [0.65, 1.25])
+  const opacity = useTransform(y, [-orbitRadiusY, orbitRadiusY], [0.45, 1])
+  
+  // Optional Z-lift for bottom icons (depth effect)
+  const zLift = useTransform(y, [-orbitRadiusY, orbitRadiusY], [-10, 20])
   
   return (
     <motion.div
@@ -109,6 +112,7 @@ const OrbitingIcon = ({ icon, index, totalIcons, baseSpeed }: {
         y,
         scale,
         opacity,
+        z: zLift,
         translateX: "-50%",
         translateY: "-50%",
         width: baselineSize,
