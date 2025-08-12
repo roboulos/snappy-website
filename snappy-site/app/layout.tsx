@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import Script from "next/script";
 import AnimatedLayout from "./components/AnimatedLayout";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -130,6 +131,7 @@ export default function RootLayout({
           {children}
         </AnimatedLayout>
         <Toaster />
+        <Analytics />
       </body>
     </html>
   );
