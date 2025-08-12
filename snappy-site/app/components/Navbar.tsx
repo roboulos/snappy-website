@@ -95,7 +95,7 @@ export default function Navbar() {
                 height={32}
                 className="drop-shadow-lg"
               />
-              <div className="absolute inset-0 bg-accent/20 blur-lg group-hover:bg-accent/30 transition-colors" />
+              <div className="absolute inset-0 bg-[#3B7EA1]/20 blur-lg group-hover:bg-[#3B7EA1]/30 transition-colors" />
             </motion.div>
             <span className="text-2xl font-bold bg-gradient-to-r from-[#3B7EA1] to-[#5E6B8D] bg-clip-text text-transparent">
               Snappy
@@ -204,7 +204,7 @@ export default function Navbar() {
             </Link>
             <Button 
               size="sm" 
-              className="bg-gradient-to-r from-primary to-secondary text-white hover:from-primary/90 hover:to-secondary/90 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center"
+              className="bg-gradient-to-r from-[#3B7EA1] to-[#5E6B8D] text-white hover:from-[#3B7EA1]/90 hover:to-[#5E6B8D]/90 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center"
               onClick={() => window.open('https://calendly.com/robertboulos/45m-vip', '_blank')}
             >
               <Phone className="h-4 w-4 mr-1 flex-shrink-0" />
@@ -282,7 +282,7 @@ export default function Navbar() {
                   </Link>
                   <Button 
                     size="sm" 
-                    className="w-full bg-gradient-to-r from-primary to-secondary text-white hover:from-primary/90 hover:to-secondary/90 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
+                    className="w-full bg-gradient-to-r from-[#3B7EA1] to-[#5E6B8D] text-white hover:from-[#3B7EA1]/90 hover:to-[#5E6B8D]/90 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
                     onClick={() => window.open('https://calendly.com/robertboulos/45m-vip', '_blank')}
                   >
                     <Phone className="h-4 w-4 mr-1 flex-shrink-0" />

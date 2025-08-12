@@ -76,7 +76,7 @@ export default function Newsletter() {
         >
           {/* Glassmorphic card */}
           <motion.div
-            className="relative p-12 md:p-16 rounded-3xl backdrop-blur-2xl bg-gradient-to-b from-background/70 to-background/50 border border-white/10 shadow-2xl overflow-hidden"
+            className="relative p-12 md:p-16 rounded-2xl service-card-glass overflow-hidden"
             whileHover={{ scale: 1.01 }}
             transition={{ type: "spring", stiffness: 400, damping: 30 }}
           >
@@ -143,7 +143,7 @@ export default function Newsletter() {
                 <Button 
                   type="submit" 
                   size="lg"
-                  className="h-14 px-8 text-base font-semibold whitespace-nowrap group bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white shadow-lg hover:shadow-xl transition-all duration-200"
+                  className="h-14 px-8 text-base font-semibold whitespace-nowrap group bg-gradient-to-r from-[#3B7EA1] to-[#5E6B8D] hover:from-[#3B7EA1]/90 hover:to-[#5E6B8D]/90 text-white shadow-lg hover:shadow-xl transition-all duration-200"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (

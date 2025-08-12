@@ -102,7 +102,7 @@ export default function Footer() {
               transition={{ duration: 4, repeat: Infinity }}
             />
             
-            <div className="relative bg-gradient-to-br from-background/80 to-background/60 backdrop-blur-xl rounded-3xl p-10 md:p-14 border border-white/10 shadow-2xl">
+            <div className="relative service-card-glass rounded-2xl p-10 md:p-14">
               <div className="flex flex-col md:flex-row items-center justify-between gap-8">
                 <div className="flex-1 text-center md:text-left">
                   <h3 className="text-3xl md:text-4xl font-bold mb-3">
@@ -113,7 +113,7 @@ export default function Footer() {
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Button size="lg" className="px-8 py-4 text-base font-semibold group bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white shadow-lg hover:shadow-xl transition-all duration-200">
+                  <Button size="lg" className="px-8 py-4 text-base font-semibold group bg-gradient-to-r from-[#3B7EA1] to-[#5E6B8D] hover:from-[#3B7EA1]/90 hover:to-[#5E6B8D]/90 text-white shadow-lg hover:shadow-xl transition-all duration-200" onClick={() => window.open('https://calendly.com/robertboulos/45m-vip', '_blank')}>
                     Book a Free Consultation
                     <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </Button>
@@ -164,7 +164,7 @@ export default function Footer() {
           >
             <Link href="/" className="inline-flex items-center space-x-3 mb-6 group">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl blur-xl group-hover:blur-2xl transition-all" />
+                <div className="absolute inset-0 bg-gradient-to-br from-[#3B7EA1]/20 to-[#5E6B8D]/20 rounded-xl blur-xl group-hover:blur-2xl transition-all" />
                 <MCPLogo size={40} className="relative text-primary" />
               </div>
               <span className="text-2xl font-bold">Snappy MCP</span>

@@ -9,7 +9,7 @@ export default function Banner() {
           </svg>
           <p className="text-primary">
             🚀 Free MCP Setup Workshop - Every Wednesday –{' '}
-            <a href="/events" className="font-semibold text-accent hover:text-accent/80 underline">
+            <a href="/events" className="font-semibold text-[#3B7EA1] hover:text-[#3B7EA1]/80 underline">
               See all workshops →
             </a>
           </p>
