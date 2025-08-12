@@ -46,7 +46,7 @@ export default function EventsPage() {
           className="mt-12 text-center"
         >
           <p className="text-muted-foreground mb-4">
-            Can't make it to a workshop? Let's talk 1-on-1:
+            Can&apos;t make it to a workshop? Let&apos;s talk 1-on-1:
           </p>
           <a
             href="https://calendly.com/robertboulos/45m-vip"

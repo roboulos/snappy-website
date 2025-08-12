@@ -20,8 +20,6 @@ import {
   Code2,
   Wrench,
   Users,
-  BookOpen,
-  Newspaper,
   FileText,
   Mail,
   Phone
