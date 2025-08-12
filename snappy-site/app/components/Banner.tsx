@@ -9,8 +9,8 @@ export default function Banner() {
           </svg>
           <p className="text-primary">
             🚀 Free MCP Setup Workshop - Every Wednesday –{' '}
-            <a href="https://calendly.com/robertboulos/45m-vip" target="_blank" rel="noopener noreferrer" className="font-semibold text-accent hover:text-accent/80 underline">
-              Register now
+            <a href="/events" className="font-semibold text-accent hover:text-accent/80 underline">
+              See all workshops →
             </a>
           </p>
         </div>

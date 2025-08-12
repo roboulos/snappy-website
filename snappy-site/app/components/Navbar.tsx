@@ -199,10 +199,9 @@ export default function Navbar() {
 
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center gap-4">
-            <Link href="/newsletter">
-              <Button variant="ghost" size="sm" className="underline-gold" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.375rem' }}>
-                <Mail className="h-4 w-4 flex-shrink-0" />
-                <span style={{ whiteSpace: 'nowrap' }}>Newsletter</span>
+            <Link href="/events">
+              <Button variant="ghost" size="sm" className="hover:text-[#3B7EA1] transition-colors">
+                📅 Workshops
               </Button>
             </Link>
             <Button 
