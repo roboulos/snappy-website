@@ -542,7 +542,7 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <Badge variant="outline" className="mb-4 px-3 py-1 border-accent text-accent">
+              <Badge variant="outline" className="mb-4 px-3 py-1">
                 <Sparkles className="w-3 h-3 mr-1" />
                 The Next Era of AI-Driven Operations
               </Badge>
