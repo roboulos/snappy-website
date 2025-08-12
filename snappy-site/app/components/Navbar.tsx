@@ -220,7 +220,7 @@ export default function Navbar() {
             <Button 
               size="sm" 
               className="bg-gradient-to-r from-primary to-secondary text-white hover:from-primary/90 hover:to-secondary/90 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center"
-              onClick={() => window.open('https://calendly.com/robert-boulos/mcp-strategy', '_blank')}
+              onClick={() => window.open('https://calendly.com/robertboulos/45m-vip', '_blank')}
             >
               <Phone className="h-4 w-4 mr-1 flex-shrink-0" />
               <span>Book a Call</span>
@@ -298,7 +298,7 @@ export default function Navbar() {
                   <Button 
                     size="sm" 
                     className="w-full bg-gradient-to-r from-primary to-secondary text-white hover:from-primary/90 hover:to-secondary/90 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
-                    onClick={() => window.open('https://calendly.com/robert-boulos/mcp-strategy', '_blank')}
+                    onClick={() => window.open('https://calendly.com/robertboulos/45m-vip', '_blank')}
                   >
                     <Phone className="h-4 w-4 mr-1 flex-shrink-0" />
                     <span>Book a Call</span>

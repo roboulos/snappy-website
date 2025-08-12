@@ -586,7 +586,7 @@ export default function Hero() {
                 <Button 
                   size="lg" 
                   className="relative px-8 py-6 text-lg font-semibold group flex-1 bg-gradient-to-r from-[#3B7EA1] to-[#5E6B8D] text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
-                  onClick={() => window.open('https://calendly.com/robert-boulos/mcp-strategy', '_blank')}
+                  onClick={() => window.open('https://calendly.com/robertboulos/45m-vip', '_blank')}
                 >
                   Book Strategy Call
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />

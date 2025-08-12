@@ -247,7 +247,11 @@ export default function ContactPage() {
               <div className="mt-8 p-6 bg-muted/50 rounded-lg">
                 <p className="text-sm text-muted-foreground mb-2">Preferred response method</p>
                 <div className="flex gap-4">
-                  <Button variant="outline" size="sm">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => window.open('https://calendly.com/robertboulos/45m-vip', '_blank')}
+                  >
                     <Phone className="w-4 h-4 mr-2" />
                     Schedule a Call
                   </Button>
