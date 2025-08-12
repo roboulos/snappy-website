@@ -13,7 +13,7 @@ const projects = [
     stats: "Production Ready"
   },
   {
-    name: "Scira MCP UI Chat",
+    name: "MCP UI Chat",
     description: "Next-gen MCP client with visual UI and tool orchestration",
     url: "https://scira-mcp-ui-chat.vercel.app/",
     icon: ExternalLink,
