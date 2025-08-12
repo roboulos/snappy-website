@@ -31,37 +31,25 @@ import Image from "next/image"
 const services = [
   {
     title: "Custom MCP Development",
-    href: "/services/custom-development",
+    href: "/services",
     description: "Build tailored MCP servers designed for your unique business requirements",
     icon: Code2,
   },
   {
     title: "MCP Integration Services",
-    href: "/services/integration",
+    href: "/services",
     description: "Seamlessly integrate MCP into your existing systems and workflows",
     icon: Wrench,
   },
   {
     title: "MCP Strategy Consulting",
-    href: "/services/consulting",
+    href: "/services",
     description: "Expert guidance to help your organization adopt and scale MCP",
     icon: Users,
   },
 ]
 
 const resources = [
-  {
-    title: "Blog",
-    href: "/blog",
-    description: "Latest insights on MCP development and best practices",
-    icon: Newspaper,
-  },
-  {
-    title: "Documentation",
-    href: "/resources",
-    description: "Comprehensive guides and technical documentation",
-    icon: BookOpen,
-  },
   {
     title: "Case Studies",
     href: "/case-studies",
@@ -111,7 +99,7 @@ export default function Navbar() {
               />
               <div className="absolute inset-0 bg-accent/20 blur-lg group-hover:bg-accent/30 transition-colors" />
             </motion.div>
-            <span className="text-2xl font-bold gradient-primary-text">
+            <span className="text-2xl font-bold bg-gradient-to-r from-[#3B7EA1] to-[#5E6B8D] bg-clip-text text-transparent">
               Snappy
             </span>
           </Link>
@@ -121,7 +109,7 @@ export default function Navbar() {
             <NavigationMenuList>
               {/* Services Dropdown */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="h-10 px-4 bg-transparent">
+                <NavigationMenuTrigger className="h-10 px-4 nav-menu-trigger">
                   Services
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -133,13 +121,13 @@ export default function Navbar() {
                           <NavigationMenuLink asChild>
                             <Link
                               href={service.href}
-                              className="group grid grid-cols-[48px_1fr] items-start gap-4 rounded-md p-3 hover:bg-muted transition-colors"
+                              className="group grid grid-cols-[48px_1fr] items-start gap-4 rounded-md p-3 nav-link-hover"
                             >
-                              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                                <Icon className="h-6 w-6 text-primary" />
+                              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#3B7EA1]/10 group-hover:bg-[#3B7EA1]/20 transition-all duration-300">
+                                <Icon className="h-6 w-6 text-[#3B7EA1]" />
                               </div>
                               <div className="space-y-1">
-                                <h4 className="text-sm font-semibold leading-none group-hover:text-primary transition-colors">
+                                <h4 className="text-sm font-semibold leading-none group-hover:text-[#3B7EA1] transition-colors">
                                   {service.title}
                                 </h4>
                                 <p className="text-sm text-muted-foreground line-clamp-2">
@@ -158,7 +146,7 @@ export default function Navbar() {
               {/* About */}
               <NavigationMenuItem>
                 <Link href="/about" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "nav-link-hover")}>
                     About
                   </NavigationMenuLink>
                 </Link>
@@ -166,7 +154,7 @@ export default function Navbar() {
 
               {/* Resources Dropdown */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="h-10 px-4 bg-transparent">
+                <NavigationMenuTrigger className="h-10 px-4 nav-menu-trigger">
                   Resources
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -178,11 +166,11 @@ export default function Navbar() {
                           <NavigationMenuLink asChild>
                             <Link
                               href={resource.href}
-                              className="group flex items-start gap-3 rounded-md p-3 hover:bg-muted transition-colors"
+                              className="group flex items-start gap-3 rounded-md p-3 nav-link-hover"
                             >
-                              <Icon className="h-5 w-5 text-primary mt-0.5" />
+                              <Icon className="h-5 w-5 text-[#3B7EA1] mt-0.5" />
                               <div className="space-y-1">
-                                <h4 className="text-sm font-semibold leading-none group-hover:text-primary transition-colors">
+                                <h4 className="text-sm font-semibold leading-none group-hover:text-[#3B7EA1] transition-colors">
                                   {resource.title}
                                 </h4>
                                 <p className="text-sm text-muted-foreground">
@@ -201,7 +189,7 @@ export default function Navbar() {
               {/* Contact */}
               <NavigationMenuItem>
                 <Link href="/contact" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "nav-link-hover")}>
                     Contact
                   </NavigationMenuLink>
                 </Link>
@@ -239,7 +227,7 @@ export default function Navbar() {
                 <Link
                   href="/"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-lg font-semibold hover:text-primary transition-colors"
+                  className="text-lg font-semibold hover:text-[#3B7EA1] transition-colors"
                 >
                   Home
                 </Link>
@@ -261,7 +249,7 @@ export default function Navbar() {
                 <Link
                   href="/about"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-lg font-semibold hover:text-primary transition-colors"
+                  className="text-lg font-semibold hover:text-[#3B7EA1] transition-colors"
                 >
                   About
                 </Link>
@@ -283,7 +271,7 @@ export default function Navbar() {
                 <Link
                   href="/contact"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-lg font-semibold hover:text-primary transition-colors"
+                  className="text-lg font-semibold hover:text-[#3B7EA1] transition-colors"
                 >
                   Contact
                 </Link>

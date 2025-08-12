@@ -768,4 +768,48 @@
     z-index: -1;
     filter: blur(0.5px) brightness(110%);
   }
+  
+  /* Navbar Link Styles */
+  .nav-link-hover {
+    @apply relative overflow-hidden;
+    background: transparent;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-link-hover:hover {
+    background: rgba(59, 126, 161, 0.08);
+    color: #3B7EA1;
+  }
+  
+  .nav-link-hover::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #3B7EA1, #5E6B8D);
+    transition: width 0.3s ease;
+  }
+  
+  .nav-link-hover:hover::after {
+    width: 100%;
+  }
+  
+  /* Navigation Menu Trigger Styles */
+  .nav-menu-trigger {
+    @apply relative;
+    background: transparent !important;
+    color: inherit;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-menu-trigger:hover {
+    color: #3B7EA1;
+  }
+  
+  .nav-menu-trigger[data-state="open"] {
+    color: #3B7EA1;
+    background: rgba(59, 126, 161, 0.08) !important;
+  }
 }
