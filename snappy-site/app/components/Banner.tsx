@@ -8,9 +8,9 @@ export default function Banner() {
             <path d="M10 5V10L13 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="text-primary"/>
           </svg>
           <p className="text-primary">
-            We&apos;re launching our comprehensive MCP implementation guide –{' '}
-            <a href="#" className="font-semibold text-accent hover:text-accent/80 underline">
-              Get early access
+            🚀 Free MCP Setup Workshop - Every Wednesday –{' '}
+            <a href="https://calendly.com/robertboulos/45m-vip" target="_blank" rel="noopener noreferrer" className="font-semibold text-accent hover:text-accent/80 underline">
+              Register now
             </a>
           </p>
         </div>
