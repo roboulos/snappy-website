@@ -11,7 +11,7 @@ import Image from "next/image"
 
 const services = [
   {
-    iconPath: "/icons/services/icon-1754959717343.png",
+    iconPath: "/icons/world-class/mcp/MCPFrostedGlass2.png",
     title: "Custom MCP Servers",
     description: "Connect legacy systems to AI in 1-2 weeks. I build the bridge between your database and Claude. Perfect for SMBs.",
     href: "https://calendly.com/robert-boulos/mcp-strategy",
@@ -57,48 +57,17 @@ const itemVariants = {
   }
 }
 
-// Glass Icon Component with scroll distortion
-function GlassIcon({ src, alt }: { src: string; alt: string }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  })
-  
-  const distortion = useTransform(scrollYProgress, [0, 0.5, 1], [0, 1, 0])
-  const blur = useTransform(scrollYProgress, [0, 0.5, 1], [0, 2, 0])
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1.05, 0.95])
-  
+// Clean Icon Component
+function ServiceIcon({ src, alt }: { src: string; alt: string }) {
   return (
-    <motion.div ref={ref} className="relative">
-      {/* Glass refraction effect */}
-      <motion.div 
-        className="absolute inset-0 bg-gradient-to-br from-[rgba(59,126,161,0.1)] to-[rgba(94,107,141,0.1)] rounded-2xl"
-        style={{
-          filter: useTransform(blur, (v) => `blur(${v}px)`),
-          transform: useTransform(distortion, (v) => `translateY(${v * 5}px)`)
-        }}
+    <motion.div className="relative">
+      <Image 
+        src={src} 
+        alt={alt}
+        width={140}
+        height={140}
+        className="relative w-32 h-32 drop-shadow-xl transform group-hover:scale-110 transition-transform duration-300"
       />
-      
-      {/* Icon with glass styling */}
-      <motion.div
-        style={{ scale }}
-        className="relative"
-      >
-        <Image 
-          src={src} 
-          alt={alt}
-          width={100}
-          height={100}
-          className="relative w-24 h-24 drop-shadow-2xl transform group-hover:scale-110 transition-transform duration-300"
-          style={{
-            filter: "drop-shadow(0 20px 40px rgba(59, 126, 161, 0.15))"
-          }}
-        />
-        
-        {/* Glass shine effect */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent rounded-2xl opacity-50" />
-      </motion.div>
     </motion.div>
   )
 }
@@ -157,10 +126,9 @@ export default function ServicesSection() {
                   </div>
                   
                   <div className="relative z-10">
-                    {/* Premium glass icon with scroll effects */}
-                    <div className="mb-8 relative">
-                      <div className="absolute inset-0 bg-gradient-to-br from-[rgba(59,126,161,0.2)] to-[rgba(94,107,141,0.2)] blur-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-500" />
-                      <GlassIcon src={service.iconPath} alt={service.title} />
+                    {/* Clean icon without container */}
+                    <div className="mb-8">
+                      <ServiceIcon src={service.iconPath} alt={service.title} />
                     </div>
                     
                     <h3 className="text-3xl font-bold mb-4 tracking-[-0.02em] transition-colors duration-300">

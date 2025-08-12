@@ -15,7 +15,7 @@ const projects = [
   {
     name: "Scira MCP UI Chat",
     description: "Next-gen MCP client with visual UI and tool orchestration",
-    url: "#",
+    url: "https://scira-mcp-ui-chat.vercel.app/",
     icon: ExternalLink,
     stats: "Live Demo"
   },
@@ -49,7 +49,7 @@ export default function RealProjects() {
             Real MCP Projects
           </Badge>
           <h2 className="text-4xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">Some Things I&apos;ve Built</span>
+            <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">Some Things I&apos;m Building</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             Working MCP implementations, tools, and communities used by developers worldwide
