@@ -68,7 +68,8 @@ const OrbitingIcon = ({ icon, index, totalIcons, baseSpeed }: {
   totalIcons: number
   baseSpeed: number
 }) => {
-  const orbitRadius = 240
+  const orbitRadiusX = 240 // Horizontal spread remains wide
+  const orbitRadiusY = 180 // Reduced vertical spread for perspective squash
   const baselineSize = 72
   const angleOffset = (index / totalIcons) * 2 * Math.PI // radians
   
@@ -86,18 +87,20 @@ const OrbitingIcon = ({ icon, index, totalIcons, baseSpeed }: {
     return controls.stop
   }, [rotation, baseSpeed])
   
-  // Calculate real X/Y position based on rotation
+  // Position: elliptical orbit for perspective
   const x = useTransform(rotation, r =>
-    Math.cos(r + angleOffset) * orbitRadius
+    Math.cos(r + angleOffset) * orbitRadiusX
   )
   const y = useTransform(rotation, r =>
-    Math.sin(r + angleOffset) * orbitRadius
+    Math.sin(r + angleOffset) * orbitRadiusY
   )
   
-  // Map Y position to scale and opacity for depth effect
-  // Y goes from -orbitRadius (top) to +orbitRadius (bottom)
-  const scale = useTransform(y, [-orbitRadius, orbitRadius], [0.75, 1.2])
-  const opacity = useTransform(y, [-orbitRadius, orbitRadius], [0.6, 1])
+  // Map Y (vertical position) to scale and opacity
+  const scale = useTransform(y, [-orbitRadiusY, orbitRadiusY], [0.65, 1.25])
+  const opacity = useTransform(y, [-orbitRadiusY, orbitRadiusY], [0.45, 1])
+  
+  // Optional Z-lift for bottom icons (depth effect)
+  const zLift = useTransform(y, [-orbitRadiusY, orbitRadiusY], [-10, 20])
   
   return (
     <motion.div
@@ -109,6 +112,7 @@ const OrbitingIcon = ({ icon, index, totalIcons, baseSpeed }: {
         y,
         scale,
         opacity,
+        z: zLift,
         translateX: "-50%",
         translateY: "-50%",
         width: baselineSize,
@@ -289,46 +293,54 @@ const MCPVisualization = () => {
       className="relative w-full h-full flex items-center justify-center will-change-transform"
       style={{ y: parallaxScrollY }}
     >
-      {/* Enhanced multi-layer glow effect behind central node - using primary blue */}
+      {/* Enhanced multi-layer glow effect behind central node - elliptical to match orbit */}
       <div
-        className="absolute w-80 h-80 md:w-96 md:h-96 lg:w-[32rem] lg:h-[32rem] rounded-full"
+        className="absolute"
         style={{
+          width: `${240 * 2}px`, // Match orbital path exactly
+          height: `${180 * 2}px`, // Match orbital path exactly
           left: '50%',
           top: '50%',
           transform: 'translate(-50%, -50%)',
+          borderRadius: '50%',
           background: `
-            radial-gradient(circle, hsl(var(--primary) / 0.3) 0%, transparent 75%),
-            radial-gradient(circle, hsl(var(--primary) / 0.15) 0%, transparent 100%)
+            radial-gradient(ellipse at center, hsl(var(--primary) / 0.25) 0%, transparent 60%),
+            radial-gradient(ellipse at center, hsl(var(--primary) / 0.1) 0%, transparent 100%)
           `,
-          filter: "blur(60px)",
-          boxShadow: "0 0 80px hsl(var(--primary) / 0.4), 0 0 120px hsl(var(--primary) / 0.2)",
+          filter: "blur(80px)",
         }}
       />
       
-      {/* Rotating halo shimmer for luxury effect - using primary blue */}
-      <motion.div
-        className="absolute w-72 h-72 md:w-[22rem] md:h-[22rem] lg:w-[26rem] lg:h-[26rem] rounded-full border border-primary/20"
+      {/* Orbital path indicator - precise SVG ellipse */}
+      <svg
+        className="absolute pointer-events-none"
+        width="600"
+        height="400"
+        viewBox="-300 -200 600 400"
         style={{
-          left: '50%',
-          top: '50%',
-          translateX: '-50%',
-          translateY: '-50%',
-          boxShadow: "0 0 40px hsl(var(--primary) / 0.3), inset 0 0 40px hsl(var(--primary) / 0.1)",
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
         }}
-        animate={{
-          rotate: 360,
-          scale: [1, 1.02, 1],
-        }}
-        transition={{
-          rotate: { duration: 30, repeat: Infinity, ease: "linear" },
-          scale: { duration: 8, repeat: Infinity, ease: "easeInOut" },
-        }}
-      />
+      >
+        <ellipse
+          cx={0}
+          cy={0}
+          rx={240} // orbitRadiusX
+          ry={180} // orbitRadiusY
+          fill="none"
+          stroke="rgba(59, 126, 161, 0.3)"
+          strokeWidth="2"
+          strokeDasharray="8 8"
+        />
+      </svg>
 
       {/* Central node - Consultant photo with premium glass effect */}
       <motion.div
-        className="absolute w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96"
+        className="absolute"
         style={{
+          width: '420px',  // Slightly smaller than 2x orbital radius for border gap
+          height: '420px', // Keep square for proper image display
           left: '50%',
           top: '50%',
           translateX: '-50%',
@@ -344,11 +356,16 @@ const MCPVisualization = () => {
           ease: [0.65, 0, 0.35, 1] 
         }}
       >
-        {/* Photo container with glass morphism */}
-        <div className="relative w-full h-full rounded-full overflow-hidden">
+        {/* Photo container with glass morphism - using clip-path for ellipse */}
+        <div 
+          className="relative w-full h-full overflow-hidden"
+          style={{
+            clipPath: 'ellipse(50% 37.5% at 50% 50%)', // 4:3 ratio to match orbit
+          }}
+        >
           {/* Gradient ring background - using primary blue */}
           <div 
-            className="absolute -inset-1 rounded-full opacity-50"
+            className="absolute -inset-1 opacity-50"
             style={{ 
               background: "conic-gradient(from 0deg, hsl(var(--primary)) 0%, transparent 25%, transparent 50%, hsl(var(--secondary)) 75%, hsl(var(--primary)) 100%)",
               filter: "blur(8px)"
@@ -356,29 +373,33 @@ const MCPVisualization = () => {
           />
           
           {/* Photo container */}
-          <div className="relative w-full h-full rounded-full overflow-hidden border border-white/10">
-            {/* Robert's photo */}
-            <Image
-              src="/images/pictureofme.png"
-              alt="Robert Boulos - MCP Integration Specialist"
-              fill
-              sizes="(max-width: 768px) 256px, (max-width: 1024px) 320px, 384px"
-              className="object-cover"
-              priority
-              loading="eager"
-            />
+          <div className="relative w-full h-full overflow-hidden border border-white/10 flex items-center justify-center">
+            {/* Robert's photo - medium size within the container */}
+            <div className="relative" style={{ width: '360px', height: '360px', marginTop: '35px' }}>
+              <Image
+                src="/images/pictureofme.png"
+                alt="Robert Boulos - MCP Integration Specialist"
+                fill
+                sizes="(max-width: 768px) 256px, (max-width: 1024px) 320px, 384px"
+                className="object-cover rounded-full"
+                style={{ objectPosition: 'center top' }}
+                priority
+                loading="eager"
+              />
+            </div>
             
             {/* Glass highlight overlay */}
-            <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-b from-white/10 via-transparent to-transparent" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-transparent" />
             
             {/* Subtle inner shadow */}
-            <div className="pointer-events-none absolute inset-0 rounded-full shadow-inner" />
+            <div className="pointer-events-none absolute inset-0 shadow-inner" />
           </div>
           
           {/* Premium glow effect - using primary blue */}
           <div 
-            className="pointer-events-none absolute inset-0 rounded-full"
+            className="pointer-events-none absolute inset-0"
             style={{
+              clipPath: 'ellipse(50% 37.5% at 50% 50%)', // Match the container's ellipse
               boxShadow: `
                 0 0 40px hsl(var(--primary) / 0.4),
                 0 0 80px hsl(var(--primary) / 0.2),
@@ -390,7 +411,11 @@ const MCPVisualization = () => {
         
         {/* MCP Badge */}
         <motion.div 
-          className="absolute -bottom-3 -right-3 px-3 py-1.5 rounded-full backdrop-blur-md border border-white/20 bg-background/80 flex items-center gap-2 shadow-lg"
+          className="absolute px-3 py-1.5 rounded-full backdrop-blur-md border border-white/20 bg-background/80 flex items-center gap-2 shadow-lg"
+          style={{
+            bottom: '40px',  // Position relative to ellipse edge
+            right: '40px',   // Position relative to ellipse edge
+          }}
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
