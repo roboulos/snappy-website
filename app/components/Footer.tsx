@@ -80,7 +80,7 @@ export default function Footer() {
       <motion.div
         className="absolute inset-0 opacity-20 pointer-events-none"
         style={{
-          background: `radial-gradient(800px circle at ${springX.get()}px ${springY.get()}px, hsl(var(--accent) / 0.1), transparent 40%)`,
+          background: `radial-gradient(800px circle at ${springX.get()}px ${springY.get()}px, hsl(var(--primary) / 0.1), transparent 40%)`,
         }}
       />
 
@@ -94,7 +94,7 @@ export default function Footer() {
             className="relative"
           >
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-primary/5 via-accent/5 to-secondary/5 rounded-3xl blur-xl"
+              className="absolute inset-0 bg-gradient-to-r from-primary/5 via-primary/10 to-secondary/5 rounded-3xl blur-xl"
               animate={{ 
                 scale: [1, 1.05, 1],
                 opacity: [0.5, 0.8, 0.5]
@@ -105,15 +105,15 @@ export default function Footer() {
             <div className="relative bg-gradient-to-br from-background/80 to-background/60 backdrop-blur-xl rounded-3xl p-10 md:p-14 border border-white/10 shadow-2xl">
               <div className="flex flex-col md:flex-row items-center justify-between gap-8">
                 <div className="flex-1 text-center md:text-left">
-                  <h3 className="text-3xl md:text-4xl font-bold mb-3 gradient-premium-text">
-                    Ready to Transform Your AI Infrastructure?
+                  <h3 className="text-3xl md:text-4xl font-bold mb-3">
+                    <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">Ready to Transform Your AI Infrastructure?</span>
                   </h3>
                   <p className="text-lg text-muted-foreground">
                     Let&apos;s discuss how MCP can revolutionize your business operations.
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Button size="lg" className="btn-gold px-8 py-4 text-base font-semibold group">
+                  <Button size="lg" className="px-8 py-4 text-base font-semibold group bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white shadow-lg hover:shadow-xl transition-all duration-200">
                     Book a Free Consultation
                     <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </Button>

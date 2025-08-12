@@ -79,7 +79,7 @@ export default function ServicesSection() {
             Our Services
           </Badge>
           <h2 className="text-5xl md:text-6xl font-extrabold tracking-[-0.03em] mb-6">
-            <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">Enterprise MCP Solutions</span>
+            <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">Ways We Can Work Together</span>
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
             Real MCP expertise from someone who builds and ships daily. Transform your business 

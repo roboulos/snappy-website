@@ -35,7 +35,7 @@ export default function Newsletter() {
   return (
     <section className="relative py-32 overflow-hidden">
       {/* Base gradient layer for smooth transition */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-[hsl(var(--gradient-primary-start))] to-[hsl(var(--gradient-accent-start))]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-[hsl(var(--primary)/0.05)] to-[hsl(var(--secondary)/0.05)]" />
       
       {/* Premium animated gradient overlay */}
       <motion.div
@@ -43,7 +43,7 @@ export default function Newsletter() {
         animate={{ 
           background: [
             "radial-gradient(circle at 20% 50%, hsl(var(--primary) / 0.3) 0%, transparent 50%)",
-            "radial-gradient(circle at 80% 50%, hsl(var(--accent) / 0.3) 0%, transparent 50%)",
+            "radial-gradient(circle at 80% 50%, hsl(var(--primary) / 0.3) 0%, transparent 50%)",
             "radial-gradient(circle at 50% 50%, hsl(var(--secondary) / 0.3) 0%, transparent 50%)",
             "radial-gradient(circle at 20% 50%, hsl(var(--primary) / 0.3) 0%, transparent 50%)",
           ]
@@ -53,7 +53,7 @@ export default function Newsletter() {
       
       {/* Subtle floating orbs */}
       <div 
-        className="absolute -top-32 left-1/3 w-80 h-80 bg-gradient-radial from-accent/12 to-transparent rounded-full blur-2xl"
+        className="absolute -top-32 left-1/3 w-80 h-80 bg-gradient-radial from-primary/12 to-transparent rounded-full blur-2xl"
         style={{
           animation: 'float-orb 24s ease-in-out infinite'
         }}
@@ -95,9 +95,9 @@ export default function Newsletter() {
                 whileInView={{ scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                className="inline-flex p-3 rounded-2xl bg-gradient-to-br from-accent/20 to-primary/20 mb-6"
+                className="inline-flex p-3 rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 mb-6"
               >
-                <Sparkles className="w-8 h-8 text-accent" />
+                <Sparkles className="w-8 h-8 text-primary" />
               </motion.div>
               
               <motion.h2 
@@ -143,7 +143,7 @@ export default function Newsletter() {
                 <Button 
                   type="submit" 
                   size="lg"
-                  className="btn-gold h-14 px-8 text-base font-semibold whitespace-nowrap group"
+                  className="h-14 px-8 text-base font-semibold whitespace-nowrap group bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white shadow-lg hover:shadow-xl transition-all duration-200"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
@@ -175,7 +175,7 @@ export default function Newsletter() {
                 </div>
                 <p className="text-sm text-muted-foreground">
                   Read our latest: 
-                  <a href="#" className="ml-1 text-primary hover:text-accent transition-colors underline-offset-4 hover:underline">
+                  <a href="#" className="ml-1 text-primary hover:text-primary/80 transition-colors underline-offset-4 hover:underline">
                     5 Ways MCP is Transforming Enterprise AI
                   </a>
                 </p>
@@ -184,7 +184,7 @@ export default function Newsletter() {
           </motion.div>
           
           {/* Decorative elements */}
-          <div className="absolute -z-10 -top-4 -left-4 w-24 h-24 bg-gradient-to-br from-accent/20 to-transparent rounded-full blur-2xl" />
+          <div className="absolute -z-10 -top-4 -left-4 w-24 h-24 bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-2xl" />
           <div className="absolute -z-10 -bottom-4 -right-4 w-32 h-32 bg-gradient-to-tr from-primary/20 to-transparent rounded-full blur-2xl" />
         </motion.div>
       </div>

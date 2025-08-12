@@ -4,7 +4,6 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import Script from "next/script";
 import AnimatedLayout from "./components/AnimatedLayout";
-import BackToTop from "./components/BackToTop";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -130,7 +129,6 @@ export default function RootLayout({
         <AnimatedLayout>
           {children}
         </AnimatedLayout>
-        <BackToTop />
         <Toaster />
       </body>
     </html>

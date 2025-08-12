@@ -31,7 +31,7 @@ export default function WallOfLove() {
             <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">What People Are Saying</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Real feedback from developers, founders, and teams who&apos;ve experienced the power of MCP integration
+            Real feedback from developers, founders, and teams who I&apos;ve worked with
           </p>
         </motion.div>
 
