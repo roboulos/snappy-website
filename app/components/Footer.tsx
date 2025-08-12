@@ -21,28 +21,28 @@ import MCPLogo from "./icons/MCPLogo"
 
 const footerLinks = {
   services: [
-    { label: "Custom MCP Development", href: "/services/custom-development" },
-    { label: "Integration Services", href: "/services/integration" },
-    { label: "Strategy Consulting", href: "/services/consulting" },
-    { label: "Training & Resources", href: "/resources" }
+    { label: "Custom MCP Development", href: "https://calendly.com/robert-boulos/mcp-strategy" },
+    { label: "Integration Services", href: "https://calendly.com/robert-boulos/mcp-strategy" },
+    { label: "Strategy Consulting", href: "https://calendly.com/robert-boulos/mcp-strategy" },
+    { label: "Training & Resources", href: "https://calendly.com/robert-boulos/mcp-strategy" }
   ],
   company: [
     { label: "About Us", href: "/about" },
     { label: "Case Studies", href: "/case-studies" },
-    { label: "Blog", href: "/blog" },
-    { label: "Careers", href: "/careers" }
+    { label: "Weekly MCP Meeting", href: "https://calendly.com/robert-boulos/mcp-meeting" },
+    { label: "Book Strategy Call", href: "https://calendly.com/robert-boulos/mcp-strategy" }
   ],
   resources: [
     { label: "Snappy MCP Tool", href: "https://mcp.snappy.ai", external: true },
-    { label: "Chrome Extension", href: "https://chrome.google.com/webstore/detail/statechange-power-tools-f/jgednopabapolfhfbgipkkigkafnlmla", external: true },
     { label: "Skool Community", href: "https://www.skool.com/snappy", external: true },
-    { label: "YouTube Channel", href: "https://www.youtube.com/channel/UC86jQJpksJULOMiQN6XBLsQ", external: true }
+    { label: "YouTube Channel", href: "https://www.youtube.com/channel/UC86jQJpksJULOMiQN6XBLsQ", external: true },
+    { label: "MCP Guide (Free)", href: "/enterprise-mcp-guide.pdf", external: false }
   ],
   legal: [
-    { label: "Privacy Policy", href: "/privacy" },
-    { label: "Terms of Service", href: "/terms" },
-    { label: "Cookie Policy", href: "/cookies" },
-    { label: "Security", href: "/security" }
+    { label: "Privacy Policy", href: "#" },
+    { label: "Terms of Service", href: "#" },
+    { label: "Contact", href: "mailto:robert@snappy.ai" },
+    { label: "Book a Call", href: "https://calendly.com/robert-boulos/mcp-strategy" }
   ]
 }
 
@@ -113,12 +113,21 @@ export default function Footer() {
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Button size="lg" className="px-8 py-4 text-base font-semibold group bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white shadow-lg hover:shadow-xl transition-all duration-200">
+                  <Button 
+                    size="lg" 
+                    className="px-8 py-4 text-base font-semibold group bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white shadow-lg hover:shadow-xl transition-all duration-200"
+                    onClick={() => window.open('https://calendly.com/robert-boulos/mcp-strategy', '_blank')}
+                  >
                     Book a Free Consultation
                     <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </Button>
-                  <Button variant="outline" size="lg" className="group">
-                    View Case Studies
+                  <Button 
+                    variant="outline" 
+                    size="lg" 
+                    className="group"
+                    onClick={() => window.open('https://calendly.com/robert-boulos/mcp-strategy', '_blank')}
+                  >
+                    Schedule Now
                     <ExternalLink className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                   </Button>
                 </div>

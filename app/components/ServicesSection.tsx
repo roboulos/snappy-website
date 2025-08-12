@@ -14,7 +14,7 @@ const services = [
     iconPath: "/icons/services/icon-1754959717343.png",
     title: "Custom MCP Servers",
     description: "Connect legacy systems to AI in 1-2 weeks. I build the bridge between your database and Claude. Perfect for SMBs.",
-    href: "/offer",
+    href: "https://calendly.com/robert-boulos/mcp-strategy",
     features: ["1-2 week delivery", "Database integration", "Full OAuth security"],
     gradientClass: "gradient-primary"
   },
@@ -22,7 +22,7 @@ const services = [
     iconPath: "/icons/services/icon-1754959549552.png",
     title: "Build-to-Own Development",
     description: "We build your system together using my MCP tools. You gradually take ownership, while moving fast.",
-    href: "https://mcp.snappy.ai",
+    href: "https://calendly.com/robert-boulos/mcp-strategy",
     features: ["Collaborative building", "Knowledge transfer", "Production-ready"],
     gradientClass: "gradient-accent"
   },
@@ -30,7 +30,7 @@ const services = [
     iconPath: "/icons/services/icon-1754959594687.png",
     title: "Accelerated Development Training",
     description: "Master the tool and techniques that let me ship in hours what used to take weeks. Pure knowledge transfer.",
-    href: "/tools",
+    href: "https://calendly.com/robert-boulos/mcp-strategy",
     features: ["500+ member community", "Live workshops", "Real-world examples"],
     gradientClass: "gradient-premium"
   }
@@ -208,13 +208,17 @@ export default function ServicesSection() {
             Ready to transform your AI infrastructure with MCP?
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="relative px-8 py-6 text-lg font-semibold bg-gradient-to-r from-[#3B7EA1] to-[#5E6B8D] text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              View All Services
+            <Button 
+              size="lg" 
+              className="relative px-8 py-6 text-lg font-semibold bg-gradient-to-r from-[#3B7EA1] to-[#5E6B8D] text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
+              onClick={() => window.open('https://calendly.com/robert-boulos/mcp-strategy', '_blank')}
+            >
+              Book Strategy Call
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             <Button size="lg" variant="outline" asChild className="px-8 py-6 text-lg font-semibold border-2 border-[#3B7EA1]/20 hover:border-[#3B7EA1]/40 hover:bg-[#3B7EA1]/5 transition-all duration-300">
-              <Link href="/contact">
-                Schedule a Consultation
+              <Link href="https://calendly.com/robert-boulos/mcp-strategy">
+                Schedule Now
               </Link>
             </Button>
           </div>
