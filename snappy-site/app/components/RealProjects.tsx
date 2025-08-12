@@ -20,7 +20,7 @@ const projects = [
     stats: "Live Demo"
   },
   {
-    name: "Skool Community",
+    name: "AI Community",
     description: "500+ developers learning MCP implementation strategies",
     url: "https://www.skool.com/snappy",
     icon: Users,
