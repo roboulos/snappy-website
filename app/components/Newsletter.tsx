@@ -101,13 +101,13 @@ export default function Newsletter() {
               </motion.div>
               
               <motion.h2 
-                className="text-4xl md:text-5xl font-extrabold mb-4 gradient-premium-text"
+                className="text-4xl md:text-5xl font-extrabold mb-4"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
               >
-                MCP Moves Fast. Stay Current Here.
+                <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">MCP Moves Fast. Stay Current Here.</span>
               </motion.h2>
               
               <motion.p 

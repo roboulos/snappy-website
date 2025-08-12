@@ -1,6 +1,7 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, useScroll, useTransform } from "framer-motion"
+import { useRef } from "react"
 import Link from "next/link"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -10,7 +11,7 @@ import Image from "next/image"
 
 const services = [
   {
-    iconPath: "/icons/world-class/service-mcp-servers.png",
+    iconPath: "/icons/services/icon-1754959717343.png",
     title: "Custom MCP Servers",
     description: "Connect legacy systems to AI in 1-2 weeks. I build the bridge between your database and Claude. Perfect for SMBs.",
     href: "/offer",
@@ -18,7 +19,7 @@ const services = [
     gradientClass: "gradient-primary"
   },
   {
-    iconPath: "/icons/world-class/service-build-to-own.png",
+    iconPath: "/icons/services/icon-1754959549552.png",
     title: "Build-to-Own Development",
     description: "We build your system together using my MCP tools. You gradually take ownership, while moving fast.",
     href: "https://mcp.snappy.ai",
@@ -26,8 +27,8 @@ const services = [
     gradientClass: "gradient-accent"
   },
   {
-    iconPath: "/icons/world-class/service-training.png",
-    title: "Snappy MCP Training",
+    iconPath: "/icons/services/icon-1754959594687.png",
+    title: "Accelerated Development Training",
     description: "Master the tool and techniques that let me ship in hours what used to take weeks. Pure knowledge transfer.",
     href: "/tools",
     features: ["500+ member community", "Live workshops", "Real-world examples"],
@@ -54,6 +55,52 @@ const itemVariants = {
       duration: 0.5
     }
   }
+}
+
+// Glass Icon Component with scroll distortion
+function GlassIcon({ src, alt }: { src: string; alt: string }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"]
+  })
+  
+  const distortion = useTransform(scrollYProgress, [0, 0.5, 1], [0, 1, 0])
+  const blur = useTransform(scrollYProgress, [0, 0.5, 1], [0, 2, 0])
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1.05, 0.95])
+  
+  return (
+    <motion.div ref={ref} className="relative">
+      {/* Glass refraction effect */}
+      <motion.div 
+        className="absolute inset-0 bg-gradient-to-br from-[rgba(59,126,161,0.1)] to-[rgba(94,107,141,0.1)] rounded-2xl"
+        style={{
+          filter: useTransform(blur, (v) => `blur(${v}px)`),
+          transform: useTransform(distortion, (v) => `translateY(${v * 5}px)`)
+        }}
+      />
+      
+      {/* Icon with glass styling */}
+      <motion.div
+        style={{ scale }}
+        className="relative"
+      >
+        <Image 
+          src={src} 
+          alt={alt}
+          width={100}
+          height={100}
+          className="relative w-24 h-24 drop-shadow-2xl transform group-hover:scale-110 transition-transform duration-300"
+          style={{
+            filter: "drop-shadow(0 20px 40px rgba(59, 126, 161, 0.15))"
+          }}
+        />
+        
+        {/* Glass shine effect */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent rounded-2xl opacity-50" />
+      </motion.div>
+    </motion.div>
+  )
 }
 
 export default function ServicesSection() {
@@ -110,16 +157,10 @@ export default function ServicesSection() {
                   </div>
                   
                   <div className="relative z-10">
-                    {/* Premium icon container with glow */}
+                    {/* Premium glass icon with scroll effects */}
                     <div className="mb-8 relative">
                       <div className="absolute inset-0 bg-gradient-to-br from-[rgba(59,126,161,0.2)] to-[rgba(94,107,141,0.2)] blur-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-500" />
-                      <Image 
-                        src={service.iconPath} 
-                        alt={service.title}
-                        width={100}
-                        height={100}
-                        className="relative w-24 h-24 drop-shadow-xl transform group-hover:scale-110 transition-transform duration-300"
-                      />
+                      <GlassIcon src={service.iconPath} alt={service.title} />
                     </div>
                     
                     <h3 className="text-3xl font-bold mb-4 tracking-[-0.02em] transition-colors duration-300">
