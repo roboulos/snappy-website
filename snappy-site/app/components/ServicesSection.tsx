@@ -1,6 +1,7 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, useScroll, useTransform } from "framer-motion"
+import { useRef } from "react"
 import Link from "next/link"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -10,10 +11,10 @@ import Image from "next/image"
 
 const services = [
   {
-    iconPath: "/icons/services/icon-1754959717343.png",
+    iconPath: "/icons/world-class/mcp/MCPFrostedGlass2.png",
     title: "Custom MCP Servers",
     description: "Connect legacy systems to AI in 1-2 weeks. I build the bridge between your database and Claude. Perfect for SMBs.",
-    href: "/offer",
+    href: "https://calendly.com/robert-boulos/mcp-strategy",
     features: ["1-2 week delivery", "Database integration", "Full OAuth security"],
     gradientClass: "gradient-primary"
   },
@@ -21,7 +22,7 @@ const services = [
     iconPath: "/icons/services/icon-1754959549552.png",
     title: "Build-to-Own Development",
     description: "We build your system together using my MCP tools. You gradually take ownership, while moving fast.",
-    href: "https://mcp.snappy.ai",
+    href: "https://calendly.com/robert-boulos/mcp-strategy",
     features: ["Collaborative building", "Knowledge transfer", "Production-ready"],
     gradientClass: "gradient-accent"
   },
@@ -29,7 +30,7 @@ const services = [
     iconPath: "/icons/services/icon-1754959594687.png",
     title: "Accelerated Development Training",
     description: "Master the tool and techniques that let me ship in hours what used to take weeks. Pure knowledge transfer.",
-    href: "/tools",
+    href: "https://calendly.com/robert-boulos/mcp-strategy",
     features: ["500+ member community", "Live workshops", "Real-world examples"],
     gradientClass: "gradient-premium"
   }
@@ -56,23 +57,16 @@ const itemVariants = {
   }
 }
 
-// Liquid Glass Icon Component
-function ServiceIcon({ src, alt, index }: { src: string; alt: string; index: number }) {
+// Clean Icon Component
+function ServiceIcon({ src, alt }: { src: string; alt: string }) {
   return (
-    <motion.div 
-      className="relative w-28 h-28 mx-auto liquid-glass-icon rounded-2xl p-4"
-      initial={{ opacity: 0, scale: 0.8 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1, duration: 0.6 }}
-      whileHover={{ scale: 1.05 }}
-    >
+    <motion.div className="relative">
       <Image 
         src={src} 
         alt={alt}
-        width={80}
-        height={80}
-        className="w-full h-full object-contain relative z-10"
+        width={140}
+        height={140}
+        className="relative w-32 h-32 drop-shadow-xl transform group-hover:scale-110 transition-transform duration-300"
       />
     </motion.div>
   )
@@ -116,44 +110,52 @@ export default function ServicesSection() {
           viewport={{ once: true }}
           className="grid grid-cols-1 md:grid-cols-3 gap-8"
         >
-          {services.map((service, index) => {
+          {services.map((service) => {
             return (
               <motion.div
                 key={service.title}
                 variants={itemVariants}
-                whileHover={{ y: -4 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                whileHover={{ scale: 1.015, rotateX: 1, rotateY: -1 }}
+                transition={{ type: "spring", stiffness: 250, damping: 18 }}
                 className="group"
               >
-                <Card className="service-card-glass h-full p-8 overflow-hidden rounded-2xl">
-                  {/* Simple icon */}
-                  <div className="mb-6 flex justify-center">
-                    <ServiceIcon src={service.iconPath} alt={service.title} index={index} />
+                <Card className="premium-card relative h-full p-10 overflow-hidden rounded-2xl">
+                  {/* Premium gradient background */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <div className="absolute inset-0 bg-gradient-to-br from-[rgba(59,126,161,0.05)] via-transparent to-[rgba(94,107,141,0.05)]" />
                   </div>
                   
-                  <h3 className="text-2xl font-bold mb-4 tracking-[-0.02em] text-center">
-                    {service.title}
-                  </h3>
-                  
-                  <p className="text-base text-muted-foreground mb-6 leading-relaxed text-center">
-                    {service.description}
-                  </p>
-                  
-                  {/* Features list */}
-                  <ul className="space-y-2 mb-6">
-                    {service.features.map((feature) => (
-                      <li key={feature} className="flex items-center gap-3 text-sm">
-                        <div className="w-2 h-2 rounded-full bg-primary shrink-0" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  
-                  <div className="mt-auto">
-                    <Button asChild variant="ghost" className="w-full group/btn hover:bg-primary/5">
+                  <div className="relative z-10">
+                    {/* Clean icon without container */}
+                    <div className="mb-8">
+                      <ServiceIcon src={service.iconPath} alt={service.title} />
+                    </div>
+                    
+                    <h3 className="text-3xl font-bold mb-4 tracking-[-0.02em] transition-colors duration-300">
+                      <span className="group-hover:bg-gradient-to-r group-hover:from-[#3B7EA1] group-hover:to-[#5E6B8D] group-hover:bg-clip-text group-hover:text-transparent">
+                        {service.title}
+                      </span>
+                    </h3>
+                    
+                    <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                      {service.description}
+                    </p>
+                    
+                    {/* Features list */}
+                    <ul className="space-y-2 mb-6">
+                      {service.features.map((feature) => (
+                        <li key={feature} className="flex items-center gap-3 text-base">
+                          <div className="w-2 h-2 rounded-full gradient-accent" />
+                          <span className="font-medium">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    
+                    <Button asChild variant="ghost" className="group/btn relative overflow-hidden px-6 py-2 border border-[rgba(59,126,161,0.2)] hover:border-[rgba(59,126,161,0.4)]">
                       <Link href={service.href}>
-                        <span>Learn more</span>
-                        <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                        <span className="relative z-10">Learn more</span>
+                        <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(59,126,161,0.1)] to-[rgba(94,107,141,0.1)] opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
                       </Link>
                     </Button>
                   </div>
@@ -174,13 +176,17 @@ export default function ServicesSection() {
             Ready to transform your AI infrastructure with MCP?
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="relative px-8 py-6 text-lg font-semibold bg-gradient-to-r from-[#3B7EA1] to-[#5E6B8D] text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              View All Services
+            <Button 
+              size="lg" 
+              className="relative px-8 py-6 text-lg font-semibold bg-gradient-to-r from-[#3B7EA1] to-[#5E6B8D] text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
+              onClick={() => window.open('https://calendly.com/robert-boulos/mcp-strategy', '_blank')}
+            >
+              Book Strategy Call
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             <Button size="lg" variant="outline" asChild className="px-8 py-6 text-lg font-semibold border-2 border-[#3B7EA1]/20 hover:border-[#3B7EA1]/40 hover:bg-[#3B7EA1]/5 transition-all duration-300">
-              <Link href="/contact">
-                Schedule a Consultation
+              <Link href="https://calendly.com/robert-boulos/mcp-strategy">
+                Schedule Now
               </Link>
             </Button>
           </div>

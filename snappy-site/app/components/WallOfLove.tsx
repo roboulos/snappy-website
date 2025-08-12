@@ -23,7 +23,7 @@ export default function WallOfLove() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <Badge variant="outline" className="mb-4 border-accent text-accent">
+          <Badge variant="outline" className="mb-4">
             <Heart className="w-3 h-3 mr-1 fill-current" />
             Wall of Love
           </Badge>
