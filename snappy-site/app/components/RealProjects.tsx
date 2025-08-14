@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Users, Code2 } from "lucide-react";
+import { ExternalLink, Code2 } from "lucide-react";
 
 const projects = [
   {
@@ -20,11 +20,11 @@ const projects = [
     stats: "Live Demo"
   },
   {
-    name: "AI Community",
-    description: "500+ developers learning MCP implementation strategies",
-    url: "https://www.skool.com/snappy",
-    icon: Users,
-    stats: "500+ Members"
+    name: "Universe DB MCP",
+    description: "1985 legacy database accessible via ChatGPT - multivalue DB demo",
+    url: "https://universe-mcp-demo.snappy.ai",
+    icon: Code2,
+    stats: "Legacy → AI"
   }
 ];
 
@@ -52,7 +52,7 @@ export default function RealProjects() {
             <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">Some Things I&apos;m Building</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Working MCP implementations, tools, and communities used by developers worldwide
+            Working MCP implementations and tools that prove what&apos;s possible with AI integration
           </p>
         </motion.div>
 
