@@ -72,23 +72,19 @@ export default function WallOfLove() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
+          className="mt-16 grid grid-cols-3 gap-8 text-center max-w-3xl mx-auto"
         >
           <div>
-            <p className="text-3xl font-bold bg-gradient-to-r from-[#3B7EA1] to-[#5E6B8D] bg-clip-text text-transparent">50+</p>
-            <p className="text-sm text-muted-foreground mt-1">Happy Clients</p>
-          </div>
-          <div>
-            <p className="text-3xl font-bold bg-gradient-to-r from-[#3B7EA1] to-[#5E6B8D] bg-clip-text text-transparent">100%</p>
-            <p className="text-sm text-muted-foreground mt-1">Satisfaction Rate</p>
+            <p className="text-3xl font-bold bg-gradient-to-r from-[#3B7EA1] to-[#5E6B8D] bg-clip-text text-transparent">100+</p>
+            <p className="text-sm text-muted-foreground mt-1">MCP Tools Built</p>
           </div>
           <div>
             <p className="text-3xl font-bold bg-gradient-to-r from-[#3B7EA1] to-[#5E6B8D] bg-clip-text text-transparent">14 Days</p>
-            <p className="text-sm text-muted-foreground mt-1">Avg. Deployment</p>
+            <p className="text-sm text-muted-foreground mt-1">To AI Integration</p>
           </div>
           <div>
-            <p className="text-3xl font-bold bg-gradient-to-r from-[#3B7EA1] to-[#5E6B8D] bg-clip-text text-transparent">24/7</p>
-            <p className="text-sm text-muted-foreground mt-1">Support Available</p>
+            <p className="text-3xl font-bold bg-gradient-to-r from-[#3B7EA1] to-[#5E6B8D] bg-clip-text text-transparent">1 of 100</p>
+            <p className="text-sm text-muted-foreground mt-1">Global MCP Experts</p>
           </div>
         </motion.div>
       </div>

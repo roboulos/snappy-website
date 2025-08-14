@@ -668,35 +668,6 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Trust badges */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-          className="mt-24 pt-12 border-t border-border"
-        >
-          <p className="text-center text-sm text-muted-foreground mb-8">
-            Proven track record with real results
-          </p>
-          <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8">
-            {[
-              { label: "100+", desc: "MCP Tools Built" },
-              { label: "14 Days", desc: "To AI Integration" },
-              { label: "1 of 100", desc: "Global MCP Experts" }
-            ].map((item, i) => (
-              <motion.div
-                key={item.label}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1 + i * 0.1 }}
-                className="text-center"
-              >
-                <div className="text-2xl font-bold text-primary">{item.label}</div>
-                <div className="text-sm text-muted-foreground">{item.desc}</div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   )
