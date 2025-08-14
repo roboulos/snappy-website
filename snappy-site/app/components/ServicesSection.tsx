@@ -1,7 +1,6 @@
 "use client"
 
-import { motion, useScroll, useTransform } from "framer-motion"
-import { useRef } from "react"
+import { motion } from "framer-motion"
 import Link from "next/link"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -13,9 +12,9 @@ const services = [
   {
     iconPath: "/icons/world-class/mcp/MCPFrostedGlass2.png",
     title: "Custom MCP Servers",
-    description: "Connect legacy systems to AI in 1-2 weeks. I build the bridge between your database and Claude. Perfect for SMBs.",
+    description: "Transform your APIs into AI-accessible tools. Enterprise authentication built-in. Works with any AI model or agent. Production-ready in 2 weeks.",
     href: "https://calendly.com/robertboulos/45m-vip",
-    features: ["1-2 week delivery", "Database integration", "Full OAuth security"],
+    features: ["Enterprise authentication built-in", "Works with any AI model", "Production-ready in 2 weeks"],
     gradientClass: "gradient-primary"
   },
   {
@@ -29,9 +28,9 @@ const services = [
   {
     iconPath: "/icons/services/icon-1754959594687.png",
     title: "Accelerated Development Training",
-    description: "Master the tool and techniques that let me ship in hours what used to take weeks. Pure knowledge transfer.",
+    description: "Master AI-powered development with Claude Code. Learn to build MCP integrations. Join 500+ developers shipping faster.",
     href: "https://calendly.com/robertboulos/45m-vip",
-    features: ["500+ member community", "Live workshops", "Real-world examples"],
+    features: ["500+ member community", "Live workshops", "Real-world implementation"],
     gradientClass: "gradient-premium"
   }
 ]

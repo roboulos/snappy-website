@@ -107,7 +107,7 @@ export default function Newsletter() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
               >
-                <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">MCP Moves Fast. Stay Current Here.</span>
+                <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">Your AI Infrastructure Starts Here.</span>
               </motion.h2>
               
               <motion.p 
@@ -117,7 +117,7 @@ export default function Newsletter() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 }}
               >
-                Get weekly insights on MCP developments, implementation strategies, and real-world use cases delivered straight to your inbox.
+                We&apos;re one of ~100 engineers globally building production MCP. While others are learning, we&apos;re shipping. Join 500+ companies already AI-ready.
               </motion.p>
               
               <motion.form 

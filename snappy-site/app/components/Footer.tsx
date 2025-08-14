@@ -106,10 +106,10 @@ export default function Footer() {
               <div className="flex flex-col md:flex-row items-center justify-between gap-8">
                 <div className="flex-1 text-center md:text-left">
                   <h3 className="text-3xl md:text-4xl font-bold mb-3">
-                    <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">Ready to Transform Your AI Infrastructure?</span>
+                    <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">Ready to Make Your Systems AI-Ready?</span>
                   </h3>
                   <p className="text-lg text-muted-foreground">
-                    Let&apos;s discuss how MCP can revolutionize your business operations.
+                    From 1985 Universe databases to modern APIs, we&apos;ve made it all work with AI. Your systems could be next.
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4">
@@ -118,7 +118,7 @@ export default function Footer() {
                     className="px-8 py-4 text-base font-semibold group bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white shadow-lg hover:shadow-xl transition-all duration-200"
                     onClick={() => window.open('https://calendly.com/robertboulos/45m-vip', '_blank')}
                   >
-                    Book a Free Consultation
+                    See Your Data + AI in 15 Minutes
                     <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </Button>
                   <Button 
@@ -127,7 +127,7 @@ export default function Footer() {
                     className="group"
                     onClick={() => window.open('https://calendly.com/robertboulos/45m-vip', '_blank')}
                   >
-                    Schedule Now
+                    Book Strategy Call
                     <ExternalLink className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                   </Button>
                 </div>
@@ -180,8 +180,8 @@ export default function Footer() {
             </Link>
             
             <p className="text-muted-foreground mb-8 max-w-md leading-relaxed">
-              MCP Integration Specialist. Transform your business systems into AI-powered 
-              machines without disrupting operations. Your database becomes hands and ears for AI.
+              We build production-grade MCP servers that make your systems AI-accessible. 
+              One of ~100 engineers globally with deep MCP expertise. Your systems, ready for any AI.
             </p>
             
             <div className="space-y-3 mb-8">

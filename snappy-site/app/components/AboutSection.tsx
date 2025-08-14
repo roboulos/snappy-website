@@ -170,10 +170,10 @@ export default function AboutSection() {
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-5xl md:text-6xl font-extrabold tracking-[-0.03em] mb-6">
-              <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">Why MCP Matters</span>
+              <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">Why Your Systems Need MCP</span>
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground mb-12 leading-relaxed">
-              Just as HTTP standardized web communications, MCP creates a universal protocol for AI systems to interact with the world&apos;s data - securely, reliably, and at scale.
+              Just as HTTP revolutionized how computers share data, MCP is revolutionizing how AI accesses your systems. With MCP, your databases, APIs, and tools become instantly accessible to any AI model—securely, reliably, and at scale.
             </p>
             
             <div className="space-y-6">
