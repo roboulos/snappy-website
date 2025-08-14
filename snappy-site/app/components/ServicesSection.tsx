@@ -12,17 +12,17 @@ const services = [
   {
     iconPath: "/icons/world-class/mcp/MCPFrostedGlass2.png",
     title: "Custom MCP Servers",
-    description: "Transform your APIs into AI-accessible tools. Enterprise authentication built-in. Works with any AI model or agent. Production-ready in 2 weeks.",
+    description: "Make your systems speak AI. From legacy databases to modern APIs, we build secure MCP servers that work with ChatGPT, Claude, or any AI agent. Your data stays yours.",
     href: "https://calendly.com/robertboulos/45m-vip",
-    features: ["Enterprise authentication built-in", "Works with any AI model", "Production-ready in 2 weeks"],
+    features: ["OAuth & enterprise auth built-in", "Any system: APIs, DBs, SaaS", "Live in 14 days, guaranteed"],
     gradientClass: "gradient-primary"
   },
   {
     iconPath: "/icons/services/icon-1754959549552.png",
     title: "Build-to-Own Development",
-    description: "We build your system together using my MCP tools. You gradually take ownership, while moving fast.",
+    description: "Skip months of learning. We build your AI-powered system together using production MCP tools. You watch, learn, and gradually take ownership.",
     href: "https://calendly.com/robertboulos/45m-vip",
-    features: ["Collaborative building", "Knowledge transfer", "Production-ready"],
+    features: ["Build alongside an expert", "Your team learns by doing", "Ship 10x faster"],
     gradientClass: "gradient-accent"
   },
   {
@@ -97,8 +97,8 @@ export default function ServicesSection() {
             <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">Ways We Can Work Together</span>
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            Real MCP expertise from someone who builds and ships daily. Transform your business 
-            with AI integration that actually works.
+            Whether you need AI-ready systems built, want to learn alongside an expert, or prefer 
+            to master it yourself—we have a path that fits.
           </p>
         </motion.div>
 
@@ -172,7 +172,7 @@ export default function ServicesSection() {
           className="mt-16 text-center"
         >
           <p className="text-lg text-muted-foreground mb-6">
-            Ready to transform your AI infrastructure with MCP?
+            Ready to make your systems AI-ready?
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 

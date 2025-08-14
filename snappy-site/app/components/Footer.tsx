@@ -180,8 +180,7 @@ export default function Footer() {
             </Link>
             
             <p className="text-muted-foreground mb-8 max-w-md leading-relaxed">
-              We build production-grade MCP servers that make your systems AI-accessible. 
-              One of ~100 engineers globally with deep MCP expertise. Your systems, ready for any AI.
+              We build production-grade MCP servers that make your APIs, databases, and legacy systems work with ChatGPT, Claude, or any AI. From 1985 Universe DB to modern SaaS—we&apos;ve done it all.
             </p>
             
             <div className="space-y-3 mb-8">

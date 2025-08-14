@@ -584,11 +584,8 @@ export default function Hero() {
                 Model Context Protocol
               </span>
               <span className="block text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-[1.1]">
-                <span className="text-foreground">Your Database.</span><br />
+                <span className="text-foreground">Your Systems,</span><br />
                 <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">Ready for Any AI.</span>
-              </span>
-              <span className="mt-6 block text-xl md:text-2xl font-light text-muted-foreground">
-                Through MCP, we make your existing systems AI-accessible. Query databases, build workflows, and connect to any AI—ChatGPT, Claude, or your own agents.
               </span>
             </motion.h1>
 
@@ -598,7 +595,7 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              We build production-grade MCP servers that turn your APIs, databases, and SaaS products into secure, tool-callable interfaces any AI can use. Built Xano&apos;s MCP integration. Made a 1985 Universe database ChatGPT-ready. One of ~100 engineers globally who can do this at production scale.
+              We build production-grade MCP servers that make your APIs, databases, and legacy systems work with ChatGPT, Claude, or any AI—securely, in 2 weeks. Built Xano&apos;s integration. Yours could be next.
             </motion.p>
 
             <motion.div
@@ -683,7 +680,6 @@ export default function Hero() {
           </p>
           <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8">
             {[
-              { label: "500+", desc: "Systems Made AI-Ready" },
               { label: "100+", desc: "MCP Tools Built" },
               { label: "14 Days", desc: "To AI Integration" },
               { label: "1 of 100", desc: "Global MCP Experts" }

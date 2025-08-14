@@ -170,10 +170,10 @@ export default function AboutSection() {
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-5xl md:text-6xl font-extrabold tracking-[-0.03em] mb-6">
-              <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">Why Your Systems Need MCP</span>
+              <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">Why AI-Ready Systems Win</span>
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground mb-12 leading-relaxed">
-              Just as HTTP revolutionized how computers share data, MCP is revolutionizing how AI accesses your systems. With MCP, your databases, APIs, and tools become instantly accessible to any AI model—securely, reliably, and at scale.
+              Every week you wait, competitors pull ahead. While they&apos;re asking AI to &quot;update customer records&quot; or &quot;analyze sales trends,&quot; your team is stuck with manual processes. MCP changes that—making your unique systems speak AI&apos;s language, instantly.
             </p>
             
             <div className="space-y-6">

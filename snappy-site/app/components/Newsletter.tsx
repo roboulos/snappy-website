@@ -107,7 +107,7 @@ export default function Newsletter() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
               >
-                <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">Your AI Infrastructure Starts Here.</span>
+                <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">From Legacy to AI-Ready in 14 Days</span>
               </motion.h2>
               
               <motion.p 
@@ -117,7 +117,7 @@ export default function Newsletter() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 }}
               >
-                We&apos;re one of ~100 engineers globally building production MCP. While others are learning, we&apos;re shipping. Join 500+ companies already AI-ready.
+                Get weekly insights on making your systems AI-accessible. Real examples from production MCP implementations, not theory.
               </motion.p>
               
               <motion.form 
@@ -174,9 +174,9 @@ export default function Newsletter() {
                   <span>100% Privacy • No spam • Unsubscribe anytime</span>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Read our latest: 
+                  This week: 
                   <a href="#" className="ml-1 text-primary hover:text-primary/80 transition-colors underline-offset-4 hover:underline">
-                    5 Ways MCP is Transforming Enterprise AI
+                    How We Made a 1985 Database ChatGPT-Ready
                   </a>
                 </p>
               </motion.div>
