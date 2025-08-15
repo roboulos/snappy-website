@@ -2,9 +2,8 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { ArrowRight, Sparkles } from "lucide-react"
+import { ArrowRight, Sparkles, ExternalLink } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 
@@ -95,20 +94,24 @@ export default function ServicesSection() {
           viewport={{ once: true }}
           className="grid grid-cols-1 md:grid-cols-3 gap-8"
         >
-          {services.map((service) => {
+          {services.map((service, index) => {
             return (
-              <motion.div
+              <motion.a
                 key={service.title}
+                href={service.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 variants={itemVariants}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -4, rotateX: 2, rotateY: -2 }}
-                transition={{ type: "spring", stiffness: 300 }}
+                className="group premium-card p-6 rounded-2xl transition-all duration-300 block"
                 style={{ transformStyle: 'preserve-3d' }}
                 whileTap={{ scale: 0.98 }}
-                className="group"
               >
-                <Card className="premium-card relative h-full p-6 overflow-hidden rounded-2xl transition-all duration-300">
-                  {/* Premium gradient background - removed as projects don't have this */}
-                  
+                <div className="relative h-full">
                   <div className="relative z-10">
                     <div className="flex items-start gap-4">
                       <div className="flex-shrink-0 w-16 h-16 rounded-lg premium-card flex items-center justify-center">
@@ -132,7 +135,7 @@ export default function ServicesSection() {
                         </p>
                         
                         {/* Features list */}
-                        <ul className="space-y-2 mb-6">
+                        <ul className="space-y-2">
                           {service.features.map((feature) => (
                             <li key={feature} className="flex items-center gap-3 text-xs">
                               <div className="w-1.5 h-1.5 rounded-full bg-[#3B7EA1]" />
@@ -140,19 +143,15 @@ export default function ServicesSection() {
                             </li>
                           ))}
                         </ul>
-                        
-                        <Button asChild variant="ghost" className="group/btn relative overflow-hidden px-4 py-1.5 text-sm border border-[rgba(59,126,161,0.2)] hover:border-[rgba(59,126,161,0.4)]">
-                          <Link href={service.href}>
-                            <span className="relative z-10">Learn more</span>
-                            <ArrowRight className="relative z-10 ml-2 h-3 w-3 transition-transform group-hover/btn:translate-x-1" />
-                            <div className="absolute inset-0 bg-gradient-to-r from-[rgba(59,126,161,0.1)] to-[rgba(94,107,141,0.1)] opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
-                          </Link>
-                        </Button>
                       </div>
                     </div>
+                    
+                    <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <ExternalLink className="w-4 h-4 text-primary" />
+                    </div>
                   </div>
-                </Card>
-              </motion.div>
+                </div>
+              </motion.a>
             )
           })}
         </motion.div>
