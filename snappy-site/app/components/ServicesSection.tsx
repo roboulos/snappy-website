@@ -56,20 +56,6 @@ const itemVariants = {
   }
 }
 
-// Clean Icon Component
-function ServiceIcon({ src, alt }: { src: string; alt: string }) {
-  return (
-    <motion.div className="relative">
-      <Image 
-        src={src} 
-        alt={alt}
-        width={140}
-        height={140}
-        className="relative w-32 h-32 drop-shadow-xl transform group-hover:scale-110 transition-transform duration-300"
-      />
-    </motion.div>
-  )
-}
 
 export default function ServicesSection() {
   return (
@@ -114,49 +100,56 @@ export default function ServicesSection() {
               <motion.div
                 key={service.title}
                 variants={itemVariants}
-                whileHover={{ scale: 1.015, rotateX: 1, rotateY: -1 }}
-                transition={{ type: "spring", stiffness: 250, damping: 18 }}
+                whileHover={{ y: -4, rotateX: 2, rotateY: -2 }}
+                transition={{ type: "spring", stiffness: 300 }}
+                style={{ transformStyle: 'preserve-3d' }}
+                whileTap={{ scale: 0.98 }}
                 className="group"
               >
-                <Card className="premium-card relative h-full p-10 overflow-hidden rounded-2xl">
-                  {/* Premium gradient background */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <div className="absolute inset-0 bg-gradient-to-br from-[rgba(59,126,161,0.05)] via-transparent to-[rgba(94,107,141,0.05)]" />
-                  </div>
+                <Card className="premium-card relative h-full p-6 overflow-hidden rounded-2xl transition-all duration-300">
+                  {/* Premium gradient background - removed as projects don't have this */}
                   
                   <div className="relative z-10">
-                    {/* Clean icon without container */}
-                    <div className="mb-8">
-                      <ServiceIcon src={service.iconPath} alt={service.title} />
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0 w-16 h-16 rounded-lg premium-card flex items-center justify-center">
+                        <Image 
+                          src={service.iconPath} 
+                          alt={service.title}
+                          width={32}
+                          height={32}
+                          className="relative drop-shadow-lg"
+                        />
+                      </div>
+                      
+                      <div className="flex-grow">
+                        <h3 className="text-xl font-semibold mb-2 transition-colors duration-300">
+                          <span className="group-hover:bg-gradient-to-r group-hover:from-[#3B7EA1] group-hover:to-[#5E6B8D] group-hover:bg-clip-text group-hover:text-transparent">
+                            {service.title}
+                          </span>
+                        </h3>
+                        <p className="text-muted-foreground text-sm mb-6">
+                          {service.description}
+                        </p>
+                        
+                        {/* Features list */}
+                        <ul className="space-y-2 mb-6">
+                          {service.features.map((feature) => (
+                            <li key={feature} className="flex items-center gap-3 text-xs">
+                              <div className="w-1.5 h-1.5 rounded-full bg-[#3B7EA1]" />
+                              <span>{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        
+                        <Button asChild variant="ghost" className="group/btn relative overflow-hidden px-4 py-1.5 text-sm border border-[rgba(59,126,161,0.2)] hover:border-[rgba(59,126,161,0.4)]">
+                          <Link href={service.href}>
+                            <span className="relative z-10">Learn more</span>
+                            <ArrowRight className="relative z-10 ml-2 h-3 w-3 transition-transform group-hover/btn:translate-x-1" />
+                            <div className="absolute inset-0 bg-gradient-to-r from-[rgba(59,126,161,0.1)] to-[rgba(94,107,141,0.1)] opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
+                          </Link>
+                        </Button>
+                      </div>
                     </div>
-                    
-                    <h3 className="text-3xl font-bold mb-4 tracking-[-0.02em] transition-colors duration-300">
-                      <span className="group-hover:bg-gradient-to-r group-hover:from-[#3B7EA1] group-hover:to-[#5E6B8D] group-hover:bg-clip-text group-hover:text-transparent">
-                        {service.title}
-                      </span>
-                    </h3>
-                    
-                    <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                      {service.description}
-                    </p>
-                    
-                    {/* Features list */}
-                    <ul className="space-y-2 mb-6">
-                      {service.features.map((feature) => (
-                        <li key={feature} className="flex items-center gap-3 text-base">
-                          <div className="w-2 h-2 rounded-full gradient-accent" />
-                          <span className="font-medium">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    
-                    <Button asChild variant="ghost" className="group/btn relative overflow-hidden px-6 py-2 border border-[rgba(59,126,161,0.2)] hover:border-[rgba(59,126,161,0.4)]">
-                      <Link href={service.href}>
-                        <span className="relative z-10">Learn more</span>
-                        <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(59,126,161,0.1)] to-[rgba(94,107,141,0.1)] opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
-                      </Link>
-                    </Button>
                   </div>
                 </Card>
               </motion.div>
