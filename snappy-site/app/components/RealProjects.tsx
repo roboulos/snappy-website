@@ -6,22 +6,22 @@ import { ExternalLink, Code2 } from "lucide-react";
 
 const projects = [
   {
-    name: "mcp.snappy.ai",
-    description: "Xano MCP Tool - Remote server with 101+ database operations",
+    name: "Snappy Xano MCP Tool",
+    description: "OAuth-protected MCP server with 101+ database operations. Powers MCP UI Chat and 100+ developers",
     url: "https://mcp.snappy.ai",
     icon: Code2,
-    stats: "Production Ready"
+    stats: "In Production"
   },
   {
     name: "MCP UI Chat",
-    description: "Next-gen MCP client with visual UI and tool orchestration",
+    description: "Visual interface for MCP tools. Built using our Xano MCP server - see AI build apps in real-time",
     url: "https://scira-mcp-ui-chat.vercel.app/",
     icon: ExternalLink,
     stats: "Live Demo"
   },
   {
     name: "Universe DB MCP",
-    description: "1985 legacy database accessible via ChatGPT - multivalue DB demo",
+    description: "Making 40-year-old multivalue databases speak AI. From PICK commands to ChatGPT in 2 weeks",
     url: "https://universe-mcp-demo.snappy.ai",
     icon: Code2,
     stats: "Legacy → AI"
