@@ -36,7 +36,7 @@ export default function AboutSection() {
       <div className="absolute left-1/4 top-1/3 w-[40rem] h-[40rem] bg-gradient-radial from-[rgba(59,126,161,0.12)] to-transparent blur-3xl opacity-50 animate-pulse-subtle" />
       <div className="absolute right-1/3 bottom-1/4 w-[35rem] h-[35rem] bg-gradient-radial from-[rgba(94,107,141,0.1)] to-transparent blur-3xl opacity-50 animate-pulse-subtle" />
       
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Visual element */}
           <motion.div

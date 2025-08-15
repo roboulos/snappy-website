@@ -554,7 +554,7 @@ export default function Hero() {
         <div className="absolute bottom-0 right-1/3 w-[30rem] h-[30rem] bg-gradient-radial from-primary/10 to-transparent blur-3xl" />
       </motion.div>
 
-      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8 py-24 md:py-32">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 sm:py-24 md:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.2fr),minmax(0,1fr)] gap-8 lg:gap-8 items-start">
           {/* Left content */}
           <motion.div
@@ -583,14 +583,14 @@ export default function Hero() {
               <span className="block text-base md:text-lg font-medium text-muted-foreground mb-4 uppercase tracking-wider">
                 Model Context Protocol
               </span>
-              <span className="block text-5xl md:text-6xl leading-[1.1]">
+              <span className="block text-4xl sm:text-5xl lg:text-6xl leading-[1.1]">
                 <span className="text-foreground">Your Systems,</span><br />
                 <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">Ready for Any AI.</span>
               </span>
             </motion.h1>
 
             <motion.p
-              className="text-lg text-muted-foreground leading-relaxed max-w-2xl"
+              className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}

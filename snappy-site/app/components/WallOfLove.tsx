@@ -15,7 +15,7 @@ export default function WallOfLove() {
       <div className="absolute top-1/3 left-1/4 w-[45rem] h-[45rem] bg-gradient-radial from-[rgba(59,126,161,0.1)] to-transparent blur-3xl opacity-60" />
       <div className="absolute bottom-1/3 right-1/4 w-[40rem] h-[40rem] bg-gradient-radial from-[rgba(94,107,141,0.08)] to-transparent blur-3xl opacity-60" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

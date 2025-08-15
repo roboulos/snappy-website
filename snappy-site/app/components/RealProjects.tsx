@@ -37,7 +37,7 @@ export default function RealProjects() {
       {/* Animated orbs for depth */}
       <div className="absolute right-0 top-0 w-[45rem] h-[45rem] bg-gradient-radial from-[rgba(94,107,141,0.12)] to-transparent blur-3xl opacity-60" />
       <div className="absolute left-0 bottom-0 w-[40rem] h-[40rem] bg-gradient-radial from-[rgba(59,126,161,0.1)] to-transparent blur-3xl opacity-60" />
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

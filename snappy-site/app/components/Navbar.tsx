@@ -273,15 +273,14 @@ export default function Navbar() {
                   Contact
                 </Link>
 
-                <div className="pt-4 space-y-3">
+                <div className="pt-6 mt-6 border-t space-y-4">
                   <Link href="/newsletter" className="w-full">
-                    <Button variant="outline" size="sm" className="w-full flex items-center justify-center">
+                    <Button variant="outline" className="w-full flex items-center justify-center">
                       <Mail className="h-4 w-4 mr-1.5 flex-shrink-0" />
                       <span>Newsletter</span>
                     </Button>
                   </Link>
                   <Button 
-                    size="sm" 
                     className="w-full bg-gradient-to-r from-[#3B7EA1] to-[#5E6B8D] text-white hover:from-[#3B7EA1]/90 hover:to-[#5E6B8D]/90 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
                     onClick={() => window.open('https://calendly.com/robertboulos/45m-vip', '_blank')}
                   >
