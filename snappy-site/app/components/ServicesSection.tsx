@@ -78,10 +78,10 @@ export default function ServicesSection() {
             <Sparkles className="w-3 h-3 mr-1" />
             Our Services
           </Badge>
-          <h2 className="text-5xl md:text-6xl font-extrabold tracking-[-0.03em] mb-6">
+          <h2 className="text-4xl md:text-5xl font-extrabold tracking-[-0.03em] mb-6">
             <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">Ways We Can Work Together</span>
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             Whether you need AI-ready systems built, want to learn alongside an expert, or prefer 
             to master it yourself—we have a path that fits.
           </p>
@@ -130,14 +130,14 @@ export default function ServicesSection() {
                             {service.title}
                           </span>
                         </h3>
-                        <p className="text-muted-foreground text-sm mb-6">
+                        <p className="text-muted-foreground text-base mb-6">
                           {service.description}
                         </p>
                         
                         {/* Features list */}
                         <ul className="space-y-2">
                           {service.features.map((feature) => (
-                            <li key={feature} className="flex items-center gap-3 text-xs">
+                            <li key={feature} className="flex items-center gap-3 text-sm">
                               <div className="w-1.5 h-1.5 rounded-full bg-[#3B7EA1]" />
                               <span>{feature}</span>
                             </li>

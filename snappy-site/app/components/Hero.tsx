@@ -583,14 +583,14 @@ export default function Hero() {
               <span className="block text-base md:text-lg font-medium text-muted-foreground mb-4 uppercase tracking-wider">
                 Model Context Protocol
               </span>
-              <span className="block text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-[1.1]">
+              <span className="block text-5xl md:text-6xl leading-[1.1]">
                 <span className="text-foreground">Your Systems,</span><br />
                 <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">Ready for Any AI.</span>
               </span>
             </motion.h1>
 
             <motion.p
-              className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl"
+              className="text-lg text-muted-foreground leading-relaxed max-w-2xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}

@@ -169,10 +169,10 @@ export default function AboutSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-5xl md:text-6xl font-extrabold tracking-[-0.03em] mb-6">
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-[-0.03em] mb-6">
               <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">Why AI-Ready Systems Win</span>
             </h2>
-            <p className="text-lg md:text-xl text-muted-foreground mb-12 leading-relaxed">
+            <p className="text-lg text-muted-foreground mb-12 leading-relaxed">
               Every week you wait, competitors pull ahead. While they&apos;re asking AI to &quot;update customer records&quot; or &quot;analyze sales trends,&quot; your team is stuck with manual processes. MCP changes that—making your unique systems speak AI&apos;s language, instantly.
             </p>
             
@@ -196,7 +196,7 @@ export default function AboutSection() {
                       <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
                         {feature.title}
                       </h3>
-                      <p className="text-muted-foreground leading-relaxed">
+                      <p className="text-base text-muted-foreground leading-relaxed">
                         {feature.description}
                       </p>
                     </div>

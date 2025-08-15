@@ -48,7 +48,7 @@ export default function RealProjects() {
             <ExternalLink className="w-3 h-3 mr-1" />
             Real MCP Projects
           </Badge>
-          <h2 className="text-4xl font-bold mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
             <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">Some Things I&apos;m Building</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -90,7 +90,7 @@ export default function RealProjects() {
                         {project.stats}
                       </Badge>
                     </div>
-                    <p className="text-muted-foreground text-sm">
+                    <p className="text-muted-foreground text-base">
                       {project.description}
                     </p>
                   </div>

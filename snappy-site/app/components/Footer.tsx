@@ -105,10 +105,10 @@ export default function Footer() {
             <div className="relative bg-gradient-to-br from-background/80 to-background/60 backdrop-blur-xl rounded-3xl p-10 md:p-14 border border-white/10 shadow-2xl">
               <div className="flex flex-col md:flex-row items-center justify-between gap-8">
                 <div className="flex-1 text-center md:text-left">
-                  <h3 className="text-3xl md:text-4xl font-bold mb-3">
+                  <h3 className="text-3xl font-bold mb-3">
                     <span className="bg-gradient-to-r from-[#3B7EA1] via-[#5E6B8D] to-[#3B7EA1] bg-clip-text text-transparent">Ready to Make Your Systems AI-Ready?</span>
                   </h3>
-                  <p className="text-lg text-muted-foreground">
+                  <p className="text-base text-muted-foreground">
                     From 1985 Universe databases to modern APIs, we&apos;ve made it all work with AI. Your systems could be next.
                   </p>
                 </div>
@@ -249,7 +249,7 @@ export default function Footer() {
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
           >
-            <h4 className="font-semibold mb-6 text-sm uppercase tracking-wider text-muted-foreground">Services</h4>
+            <h4 className="font-semibold mb-6 text-base uppercase tracking-wider text-muted-foreground">Services</h4>
             <ul className="space-y-3">
               {footerLinks.services.map((link) => (
                 <motion.li key={link.href} whileHover={{ x: 4 }}>
@@ -272,7 +272,7 @@ export default function Footer() {
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
           >
-            <h4 className="font-semibold mb-6 text-sm uppercase tracking-wider text-muted-foreground">Company</h4>
+            <h4 className="font-semibold mb-6 text-base uppercase tracking-wider text-muted-foreground">Company</h4>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <motion.li key={link.href} whileHover={{ x: 4 }}>
@@ -295,7 +295,7 @@ export default function Footer() {
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
           >
-            <h4 className="font-semibold mb-6 text-sm uppercase tracking-wider text-muted-foreground">Resources</h4>
+            <h4 className="font-semibold mb-6 text-base uppercase tracking-wider text-muted-foreground">Resources</h4>
             <ul className="space-y-3">
               {footerLinks.resources.map((link) => (
                 <motion.li key={link.href} whileHover={{ x: 4 }}>
@@ -320,7 +320,7 @@ export default function Footer() {
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
           >
-            <h4 className="font-semibold mb-6 text-sm uppercase tracking-wider text-muted-foreground">Legal</h4>
+            <h4 className="font-semibold mb-6 text-base uppercase tracking-wider text-muted-foreground">Legal</h4>
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (
                 <motion.li key={link.href} whileHover={{ x: 4 }}>

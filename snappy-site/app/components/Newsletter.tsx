@@ -111,7 +111,7 @@ export default function Newsletter() {
               </motion.h2>
               
               <motion.p 
-                className="text-lg md:text-xl text-muted-foreground mb-10 leading-relaxed"
+                className="text-lg text-muted-foreground mb-10 leading-relaxed"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
